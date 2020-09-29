@@ -5,12 +5,11 @@ OBJECTS = $(SOURCES:.cpp=.o)
 include library/*.mk
 
 LDFLAGS = $(LIBRARIES) -lpthread $(shell pkg-config --cflags --libs x11) -ldl -lm
-CFLAGS = -g \
-		 -Isource \
-		 -Ilibrary \
+CXXFLAGS = -g \
+		 -Isource/ \
+		 -Ilibrary/ \
 		 -std=c++17 \
 		 -MD \
-		 -Isource \
 		 -Wall \
 		 -Wextra  \
 		 -Werror \
@@ -18,7 +17,7 @@ CFLAGS = -g \
 		 -fsanitize=undefined
 
 $(PROJECT).out: $(OBJECTS)
-	$(CXX) $(CFLAGS) -o $@ $^ $(LDFLAGS)
+	$(CXX) $(CXXFLAGS) -o $@ $^ $(LDFLAGS)
 
 .PHONY: all clean test
 
@@ -27,7 +26,7 @@ all: $(LIBRARIES) $(PROJECT).out
 clean:
 	rm -f $(OBJECTS) $(SOURCES:.cpp=.d) $(PROJECT).out
 
-debug: $(PROJECT).out
+debug: $(PROJECT).out $(LIBRARIES)
 	./$(PROJECT).out
 
 -include $(SOURCES:.cpp=.d)
