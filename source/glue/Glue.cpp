@@ -23,7 +23,7 @@ namespace glue
         ImGuiIO &io = ImGui::GetIO();
         (void)io;
         ImGui::StyleColorsDark();
-        ImGui_ImplGlfw_InitForOpenGL(reinterpret_cast<GLFWwindow *>(GetWindowHandle()), true);
+        ImGui_ImplGlfw_InitForOpenGL(reinterpret_cast<GLFWwindow *>(GetWindowGLFWHandle()), true);
         ImGui_ImplOpenGL3_Init("#version 130");
     }
 
