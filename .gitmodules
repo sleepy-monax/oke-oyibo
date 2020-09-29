@@ -1,0 +1,9 @@
+[submodule "library/entt"]
+	path = library/entt
+	url = https://github.com/skypjack/entt
+[submodule "library/imgui"]
+	path = library/imgui
+	url = https://github.com/ocornut/imgui
+[submodule "library/raylib"]
+	path = library/raylib
+	url = https://github.com/raysan5/raylib/
