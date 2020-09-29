@@ -1,26 +1,21 @@
-#include "RayLib.h"
+#include <raylib.h>
+
+#include "glue/Glue.h"
 
 int main(void)
 {
-    const int screenWidth = 800;
-    const int screenHeight = 450;
+    glue::initialize();
 
-    InitWindow(screenWidth, screenHeight, "raylib [core] example - basic window");
-
-    SetTargetFPS(60);
-
-    while (!WindowShouldClose())
+    while (!glue::should_exit())
     {
-        BeginDrawing();
-
-        ClearBackground(RAYWHITE);
+        glue::begin_frame();
 
         DrawText("Congrats! You created your first window!", 190, 200, 20, LIGHTGRAY);
 
-        EndDrawing();
+        glue::end_frame();
     }
 
-    CloseWindow();
+    glue::uninitialize();
 
     return 0;
 }

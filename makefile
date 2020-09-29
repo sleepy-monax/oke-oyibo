@@ -1,23 +1,26 @@
+.DEFAULT_GOAL := all
+
 PROJECT = oke-oyibo
-SOURCES = $(wildcard source/*.cpp) $(wildcard source/*/*.cpp)
+SOURCES = $(wildcard source/*.cpp) $(wildcard library/*.cpp) $(wildcard source/*/*.cpp)
 OBJECTS = $(SOURCES:.cpp=.o)
 
-include library/*.mk
-
-LDFLAGS = $(LIBRARIES) -lpthread $(shell pkg-config --cflags --libs x11) -ldl -lm
+LDFLAGS = -lm
 CXXFLAGS = -g \
-		 -Isource/ \
-		 -Ilibrary/ \
 		 -std=c++17 \
 		 -MD \
 		 -Wall \
 		 -Wextra  \
-		 -Werror \
 		 -fsanitize=address \
-		 -fsanitize=undefined
+		 -fsanitize=undefined \
+		 -I. \
+		 -Isource/ \
+		 $(INCLUDES) \
+		 $(DEFINES) \
+
+include library/*.mk
 
 $(PROJECT).out: $(OBJECTS)
-	$(CXX) $(CXXFLAGS) -o $@ $^ $(LDFLAGS)
+	$(CXX) -fsanitize=address -fsanitize=undefined -o $@ $^ $(LIBRARIES) $(LDFLAGS)
 
 .PHONY: all clean test
 
