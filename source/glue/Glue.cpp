@@ -16,6 +16,7 @@ namespace glue
         const int screenWidth = 800;
         const int screenHeight = 450;
 
+        SetConfigFlags(FLAG_WINDOW_RESIZABLE);
         InitWindow(screenWidth, screenHeight, "raylib [core] example - basic window");
         SetTargetFPS(60);
 
