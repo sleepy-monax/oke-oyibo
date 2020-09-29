@@ -26,7 +26,7 @@ all: $(LIBRARIES) $(PROJECT).out
 clean:
 	rm -f $(OBJECTS) $(SOURCES:.cpp=.d) $(PROJECT).out
 
-debug: $(PROJECT).out $(LIBRARIES)
+debug: $(LIBRARIES) $(PROJECT).out
 	./$(PROJECT).out
 
 -include $(SOURCES:.cpp=.d)
