@@ -10,6 +10,7 @@ CXXFLAGS = -g \
 		 -MD \
 		 -Wall \
 		 -Wextra  \
+		 -Werror \
 		 -fsanitize=address \
 		 -fsanitize=undefined \
 		 -I. \
