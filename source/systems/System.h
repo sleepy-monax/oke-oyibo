@@ -14,6 +14,7 @@ namespace systems
     class System
     {
     private:
+        bool _enabled = true;
         std::string _name;
 
         debug::Profiler update_profiler{"Update"};

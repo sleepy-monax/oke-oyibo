@@ -5,25 +5,35 @@ namespace systems
     void System::do_update(world::World &world)
     {
         update_profiler.mesure([&]() {
-            update(world);
+            if (_enabled)
+            {
+                update(world);
+            }
         });
     }
 
     void System::do_render(world::World &world)
     {
         render_profiler.mesure([&]() {
-            render(world);
+            if (_enabled)
+            {
+                render(world);
+            }
         });
     }
 
     void System::do_display(world::World &world)
     {
         ImGui::Begin("Systems");
+
         display_profiler.mesure([&]() {
+            ImGui::PushID(this);
             if (ImGui::CollapsingHeader(_name.c_str()))
             {
+                ImGui::Checkbox("Enable", &_enabled);
                 display(world);
             }
+            ImGui::PopID();
         });
         ImGui::End();
 
