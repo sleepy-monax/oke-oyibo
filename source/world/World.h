@@ -2,6 +2,7 @@
 
 #include <entt.hpp>
 
+#include "entity/Builder.h"
 #include "loop/RenderContext.h"
 #include "loop/UpdateContext.h"
 #include "systems/System.h"
@@ -28,10 +29,15 @@ namespace world
 
         ~World() {}
 
-        template <typename TSystem, typename... Args>
-        void register_system(Args &&... args)
+        template <typename TSystem, typename... TArgs>
+        void register_system(TArgs &&... args)
         {
-            _systems.push_back(utils::own<TSystem>(std::forward<Args>(args)...));
+            _systems.push_back(utils::own<TSystem>(std::forward<TArgs>(args)...));
+        }
+
+        entity::Builder create_entity()
+        {
+            return entity::Builder{entities()};
         }
 
         void update(loop::UpdateContext &context)

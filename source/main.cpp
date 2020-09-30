@@ -9,6 +9,8 @@
 #include "systems/Input.h"
 #include "world/World.h"
 
+using namespace components;
+
 int main(void)
 {
     glue::initialize();
@@ -17,6 +19,9 @@ int main(void)
 
     world.register_system<systems::Input>();
     world.register_system<systems::DebugRender>();
+
+    world.create_entity()
+        .with<Position>(0.0, 0.0, 0.0);
 
     loop::GameLoop loop{world};
 

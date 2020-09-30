@@ -52,12 +52,9 @@ namespace loop
                         ImGui::Begin("Profiler");
                         fps_counter.mesure_and_display();
                         frame_time_profiler.display();
-                        if (ImGui::CollapsingHeader("Game Loop"))
-                        {
-                            update_profiler.display();
-                            render_profiler.display();
-                            display_profiler.display();
-                        }
+                        update_profiler.display();
+                        render_profiler.display();
+                        display_profiler.display();
                         ImGui::End();
 
                         _world.display();
