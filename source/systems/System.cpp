@@ -2,22 +2,22 @@
 
 namespace systems
 {
-    void System::do_update(world::World &world)
+    void System::do_update(world::World &world, loop::UpdateContext &context)
     {
         update_profiler.mesure([&]() {
             if (_enabled)
             {
-                update(world);
+                update(world, context);
             }
         });
     }
 
-    void System::do_render(world::World &world)
+    void System::do_render(world::World &world, loop::RenderContext &context)
     {
         render_profiler.mesure([&]() {
-            if (_enabled)
+            if (_visible)
             {
-                render(world);
+                render(world, context);
             }
         });
     }
@@ -31,6 +31,7 @@ namespace systems
             if (ImGui::CollapsingHeader(_name.c_str()))
             {
                 ImGui::Checkbox("Enable", &_enabled);
+                ImGui::Checkbox("Visible", &_visible);
                 display(world);
             }
             ImGui::PopID();

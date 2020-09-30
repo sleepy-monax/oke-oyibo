@@ -22,7 +22,9 @@ namespace systems
         {
         }
 
-        void update(world::World &world) override
+        void update(
+            world::World &world,
+            loop::UpdateContext &) override
         {
             auto view = world.entities().view<components::Player, components::Acceleration>();
 

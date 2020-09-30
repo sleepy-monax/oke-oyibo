@@ -1,11 +1,11 @@
 #pragma once
 
-namespace component
+namespace components
 {
-    struct Positions
+    struct Position
     {
         double x;
         double y;
         double z;
     };
-} // namespace component
+} // namespace components
