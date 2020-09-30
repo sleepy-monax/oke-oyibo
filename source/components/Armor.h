@@ -2,7 +2,7 @@
 
 #include "inventory/Item.h"
 
-namespace component
+namespace components
 {
     struct Armor
     {
