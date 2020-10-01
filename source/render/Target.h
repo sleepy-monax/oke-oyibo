@@ -44,15 +44,15 @@ namespace render
             EndTextureMode();
         }
 
-        void resize_to_fit_the_screen()
+        void resize_to_fit(int width, int height)
         {
-            if (_width != GetScreenWidth() ||
-                _height != GetScreenHeight())
+            if (_width != width || _height != height)
             {
-                _width = GetScreenWidth();
-                _height = GetScreenHeight();
 
                 UnloadRenderTexture(_texture);
+
+                _width = width;
+                _height = height;
 
                 _texture = LoadRenderTexture(_width, _height);
 
@@ -60,12 +60,17 @@ namespace render
             }
         }
 
-        void display()
+        void display(double scale)
         {
-            ImGui::Image(reinterpret_cast<void *>(_texture.texture.id), ImVec2(_width / 16.0, _height / 16.0));
+            ImGui::Image(reinterpret_cast<void *>(_texture.texture.id), ImVec2(_width * scale, _height * scale));
         }
 
-        RenderTexture2D &underlying_texture()
+        Texture2D &underlying_texture()
+        {
+            return _texture.texture;
+        }
+
+        RenderTexture2D &underlying_render_texture()
         {
             return _texture;
         }

@@ -9,6 +9,9 @@ namespace game
     class RenderContext
     {
     private:
+        int _width = 0;
+        int _height = 0;
+
         render::Target _terrain{};
         render::Target _shadows{};
         render::Target _light{};
@@ -18,6 +21,9 @@ namespace game
         render::Target _composite{};
 
     public:
+        int width() { return _width; }
+        int height() { return _height; }
+
         render::Target &terrain() { return _terrain; }
         render::Target &shadows() { return _shadows; }
         render::Target &light() { return _light; }
@@ -25,19 +31,34 @@ namespace game
         render::Target &overlay() { return _overlay; }
         render::Target &composite() { return _composite; }
 
-        RenderContext() {}
+        RenderContext()
+        {
+            _width = GetScreenWidth();
+            _height = GetScreenHeight();
+        }
 
         template <typename TCallback>
         void use_and_do(TCallback callback)
         {
-            _terrain.resize_to_fit_the_screen();
-            _shadows.resize_to_fit_the_screen();
-            _light.resize_to_fit_the_screen();
-            _entities.resize_to_fit_the_screen();
-            _overlay.resize_to_fit_the_screen();
-            _composite.resize_to_fit_the_screen();
-
             callback();
+        }
+
+        void resize_to_fit(int width, int height)
+        {
+            _terrain.resize_to_fit(width, height);
+            _shadows.resize_to_fit(width, height);
+            _light.resize_to_fit(width, height);
+            _entities.resize_to_fit(width, height);
+            _overlay.resize_to_fit(width, height);
+            _composite.resize_to_fit(width, height);
+
+            _width = width;
+            _width = height;
+        }
+
+        void resize_to_fit_the_screen()
+        {
+            resize_to_fit(GetScreenWidth(), GetScreenHeight());
         }
 
         void display()
@@ -45,27 +66,27 @@ namespace game
             ImGui::Begin("Render Context");
 
             ImGui::Text("Terrain Map");
-            _terrain.display();
+            _terrain.display(1 / 8.0);
             ImGui::Separator();
 
             ImGui::Text("Shadow Map");
-            _shadows.display();
+            _shadows.display(1 / 8.0);
             ImGui::Separator();
 
             ImGui::Text("Light Map");
-            _light.display();
+            _light.display(1 / 8.0);
             ImGui::Separator();
 
             ImGui::Text("Entities Map");
-            _entities.display();
+            _entities.display(1 / 8.0);
             ImGui::Separator();
 
             ImGui::Text("Overlay Map");
-            _overlay.display();
+            _overlay.display(1 / 8.0);
             ImGui::Separator();
 
             ImGui::Text("Final Result");
-            _overlay.display();
+            _overlay.display(1 / 8.0);
             ImGui::Separator();
 
             ImGui::End();

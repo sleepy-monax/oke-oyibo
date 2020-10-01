@@ -19,7 +19,7 @@ namespace game
     class GameLoop
     {
     private:
-        bool _debugging = false;
+        bool _debugging = true;
 
         world::World &_world;
         RenderContext _render_context{};
@@ -63,12 +63,19 @@ namespace game
                     });
 
                     render_profiler.mesure([&]() {
+                        if (!_debugging)
+                        {
+                            _render_context.resize_to_fit_the_screen();
+                        }
+
                         render();
                     });
 
                     display_profiler.mesure([&]() {
                         if (_debugging)
+                        {
                             display();
+                        }
                     });
                 });
 
@@ -84,13 +91,30 @@ namespace game
 
         void render()
         {
-            _render_context.use_and_do([&]() {
-                _world.render(_render_context);
+            _world.render(_render_context);
+
+            _render_context.composite().use_and_do([&]() {
+                Rectangle rect{0, 0, _render_context.width() * 1.0f, _render_context.height() * 1.0f};
+                DrawTexturePro(_render_context.terrain().underlying_texture(), rect, rect, (Vector2){0, 0}, 0.0f, WHITE);
+                DrawTexturePro(_render_context.shadows().underlying_texture(), rect, rect, (Vector2){0, 0}, 0.0f, WHITE);
+                DrawTexturePro(_render_context.entities().underlying_texture(), rect, rect, (Vector2){0, 0}, 0.0f, WHITE);
+                DrawTexturePro(_render_context.light().underlying_texture(), rect, rect, (Vector2){0, 0}, 0.0f, WHITE);
+                DrawTexturePro(_render_context.overlay().underlying_texture(), rect, rect, (Vector2){0, 0}, 0.0f, WHITE);
             });
         }
 
         void display()
         {
+            ImGui::DockSpaceOverViewport();
+
+            ImGui::Begin("Viewport");
+
+            ImGui::GetWindowSize();
+            //_render_context.resize_to_fit(size.x, size.y);
+            _render_context.composite().display(1);
+
+            ImGui::End();
+
             ImGui::Begin("Profiler");
             fps_counter.mesure_and_display();
             frame_time_profiler.display();
