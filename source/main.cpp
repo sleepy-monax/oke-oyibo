@@ -1,30 +1,30 @@
 #include <imgui.h>
 #include <raylib.h>
 
-#include "components/Acceleration.h"
-#include "components/Velocity.h"
-#include "debug/FPSCounter.h"
-#include "debug/Profiler.h"
-#include "game/GameLoop.h"
-#include "glue/Glue.h"
-#include "systems/DebugRender.h"
-#include "systems/Input.h"
-#include "systems/Physic.h"
-#include "systems/TerrainRender.h"
-#include "world/World.h"
+#include "core/components/Acceleration.h"
+#include "core/components/Velocity.h"
+#include "core/debug/FPSCounter.h"
+#include "core/debug/Profiler.h"
+#include "core/game/GameLoop.h"
+#include "core/glue/Glue.h"
+#include "core/systems/DebugRender.h"
+#include "core/systems/Input.h"
+#include "core/systems/Physic.h"
+#include "core/systems/TerrainRender.h"
+#include "core/world/World.h"
 
-using namespace components;
+using namespace core::components;
 
 int main()
 {
-    glue::initialize();
+    core::glue::initialize();
 
-    world::World world{256, 256};
+    core::world::World world{256, 256};
 
-    world.register_system<systems::Input>();
-    world.register_system<systems::DebugRender>();
-    world.register_system<systems::Physic>();
-    world.register_system<systems::TerrainRender>();
+    world.register_system<core::systems::Input>();
+    world.register_system<core::systems::DebugRender>();
+    world.register_system<core::systems::Physic>();
+    world.register_system<core::systems::TerrainRender>();
 
     world.create_entity()
         .with<Position>(64.0f, 64.0f, 0.0f)
@@ -32,11 +32,11 @@ int main()
         .with<Velocity>()
         .with<Player>();
 
-    game::GameLoop loop{world};
+    core::game::GameLoop loop{world};
 
     loop.run();
 
-    glue::uninitialize();
+    core::glue::uninitialize();
 
     return 0;
 }

@@ -1,7 +1,10 @@
 .DEFAULT_GOAL := all
 
 PROJECT = oke-oyibo
-SOURCES = $(wildcard source/*.cpp) $(wildcard library/*.cpp) $(wildcard source/*/*.cpp)
+SOURCES = $(wildcard source/*.cpp) \
+		  $(wildcard source/*/*.cpp) \
+		  $(wildcard source/*/*/*.cpp) \
+		  $(wildcard library/*.cpp)
 OBJECTS = $(SOURCES:.cpp=.o)
 
 LDFLAGS = -lm
