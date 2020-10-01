@@ -53,12 +53,19 @@ namespace core::game
             _composite.resize_to_fit(width, height);
 
             _width = width;
-            _width = height;
+            _height = height;
         }
 
         void resize_to_fit_the_screen()
         {
             resize_to_fit(GetScreenWidth(), GetScreenHeight());
+        }
+
+        void clear()
+        {
+            _terrain.use_and_do([]() {
+                ClearBackground(BLACK);
+            });
         }
 
         void display()

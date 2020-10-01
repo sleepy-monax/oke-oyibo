@@ -12,11 +12,15 @@
 #include "core/systems/Physic.h"
 #include "core/systems/TerrainRender.h"
 #include "core/world/World.h"
+#include "editor/Editor.h"
+#include "game/Game.h"
 
 using namespace core::components;
 
 int main()
 {
+    bool debugging = false;
+
     core::glue::initialize();
 
     core::world::World world{256, 256};
@@ -32,9 +36,31 @@ int main()
         .with<Velocity>()
         .with<Player>();
 
-    core::game::GameLoop loop{world};
+    editor::Editor editor{world};
 
-    loop.run();
+    game::Game game{world};
+
+    while (!core::glue::should_exit())
+    {
+        if (IsKeyPressed(KEY_F3))
+        {
+            debugging = !debugging;
+        }
+
+        core::glue::begin_frame();
+        core::debug::Profiler::new_frame();
+
+        if (debugging)
+        {
+            editor.run();
+        }
+        else
+        {
+            game.run();
+        }
+
+        core::glue::end_frame();
+    }
 
     core::glue::uninitialize();
 
