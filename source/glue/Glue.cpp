@@ -74,10 +74,15 @@ namespace glue
         InitWindow(screenWidth, screenHeight, "raylib [core] example - basic window");
         SetTargetFPS(60);
 
+        IMGUI_CHECKVERSION();
         ImGui::CreateContext();
+
         ImGuiIO &io = ImGui::GetIO();
-        (void)io;
+        io.ConfigFlags |= ImGuiConfigFlags_NavEnableKeyboard; // Enable Keyboard Controls
+        io.ConfigFlags |= ImGuiConfigFlags_DockingEnable;     // Enable Docking
+
         ImGui::StyleColorsDark();
+        
         load_imgui_style();
         ImGui_ImplGlfw_InitForOpenGL(reinterpret_cast<GLFWwindow *>(GetWindowGLFWHandle()), true);
         ImGui_ImplOpenGL3_Init("#version 130");
