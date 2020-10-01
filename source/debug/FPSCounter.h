@@ -14,8 +14,6 @@ namespace debug
     public:
         FPSCounter() {}
 
-        ~FPSCounter() {}
-
         void mesure_and_display()
         {
             for (size_t i = 0; i < RECORD_COUNT - 1; i++)
@@ -34,10 +32,8 @@ namespace debug
 
             average /= IM_ARRAYSIZE(_record);
 
-            ImGui::Begin("Profiler");
-            ImGui::PlotLines("FPS", _record, IM_ARRAYSIZE(_record), 0, nullptr, 0, 100, ImVec2(0, 24));
             ImGui::Text("avg: %3.0ffps", average);
-            ImGui::End();
+            ImGui::PlotLines("FPS", _record, IM_ARRAYSIZE(_record), 0, nullptr, 0, 100, ImVec2(0, 24));
         }
     };
 } // namespace debug

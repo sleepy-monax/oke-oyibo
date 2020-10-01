@@ -30,9 +30,19 @@ namespace systems
             ImGui::PushID(this);
             if (ImGui::CollapsingHeader(_name.c_str()))
             {
+                ImGui::Indent();
+
+                ImGui::Text("State:");
                 ImGui::Checkbox("Enable", &_enabled);
+                ImGui::SameLine();
                 ImGui::Checkbox("Visible", &_visible);
+
+                ImGui::Separator();
+                ImGui::Text("Properities:");
+
                 display(world);
+
+                ImGui::Unindent();
             }
             ImGui::PopID();
         });
@@ -41,9 +51,13 @@ namespace systems
         ImGui::Begin("Profiler");
         if (ImGui::CollapsingHeader(_name.c_str()))
         {
+            ImGui::Indent();
+
             update_profiler.display();
             render_profiler.display();
             display_profiler.display();
+
+            ImGui::Unindent();
         }
         ImGui::End();
     }

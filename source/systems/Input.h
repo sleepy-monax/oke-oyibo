@@ -35,6 +35,21 @@ namespace systems
                     {
                         acceleration.ay -= 1.0;
                     }
+
+                    if (IsKeyDown(KEY_DOWN))
+                    {
+                        acceleration.ay += 1.0;
+                    }
+
+                    if (IsKeyDown(KEY_LEFT))
+                    {
+                        acceleration.ax -= 1.0;
+                    }
+
+                    if (IsKeyDown(KEY_RIGHT))
+                    {
+                        acceleration.ax += 1.0;
+                    }
                 }
             });
         }

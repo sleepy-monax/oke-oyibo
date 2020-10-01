@@ -46,8 +46,10 @@ namespace debug
 
             average /= IM_ARRAYSIZE(_record);
 
-            ImGui::PlotLines(_name, _record, IM_ARRAYSIZE(_record), 0, nullptr, 0, 16 * 100, ImVec2(0, 24));
-            ImGui::Text("avg: %5.2fµs", average);
+            ImGui::Text("%s", _name);
+            ImGui::Text("avg: %5.2fµs budget: %3.2f%%", average, average / 160.0);
+            ImGui::PlotLines("(µs)", _record, IM_ARRAYSIZE(_record), 0, nullptr, 0, 16 * 100, ImVec2(0, 24));
+            ImGui::Separator();
         }
     };
 } // namespace debug
