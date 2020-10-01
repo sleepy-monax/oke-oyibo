@@ -27,7 +27,7 @@ int main()
     world.register_system<systems::TerrainRender>();
 
     world.create_entity()
-        .with<Position>(64.0, 64.0, 0.0)
+        .with<Position>(64.0f, 64.0f, 0.0f)
         .with<Acceleration>()
         .with<Velocity>()
         .with<Player>();

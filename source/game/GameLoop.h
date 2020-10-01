@@ -3,11 +3,16 @@
 #include <raylib.h>
 
 #include "debug/FPSCounter.h"
+#include "debug/Inspector.h"
 #include "debug/Profiler.h"
 #include "game/RenderContext.h"
 #include "game/UpdateContext.h"
 #include "glue/Glue.h"
 #include "world/World.h"
+
+#include "components/Acceleration.h"
+#include "components/Position.h"
+#include "components/Velocity.h"
 
 namespace game
 {
@@ -26,10 +31,16 @@ namespace game
         debug::Profiler render_profiler{"Render"};
         debug::Profiler display_profiler{"Display"};
 
+        entt::entity _inspector_selected;
+        MM::EntityEditor<entt::entity> _inspector{};
+
     public:
         GameLoop(world::World &world)
             : _world(world)
         {
+            _inspector.registerComponent<components::Velocity>("Velocity");
+            _inspector.registerComponent<components::Position>("Position");
+            _inspector.registerComponent<components::Acceleration>("Acceleration");
         }
 
         ~GameLoop() {}
@@ -88,6 +99,7 @@ namespace game
             display_profiler.display();
             ImGui::End();
 
+            _inspector.renderSimpleCombo(_world.entities(), _inspector_selected);
             _render_context.display();
             _world.display();
         }
