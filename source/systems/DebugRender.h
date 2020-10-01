@@ -21,7 +21,7 @@ namespace systems
         {
         }
 
-        virtual void render(world::World &world, loop::RenderContext &)
+        virtual void render(world::World &world, game::RenderContext &)
         {
             auto view = world.entities().view<components::Position>();
 

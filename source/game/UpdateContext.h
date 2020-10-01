@@ -1,6 +1,6 @@
 #pragma once
 
-namespace loop
+namespace game
 {
     class UpdateContext
     {
@@ -21,4 +21,4 @@ namespace loop
         {
         }
     };
-} // namespace loop
+} // namespace game

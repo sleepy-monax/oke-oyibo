@@ -3,27 +3,37 @@
 #include <entt.hpp>
 
 #include "entity/Builder.h"
-#include "loop/RenderContext.h"
-#include "loop/UpdateContext.h"
+#include "game/RenderContext.h"
+#include "game/UpdateContext.h"
 #include "systems/System.h"
 #include "utils/OwnPtr.h"
 #include "utils/Vector.h"
+#include "world/Terrain.h"
 
 namespace world
 {
     class World
     {
     private:
-        entt::registry _entities{};
-        utils::Vector<utils::OwnPtr<systems::System>> _systems{};
+        Terrain _terrain;
+        entt::registry _entities;
+        utils::Vector<utils::OwnPtr<systems::System>> _systems;
 
     public:
+        Terrain &terrain()
+        {
+            return _terrain;
+        }
+
         entt::registry &entities()
         {
             return _entities;
         }
 
-        World()
+        World(int width, int height)
+            : _terrain{width, height},
+              _entities{},
+              _systems{}
         {
         }
 
@@ -40,7 +50,7 @@ namespace world
             return entity::Builder{entities()};
         }
 
-        void update(loop::UpdateContext &context)
+        void update(game::UpdateContext &context)
         {
             _systems.foreach ([&](auto &sys) {
                 sys->do_update(*this, context);
@@ -48,7 +58,7 @@ namespace world
             });
         }
 
-        void render(loop::RenderContext &context)
+        void render(game::RenderContext &context)
         {
             _systems.foreach ([&](auto &sys) {
                 sys->do_render(*this, context);

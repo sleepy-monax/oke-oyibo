@@ -25,7 +25,7 @@ namespace systems
 
         void update(
             world::World &world,
-            loop::UpdateContext &context) override
+            game::UpdateContext &context) override
         {
             __unused(context);
 

@@ -4,17 +4,18 @@
 
 #include "debug/FPSCounter.h"
 #include "debug/Profiler.h"
+#include "game/RenderContext.h"
+#include "game/UpdateContext.h"
 #include "glue/Glue.h"
-#include "loop/RenderContext.h"
-#include "loop/UpdateContext.h"
 #include "world/World.h"
 
-namespace loop
+namespace game
 {
     class GameLoop
     {
     private:
         world::World &_world;
+        RenderContext _render_context{};
 
         debug::FPSCounter fps_counter{};
 
@@ -36,33 +37,51 @@ namespace loop
             while (!glue::should_exit())
             {
                 glue::begin_frame();
+                debug::Profiler::new_frame();
 
                 frame_time_profiler.mesure([&]() {
                     update_profiler.mesure([&]() {
-                        UpdateContext context{GetFrameTime(), GetTime()};
-                        _world.update(context);
+                        update();
                     });
 
                     render_profiler.mesure([&]() {
-                        RenderContext context{};
-                        _world.render(context);
+                        render();
                     });
 
                     display_profiler.mesure([&]() {
-                        ImGui::Begin("Profiler");
-                        fps_counter.mesure_and_display();
-                        frame_time_profiler.display();
-                        update_profiler.display();
-                        render_profiler.display();
-                        display_profiler.display();
-                        ImGui::End();
-
-                        _world.display();
+                        display();
                     });
                 });
 
                 glue::end_frame();
             }
         }
+
+        void update()
+        {
+            UpdateContext context{GetFrameTime(), GetTime()};
+            _world.update(context);
+        }
+
+        void render()
+        {
+            _render_context.use_and_do([&]() {
+                _world.render(_render_context);
+            });
+        }
+
+        void display()
+        {
+            ImGui::Begin("Profiler");
+            fps_counter.mesure_and_display();
+            frame_time_profiler.display();
+            update_profiler.display();
+            render_profiler.display();
+            display_profiler.display();
+            ImGui::End();
+
+            _render_context.display();
+            _world.display();
+        }
     };
-} // namespace loop
+} // namespace game

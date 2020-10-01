@@ -24,7 +24,7 @@ namespace systems
 
         void update(
             world::World &world,
-            loop::UpdateContext &) override
+            game::UpdateContext &) override
         {
             auto view = world.entities().view<components::Player, components::Acceleration>();
 
