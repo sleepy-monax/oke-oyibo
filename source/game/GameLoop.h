@@ -14,6 +14,8 @@ namespace game
     class GameLoop
     {
     private:
+        bool _debugging = false;
+
         world::World &_world;
         RenderContext _render_context{};
 
@@ -36,6 +38,11 @@ namespace game
         {
             while (!glue::should_exit())
             {
+                if (IsKeyPressed(KEY_F3))
+                {
+                    _debugging = !_debugging;
+                }
+
                 glue::begin_frame();
                 debug::Profiler::new_frame();
 
@@ -49,7 +56,8 @@ namespace game
                     });
 
                     display_profiler.mesure([&]() {
-                        display();
+                        if (_debugging)
+                            display();
                     });
                 });
 
