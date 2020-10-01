@@ -5,3 +5,6 @@
 	path = library/imgui
 	url = https://github.com/ocornut/imgui
 
+[submodule "library/magic_enum"]
+	path = library/magic_enum
+	url = https://github.com/Neargye/magic_enum
