@@ -2,9 +2,9 @@
 
 #include <raylib.h>
 
-#include "core/systems/System.h"
-
 #include "core/components/Position.h"
+#include "core/systems/System.h"
+#include "core/world/World.h"
 
 namespace core::systems
 {
@@ -21,7 +21,7 @@ namespace core::systems
         {
         }
 
-        virtual void render(world::World &world, game::RenderContext &context)
+        void render(world::World &world, game::RenderContext &context) override
         {
             auto view = world.entities().view<components::Position>();
 

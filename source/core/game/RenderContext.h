@@ -66,6 +66,18 @@ namespace core::game
             _terrain.use_and_do([]() {
                 ClearBackground(BLACK);
             });
+
+            _shadows.use_and_do([]() {
+                ClearBackground({});
+            });
+
+            _entities.use_and_do([]() {
+                ClearBackground({});
+            });
+
+            _overlay.use_and_do([]() {
+                ClearBackground({});
+            });
         }
 
         void compose()

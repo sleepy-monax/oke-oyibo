@@ -5,7 +5,6 @@
 #include "core/components/Velocity.h"
 #include "core/debug/FPSCounter.h"
 #include "core/debug/Profiler.h"
-#include "core/game/GameLoop.h"
 #include "core/glue/Glue.h"
 #include "core/systems/DebugRender.h"
 #include "core/systems/Input.h"
@@ -28,7 +27,7 @@ int main()
     world.register_system<core::systems::Input>();
     world.register_system<core::systems::DebugRender>();
     world.register_system<core::systems::Physic>();
-    world.register_system<core::systems::TerrainRender>();
+    // world.register_system<core::systems::TerrainRender>();
 
     world.create_entity()
         .with<Position>(64.0f, 64.0f, 0.0f)
