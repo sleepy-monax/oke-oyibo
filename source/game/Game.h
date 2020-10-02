@@ -47,16 +47,12 @@ namespace game
 
         void render()
         {
+            _render_context.clear();
             _world.render(_render_context);
+            _render_context.compose();
 
-            _render_context.composite().use_and_do([&]() {
-                Rectangle rect{0, 0, _render_context.width() * 1.0f, _render_context.height() * 1.0f};
-                DrawTexturePro(_render_context.terrain().underlying_texture(), rect, rect, (Vector2){0, 0}, 0.0f, WHITE);
-                DrawTexturePro(_render_context.shadows().underlying_texture(), rect, rect, (Vector2){0, 0}, 0.0f, WHITE);
-                DrawTexturePro(_render_context.entities().underlying_texture(), rect, rect, (Vector2){0, 0}, 0.0f, WHITE);
-                DrawTexturePro(_render_context.light().underlying_texture(), rect, rect, (Vector2){0, 0}, 0.0f, WHITE);
-                DrawTexturePro(_render_context.overlay().underlying_texture(), rect, rect, (Vector2){0, 0}, 0.0f, WHITE);
-            });
+            Rectangle rect{0, 0, _render_context.width() * 1.0f, _render_context.height() * 1.0f};
+            DrawTexturePro(_render_context.composite().underlying_texture(), rect, rect, (Vector2){0, 0}, 0.0f, WHITE);
         }
     };
 } // namespace game

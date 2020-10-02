@@ -21,12 +21,14 @@ namespace core::systems
         {
         }
 
-        virtual void render(world::World &world, game::RenderContext &)
+        virtual void render(world::World &world, game::RenderContext &context)
         {
             auto view = world.entities().view<components::Position>();
 
-            view.each([](auto &position) {
-                DrawCircle(position.x, position.y, 4, RED);
+            context.overlay().use_and_do([&]() {
+                view.each([](auto &position) {
+                    DrawCircle(position.x, position.y, 4, RED);
+                });
             });
         }
     };

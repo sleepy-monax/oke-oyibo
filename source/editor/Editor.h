@@ -2,6 +2,9 @@
 
 #include <raylib.h>
 
+#include "core/components/Acceleration.h"
+#include "core/components/Position.h"
+#include "core/components/Velocity.h"
 #include "core/debug/FPSCounter.h"
 #include "core/debug/Inspector.h"
 #include "core/debug/Profiler.h"
@@ -10,9 +13,7 @@
 #include "core/glue/Glue.h"
 #include "core/world/World.h"
 
-#include "core/components/Acceleration.h"
-#include "core/components/Position.h"
-#include "core/components/Velocity.h"
+#include "editor/Panel.h"
 
 namespace editor
 {
@@ -35,6 +36,8 @@ namespace editor
         entt::entity _inspector_selected;
         MM::EntityEditor<entt::entity> _inspector{};
 
+        utils::Vector<utils::OwnPtr<Panel>> _panels;
+
     public:
         Editor(core::world::World &world)
             : _world(world)
@@ -45,6 +48,12 @@ namespace editor
         }
 
         ~Editor() {}
+
+        template <typename TPanel, typename... TArgs>
+        void open(TArgs &&... args)
+        {
+            _panels.push_back(utils::own<TPanel>(*this, std::forward<TArgs>(args)...));
+        }
 
         void run()
         {
@@ -77,19 +86,18 @@ namespace editor
 
             _world.render(_render_context);
 
-            _render_context.composite().use_and_do([&]() {
-                Rectangle rect{0, 0, _render_context.width() * 1.0f, _render_context.height() * 1.0f};
-                DrawTexturePro(_render_context.terrain().underlying_texture(), rect, rect, (Vector2){0, 0}, 0.0f, WHITE);
-                DrawTexturePro(_render_context.shadows().underlying_texture(), rect, rect, (Vector2){0, 0}, 0.0f, WHITE);
-                DrawTexturePro(_render_context.entities().underlying_texture(), rect, rect, (Vector2){0, 0}, 0.0f, WHITE);
-                DrawTexturePro(_render_context.light().underlying_texture(), rect, rect, (Vector2){0, 0}, 0.0f, WHITE);
-                DrawTexturePro(_render_context.overlay().underlying_texture(), rect, rect, (Vector2){0, 0}, 0.0f, WHITE);
-            });
+            _render_context.compose();
         }
 
         void display()
         {
             ImGui::DockSpaceOverViewport();
+
+            _panels.foreach ([](auto &panel) {
+                panel->do_display();
+
+                return utils::Iteration::CONTINUE;
+            });
 
             ImGui::Begin("Viewport");
 

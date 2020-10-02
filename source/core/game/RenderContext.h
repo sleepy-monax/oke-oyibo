@@ -68,6 +68,18 @@ namespace core::game
             });
         }
 
+        void compose()
+        {
+            composite().use_and_do([&]() {
+                Rectangle rect{0, 0, (float)width(), (float)height()};
+                DrawTexturePro(terrain().underlying_texture(), rect, rect, (Vector2){0, 0}, 0.0f, WHITE);
+                DrawTexturePro(shadows().underlying_texture(), rect, rect, (Vector2){0, 0}, 0.0f, WHITE);
+                DrawTexturePro(entities().underlying_texture(), rect, rect, (Vector2){0, 0}, 0.0f, WHITE);
+                DrawTexturePro(light().underlying_texture(), rect, rect, (Vector2){0, 0}, 0.0f, WHITE);
+                DrawTexturePro(overlay().underlying_texture(), rect, rect, (Vector2){0, 0}, 0.0f, WHITE);
+            });
+        }
+
         void display()
         {
             ImGui::Begin("Render Context");
@@ -93,7 +105,7 @@ namespace core::game
             ImGui::Separator();
 
             ImGui::Text("Final Result");
-            _overlay.display(1 / 8.0);
+            _composite.display(1 / 8.0);
             ImGui::Separator();
 
             ImGui::End();
