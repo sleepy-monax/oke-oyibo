@@ -1,6 +1,6 @@
 #pragma once
 
-#include "core/debug/Inspector.h"
+#include "editor/Inspect.h"
 
 namespace core::components
 {
@@ -11,13 +11,12 @@ namespace core::components
         float az;
     };
 
-    template <>
-    void inspect<Acceleration>(entt::registry &registry, entt::entity entity)
-    {
-        auto &c = registry.get<Acceleration>(entity);
-
-        ImGui::DragFloat("x##Acceleration", &c.ax, 0.1f);
-        ImGui::DragFloat("y##Acceleration", &c.ay, 0.1f);
-        ImGui::DragFloat("z##Acceleration", &c.az, 0.1f);
-    }
 } // namespace core::components
+
+template <>
+void inspect<core::components::Acceleration>(core::components::Acceleration &acc)
+{
+    ImGui::DragFloat("x##Acceleration", &acc.ax, 0.1f);
+    ImGui::DragFloat("y##Acceleration", &acc.ay, 0.1f);
+    ImGui::DragFloat("z##Acceleration", &acc.az, 0.1f);
+}

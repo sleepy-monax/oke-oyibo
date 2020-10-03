@@ -3,6 +3,7 @@
 #include <imgui.h>
 #include <string>
 
+#include "core/game/UpdateContext.h"
 #include "core/world/World.h"
 
 namespace editor
@@ -37,6 +38,14 @@ namespace editor
 
             ImGui::End();
             ImGui::End();
+        }
+
+        virtual void update(core::game::UpdateContext &)
+        {
+        }
+
+        virtual void render()
+        {
         }
 
         virtual void display()

@@ -10,7 +10,7 @@
 #include <entt.hpp>
 #include <imgui.h>
 
-#include "core/components/Inspect.h"
+#include "editor/Inspect.h"
 
 #ifndef MM_IEEE_ASSERT
 #define MM_IEEE_ASSERT(x) assert(x)
@@ -120,7 +120,7 @@ namespace MM
         template <class TComponent>
         ComponentInfo &registerComponent(const std::string &name)
         {
-            return registerComponent<TComponent>(name, core::components::inspect<TComponent>);
+            return registerComponent<TComponent>(name, inspect_component<TComponent>);
         }
 
         void renderEditor(Registry &registry, EntityType &e)
@@ -288,6 +288,7 @@ namespace MM
                     static std::set<ComponentTypeID> comp_list;
                     display_entity_list(registry, comp_list);
                 }
+
                 ImGui::EndChild();
 
                 ImGui::SameLine();

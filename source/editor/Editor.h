@@ -36,7 +36,7 @@ namespace editor
         entt::entity _inspector_selected;
         MM::EntityEditor<entt::entity> _inspector{};
 
-        utils::Vector<utils::OwnPtr<Panel>> _panels;
+        utils::Vector<utils::OwnPtr<Panel>> _panels{};
 
     public:
         Editor(core::world::World &world)
@@ -78,6 +78,12 @@ namespace editor
         {
             core::game::UpdateContext context{GetFrameTime(), GetTime()};
             _world.update(context);
+
+            _panels.foreach ([&](auto &panel) {
+                panel->update(context);
+
+                return utils::Iteration::CONTINUE;
+            });
         }
 
         void render()
@@ -85,6 +91,12 @@ namespace editor
             _render_context.clear();
 
             _world.render(_render_context);
+
+            _panels.foreach ([](auto &panel) {
+                panel->render();
+
+                return utils::Iteration::CONTINUE;
+            });
 
             _render_context.compose();
         }
