@@ -13,7 +13,7 @@ namespace core::systems
     {
     private:
     public:
-        DebugRender() : System("Debug Render")
+        DebugRender() : System("DebugRender")
         {
         }
 

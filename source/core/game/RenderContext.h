@@ -87,7 +87,11 @@ namespace core::game
                 DrawTexturePro(terrain().underlying_texture(), rect, rect, (Vector2){0, 0}, 0.0f, WHITE);
                 DrawTexturePro(shadows().underlying_texture(), rect, rect, (Vector2){0, 0}, 0.0f, WHITE);
                 DrawTexturePro(entities().underlying_texture(), rect, rect, (Vector2){0, 0}, 0.0f, WHITE);
+
+                BeginBlendMode(BLEND_MULTIPLIED);
                 DrawTexturePro(light().underlying_texture(), rect, rect, (Vector2){0, 0}, 0.0f, WHITE);
+                EndBlendMode();
+
                 DrawTexturePro(overlay().underlying_texture(), rect, rect, (Vector2){0, 0}, 0.0f, WHITE);
             });
         }
@@ -97,27 +101,27 @@ namespace core::game
             ImGui::Begin("Render Context");
 
             ImGui::Text("Terrain Map");
-            _terrain.display(1 / 8.0);
+            _terrain.display(1 / 6.0);
             ImGui::Separator();
 
             ImGui::Text("Shadow Map");
-            _shadows.display(1 / 8.0);
+            _shadows.display(1 / 6.0);
             ImGui::Separator();
 
             ImGui::Text("Light Map");
-            _light.display(1 / 8.0);
+            _light.display(1 / 6.0);
             ImGui::Separator();
 
             ImGui::Text("Entities Map");
-            _entities.display(1 / 8.0);
+            _entities.display(1 / 6.0);
             ImGui::Separator();
 
             ImGui::Text("Overlay Map");
-            _overlay.display(1 / 8.0);
+            _overlay.display(1 / 6.0);
             ImGui::Separator();
 
             ImGui::Text("Final Result");
-            _composite.display(1 / 8.0);
+            _composite.display(1 / 6.0);
             ImGui::Separator();
 
             ImGui::End();

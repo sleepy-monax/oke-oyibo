@@ -22,7 +22,7 @@ namespace core::systems
                 {
                     for (int y = 0; y < terrain.height(); y++)
                     {
-                        DrawRectangleLines(x, y, 1, 1, RED);
+                        DrawRectangleLines(x, y, 1, 1, GREEN);
                     }
                 }
             });
