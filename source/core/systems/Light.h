@@ -27,7 +27,7 @@ namespace core::systems
             auto view = world.entities().view<components::Position, components::LightSource>();
 
             context.light().use_and_do([&]() {
-                ClearBackground(BLACK);
+                ClearBackground(GRAY);
 
                 BeginBlendMode(BLEND_ADDITIVE);
 
