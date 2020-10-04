@@ -1,5 +1,11 @@
 #pragma once
 
+template <typename TFrom, typename TTo>
+constexpr TTo &sketchy_cast(TFrom &from)
+{
+    return *reinterpret_cast<TTo *>(&from);
+}
+
 #define __unused(__stuff) (void)(__stuff)
 
 #define __clamp(__v, __lower, __upper) (__max(__min((__v), (__upper)), (__lower)))

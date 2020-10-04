@@ -14,7 +14,7 @@ namespace core::components
 } // namespace core::components
 
 template <>
-void inspect<core::components::Position>(core::components::Position &pos)
+inline void inspect<core::components::Position>(core::components::Position &pos)
 {
     ImGui::InputFloat("x##Position", &pos.x);
     ImGui::InputFloat("y##Position", &pos.y);

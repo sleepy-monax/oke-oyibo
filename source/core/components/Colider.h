@@ -14,7 +14,7 @@ namespace core::components
 } // namespace core::components
 
 template <>
-void inspect<core::components::Colider>(core::components::Colider &col)
+inline void inspect<core::components::Colider>(core::components::Colider &col)
 {
     ImGui::InputFloat("offx##Colider", &col.offx);
     ImGui::InputFloat("offy##Colider", &col.offy);

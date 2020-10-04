@@ -6,7 +6,6 @@
 #include "core/components/Position.h"
 #include "core/components/Velocity.h"
 #include "core/debug/FPSCounter.h"
-#include "core/debug/Inspector.h"
 #include "core/debug/Profiler.h"
 #include "core/game/RenderContext.h"
 #include "core/game/UpdateContext.h"
@@ -33,26 +32,27 @@ namespace editor
         core::debug::Profiler render_profiler{"Render"};
         core::debug::Profiler display_profiler{"Display"};
 
-        entt::entity _inspector_selected;
-        MM::EntityEditor<entt::entity> _inspector{};
-
         utils::Vector<utils::OwnPtr<Panel>> _panels{};
 
     public:
+        auto &world() { return _world; }
+        auto &entities() { return _world.entities(); }
+        auto &registry() { return _world.registry(); }
+
         Editor(core::world::World &world)
             : _world(world)
         {
-            _inspector.registerComponent<core::components::Velocity>("Velocity");
-            _inspector.registerComponent<core::components::Position>("Position");
-            _inspector.registerComponent<core::components::Acceleration>("Acceleration");
         }
 
         ~Editor() {}
 
         template <typename TPanel, typename... TArgs>
-        void open(TArgs &&... args)
+        TPanel &open(TArgs &&... args)
         {
-            _panels.push_back(utils::own<TPanel>(*this, std::forward<TArgs>(args)...));
+            auto ptr = utils::own<TPanel>(*this, std::forward<TArgs>(args)...);
+            auto &ref = *ptr;
+            _panels.push_back(ptr);
+            return ref;
         }
 
         void run()
@@ -131,7 +131,6 @@ namespace editor
             display_profiler.display();
             ImGui::End();
 
-            _inspector.renderSimpleCombo(_world.entities(), _inspector_selected);
             _render_context.display();
             _world.display();
         }

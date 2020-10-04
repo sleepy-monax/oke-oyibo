@@ -11,10 +11,14 @@
 #include "core/systems/Physic.h"
 #include "core/systems/TerrainRender.h"
 #include "core/world/World.h"
+
+#include "core/Registry.h"
 #include "editor/Editor.h"
+#include "editor/EntityList.h"
 #include "game/Game.h"
 
 using namespace core::components;
+using namespace core::systems;
 
 int main()
 {
@@ -22,12 +26,24 @@ int main()
 
     core::glue::initialize();
 
-    core::world::World world{256, 256};
+    core::Registry registry{};
 
-    world.register_system<core::systems::Input>();
-    world.register_system<core::systems::DebugRender>();
-    world.register_system<core::systems::Physic>();
-    // world.register_system<core::systems::TerrainRender>();
+    registry.register_system<Input>("Input");
+    registry.register_system<DebugRender>("DebugRender");
+    registry.register_system<Physic>("Physic");
+    registry.register_system<TerrainRender>("TerrainRender");
+
+    registry.register_component<Acceleration>("Acceleration");
+    registry.register_component<Player>("Player");
+    registry.register_component<Position>("Position");
+    registry.register_component<Velocity>("Velocity");
+
+    core::world::World world{registry, 256, 256};
+
+    world.register_system<Input>();
+    world.register_system<DebugRender>();
+    world.register_system<Physic>();
+    world.register_system<core::systems::TerrainRender>();
 
     world.create_entity()
         .with<Position>(64.0f, 64.0f, 0.0f)
@@ -36,6 +52,7 @@ int main()
         .with<Player>();
 
     editor::Editor editor{world};
+    editor.open<editor::EntityList>();
 
     game::Game game{world};
 

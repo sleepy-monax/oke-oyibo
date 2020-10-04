@@ -14,7 +14,7 @@ namespace core::components
 } // namespace core::components
 
 template <>
-void inspect<core::components::Acceleration>(core::components::Acceleration &acc)
+inline void inspect<core::components::Acceleration>(core::components::Acceleration &acc)
 {
     ImGui::DragFloat("x##Acceleration", &acc.ax, 0.1f);
     ImGui::DragFloat("y##Acceleration", &acc.ay, 0.1f);

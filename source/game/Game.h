@@ -3,7 +3,6 @@
 #include <raylib.h>
 
 #include "core/debug/FPSCounter.h"
-#include "core/debug/Inspector.h"
 #include "core/debug/Profiler.h"
 #include "core/game/RenderContext.h"
 #include "core/game/UpdateContext.h"

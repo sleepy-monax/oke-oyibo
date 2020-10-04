@@ -37,7 +37,7 @@ namespace editor
             display();
 
             ImGui::End();
-            ImGui::End();
+            ImGui::PopID();
         }
 
         virtual void update(core::game::UpdateContext &)

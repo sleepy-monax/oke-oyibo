@@ -10,28 +10,31 @@
 #include "utils/OwnPtr.h"
 #include "utils/Vector.h"
 
+namespace core
+{
+    class Registry;
+} // namespace core
+
 namespace core::world
 {
     class World
     {
     private:
+        Registry &_registry;
         Terrain _terrain;
         entt::registry _entities;
         utils::Vector<utils::OwnPtr<systems::System>> _systems;
 
     public:
-        Terrain &terrain()
-        {
-            return _terrain;
-        }
+        auto &terrain() { return _terrain; }
 
-        entt::registry &entities()
-        {
-            return _entities;
-        }
+        auto &entities() { return _entities; }
 
-        World(int width, int height)
-            : _terrain{width, height},
+        auto &registry() { return _registry; }
+
+        World(Registry &registry, int width, int height)
+            : _registry(registry),
+              _terrain{width, height},
               _entities{},
               _systems{}
         {
