@@ -7,6 +7,7 @@
 #include "core/game/UpdateContext.h"
 #include "core/systems/System.h"
 #include "core/world/Terrain.h"
+#include "utils/HashMap.h"
 #include "utils/OwnPtr.h"
 #include "utils/Vector.h"
 
@@ -23,7 +24,7 @@ namespace core::world
         Registry &_registry;
         Terrain _terrain;
         entt::registry _entities;
-        utils::Vector<utils::OwnPtr<systems::System>> _systems;
+        utils::HashMap<entt::id_type, utils::OwnPtr<systems::System>> _systems;
 
     public:
         auto &terrain() { return _terrain; }
@@ -31,6 +32,8 @@ namespace core::world
         auto &entities() { return _entities; }
 
         auto &registry() { return _registry; }
+
+        auto &systems() { return _systems; }
 
         World(Registry &registry, int width, int height)
             : _registry(registry),
@@ -40,12 +43,10 @@ namespace core::world
         {
         }
 
-        ~World() {}
-
         template <typename TSystem, typename... TArgs>
         void register_system(TArgs &&... args)
         {
-            _systems.push_back(utils::own<TSystem>(std::forward<TArgs>(args)...));
+            _systems[entt::type_info<TSystem>::id()] = utils::own<TSystem>(std::forward<TArgs>(args)...);
         }
 
         entity::Builder create_entity()
@@ -55,7 +56,7 @@ namespace core::world
 
         void update(game::UpdateContext &context)
         {
-            _systems.foreach ([&](auto &sys) {
+            _systems.foreach ([&](auto &, auto &sys) {
                 sys->do_update(*this, context);
                 return utils::Iteration::CONTINUE;
             });
@@ -63,16 +64,8 @@ namespace core::world
 
         void render(game::RenderContext &context)
         {
-            _systems.foreach ([&](auto &sys) {
+            _systems.foreach ([&](auto &, auto &sys) {
                 sys->do_render(*this, context);
-                return utils::Iteration::CONTINUE;
-            });
-        }
-
-        void display()
-        {
-            _systems.foreach ([&](auto &sys) {
-                sys->do_display(*this);
                 return utils::Iteration::CONTINUE;
             });
         }

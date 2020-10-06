@@ -2,9 +2,10 @@
 
 #include <string>
 
-#include "core/debug/Profiler.h"
+#include "core/debug/Probe.h"
 #include "core/game/RenderContext.h"
 #include "core/game/UpdateContext.h"
+#include "editor/Inspect.h"
 
 namespace core::world
 {
@@ -16,21 +17,29 @@ namespace core::systems
     class System
     {
     private:
-        bool _enabled = true;
-        bool _visible = true;
-        bool _detached = false;
-
         std::string _name;
 
-        debug::Profiler _update_profiler{"Update"};
-        debug::Profiler _render_profiler{"Render"};
-        debug::Profiler _display_profiler{"Display"};
+        bool _enable = true;
+        bool _visible = true;
 
-        void display_state();
-        void display_profiler();
-        void display_properties(world::World &);
+        debug::Probe _update_probe{"Update"};
+        debug::Probe _render_probe{"Render"};
 
     public:
+        const char *name() { return _name.c_str(); }
+
+        bool enable() { return _enable; }
+
+        void enable(bool enable) { _enable = enable; }
+
+        bool visible() { return _visible; }
+
+        void visible(bool visible) { _visible = visible; }
+
+        debug::Probe &update_probe() { return _update_probe; }
+
+        debug::Probe &render_probe() { return _render_probe; }
+
         System(const char *name) : _name(name + std::string(" System")) {}
 
         virtual ~System() {}
@@ -39,12 +48,15 @@ namespace core::systems
 
         void do_render(world::World &, game::RenderContext &);
 
-        void do_display(world::World &);
-
         virtual void update(world::World &, game::UpdateContext &) {}
 
         virtual void render(world::World &, game::RenderContext &) {}
-
-        virtual void display(world::World &) { ImGui::Text("Nothing to show here."); }
     };
 } // namespace core::systems
+
+template <class TSystem>
+void inspect_system(core::world::World &world, TSystem &system)
+{
+    __unused(world);
+    inspect(system);
+}

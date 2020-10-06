@@ -20,6 +20,9 @@ namespace core::render
         __nonmovable(Target);
 
     public:
+        int width() { return _width; }
+        int height() { return _height; }
+
         Target()
         {
             _width = GetScreenWidth();

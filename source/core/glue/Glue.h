@@ -1,7 +1,11 @@
 #pragma once
 
+#include <cstdint>
+
 namespace core::glue
 {
+    uint64_t current_frame();
+
     void initialize();
 
     void begin_frame();

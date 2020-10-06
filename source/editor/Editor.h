@@ -6,10 +6,11 @@
 #include "core/components/Position.h"
 #include "core/components/Velocity.h"
 #include "core/debug/FPSCounter.h"
-#include "core/debug/Profiler.h"
+#include "core/debug/Probe.h"
 #include "core/game/RenderContext.h"
 #include "core/game/UpdateContext.h"
 #include "core/glue/Glue.h"
+#include "core/glue/ImGuiExtension.h"
 #include "core/world/World.h"
 
 #include "editor/Panel.h"
@@ -27,16 +28,17 @@ namespace editor
 
         core::debug::FPSCounter fps_counter{};
 
-        core::debug::Profiler frame_time_profiler{"Frame Time"};
-        core::debug::Profiler update_profiler{"Update"};
-        core::debug::Profiler render_profiler{"Render"};
-        core::debug::Profiler display_profiler{"Display"};
+        core::debug::Probe frame_time_probe{"Frame Time"};
+        core::debug::Probe update_probe{"Update"};
+        core::debug::Probe render_probe{"Render"};
+        core::debug::Probe display_probe{"Display"};
 
         utils::Vector<utils::OwnPtr<Panel>> _panels{};
 
     public:
         auto &world() { return _world; }
         auto &entities() { return _world.entities(); }
+        auto &system() { return _world.systems(); }
         auto &registry() { return _world.registry(); }
 
         Editor(core::world::World &world)
@@ -57,18 +59,18 @@ namespace editor
 
         void run()
         {
-            frame_time_profiler.mesure([&]() {
+            frame_time_probe.mesure_time([&]() {
                 _render_context.resize_to_fit(_view_port_width, _view_port_height);
 
-                update_profiler.mesure([&]() {
+                update_probe.mesure_time([&]() {
                     update();
                 });
 
-                render_profiler.mesure([&]() {
+                render_probe.mesure_time([&]() {
                     render();
                 });
 
-                display_profiler.mesure([&]() {
+                display_probe.mesure_time([&]() {
                     display();
                 });
             });
@@ -111,7 +113,9 @@ namespace editor
                 return utils::Iteration::CONTINUE;
             });
 
-            ImGui::Begin("Viewport");
+            ImGui::Begin("Viewport", nullptr, ImGuiWindowFlags_NoScrollbar | ImGuiWindowFlags_NoScrollWithMouse);
+            ImGui::SetScrollX(0);
+            ImGui::SetScrollY(0);
 
             ImGui::GetWindowSize();
             auto size = ImGui::GetWindowSize();
@@ -119,20 +123,19 @@ namespace editor
             _view_port_width = size.x;
             _view_port_height = size.y;
 
-            _render_context.composite().display(1);
+            ImGui::Viewport(reinterpret_cast<void *>(_render_context.composite().underlying_texture().id), ImVec2(_render_context.composite().width(), _render_context.composite().height()));
 
             ImGui::End();
 
             ImGui::Begin("Profiler");
-            fps_counter.mesure_and_display();
-            frame_time_profiler.display();
-            update_profiler.display();
-            render_profiler.display();
-            display_profiler.display();
+            inspect(fps_counter);
+            inspect(frame_time_probe);
+            inspect(update_probe);
+            inspect(render_probe);
+            inspect(display_probe);
             ImGui::End();
 
             _render_context.display();
-            _world.display();
         }
     };
 } // namespace editor

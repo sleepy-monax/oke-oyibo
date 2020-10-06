@@ -5,6 +5,7 @@
 #include "core/components/Velocity.h"
 #include "core/systems/System.h"
 #include "core/world/World.h"
+#include "editor/Inspect.h"
 
 namespace core::systems
 {
@@ -46,10 +47,13 @@ namespace core::systems
             });
         }
 
-        void display(world::World &) override
-        {
-            ImGui::SliderFloat("Air Friction", &_air_friction, 0, 1, "Friction %f", 0);
-            ImGui::SliderFloat("Time step", &_time_scale, 0, 1, "%fsec", 0);
-        }
+        friend void inspect<core::systems::Physic>(core::systems::Physic &physic);
     };
 } // namespace core::systems
+
+template <>
+void inspect<core::systems::Physic>(core::systems::Physic &physic)
+{
+    ImGui::SliderFloat("Air Friction", &physic._air_friction, 0, 1, "Friction %f", 0);
+    ImGui::SliderFloat("Time step", &physic._time_scale, 0, 1, "%fsec", 0);
+}

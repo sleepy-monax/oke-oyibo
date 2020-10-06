@@ -6,8 +6,8 @@
 
 #include "utils/OwnPtr.h"
 
+#include "core/components/Component.h"
 #include "core/systems/System.h"
-#include "editor/Inspect.h"
 
 namespace core::world
 {
@@ -56,6 +56,11 @@ namespace core
             {
                 callback(id, info);
             }
+        }
+
+        SystemRegistryEntry &system_info(entt::id_type id)
+        {
+            return _systems[id];
         }
 
         template <typename TComponent>

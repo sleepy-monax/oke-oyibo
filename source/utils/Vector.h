@@ -204,7 +204,7 @@ namespace utils
             }
         }
 
-        void insert(size_t index, T value)
+        T &insert(size_t index, T value)
         {
             assert(index <= _count);
 
@@ -216,6 +216,8 @@ namespace utils
             }
 
             new (&_storage[index]) T(std::move(value));
+
+            return _storage[index];
         }
 
         void insert_sorted(T value)
@@ -304,19 +306,19 @@ namespace utils
         {
             assert(index < _count);
 
-            T copy = _storage[index];
+            T copy = std::move(_storage[index]);
             remove_index(index);
             return copy;
         }
 
-        void push(T value)
+        T &push(T value)
         {
-            insert(0, value);
+            return insert(0, value);
         }
 
-        void push_back(T value)
+        T &push_back(T value)
         {
-            insert(_count, value);
+            return insert(_count, value);
         }
 
         void push_back_many(Vector<T> &values)

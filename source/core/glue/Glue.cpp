@@ -11,6 +11,13 @@
 
 namespace core::glue
 {
+    static uint64_t _current_frame = 0;
+
+    uint64_t current_frame()
+    {
+        return _current_frame;
+    }
+
     void load_imgui_style()
     {
         ImGuiStyle &style = ImGui::GetStyle();
@@ -90,6 +97,8 @@ namespace core::glue
 
     void begin_frame()
     {
+        _current_frame++;
+
         BeginDrawing();
         ClearBackground(BLUE);
 

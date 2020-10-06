@@ -4,8 +4,6 @@
 #include "core/components/Acceleration.h"
 #include "core/components/LightSource.h"
 #include "core/components/Velocity.h"
-#include "core/debug/FPSCounter.h"
-#include "core/debug/Profiler.h"
 #include "core/glue/Glue.h"
 #include "core/systems/DebugRender.h"
 #include "core/systems/Input.h"
@@ -17,6 +15,7 @@
 #include "core/Registry.h"
 #include "editor/Editor.h"
 #include "editor/EntityList.h"
+#include "editor/SystemList.h"
 #include "game/Game.h"
 
 using namespace core::components;
@@ -58,6 +57,7 @@ int main()
 
     editor::Editor editor{world};
     editor.open<editor::EntityList>();
+    editor.open<editor::SystemList>();
 
     game::Game game{world};
 
@@ -69,7 +69,6 @@ int main()
         }
 
         core::glue::begin_frame();
-        core::debug::Profiler::new_frame();
 
         if (debugging)
         {
