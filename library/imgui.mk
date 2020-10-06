@@ -5,12 +5,12 @@ INCLUDES+= \
 	-Ilibrary/imgui/examples \
 	-Ilibrary/raylib/src/external/glfw/include
 
-OBJECTS+= \
-	library/imgui/examples/imgui_impl_glfw.o \
-	library/imgui/examples/imgui_impl_opengl3.o \
-	library/imgui/imgui.o \
-	library/imgui/imgui_draw.o \
-	library/imgui/imgui_widgets.o \
-	library/imgui/imgui_demo.o
+SOURCES+= \
+	library/imgui/examples/imgui_impl_glfw.cpp \
+	library/imgui/examples/imgui_impl_opengl3.cpp \
+	library/imgui/imgui.cpp \
+	library/imgui/imgui_draw.cpp \
+	library/imgui/imgui_widgets.cpp \
+	library/imgui/imgui_demo.cpp
 
 LDFLAGS+=

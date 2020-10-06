@@ -59,6 +59,8 @@ namespace editor
 
         void run()
         {
+            fps_counter.mesure_fps();
+
             frame_time_probe.mesure_time([&]() {
                 _render_context.resize_to_fit(_view_port_width, _view_port_height);
 

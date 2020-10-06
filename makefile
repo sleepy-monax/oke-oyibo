@@ -1,39 +1,52 @@
 .DEFAULT_GOAL := all
 
+TARGET?=debug
+
+BUILD_DIRCETORY=build/$(TARGET)
+
 PROJECT = oke-oyibo
 SOURCES = $(wildcard source/*.cpp) \
 		  $(wildcard source/*/*.cpp) \
 		  $(wildcard source/*/*/*.cpp) \
 		  $(wildcard library/*.cpp)
-OBJECTS = $(SOURCES:.cpp=.o)
+
+OBJECTS = $(patsubst %.cpp, $(BUILD_DIRCETORY)/%.o, $(SOURCES))
+
+GUARD=@mkdir -p $(@D)
 
 LDFLAGS = -lm
-CXXFLAGS = -g \
-		 -std=c++17 \
-		 -MD \
-		 -Wall \
-		 -Wextra  \
-		 -Werror \
-		 -fsanitize=address \
-		 -fsanitize=undefined \
-		 -I. \
-		 -Isource/ \
-		 $(INCLUDES) \
-		 $(DEFINES) \
+CXXFLAGS = \
+	-std=c++17 \
+	-MD \
+	-Wall \
+	-Wextra  \
+	-Werror \
+	-I. \
+	-Isource/ \
+	$(INCLUDES) \
+	$(DEFINES) \
 
 include library/*.mk
+include config/$(TARGET).mk
 
-$(PROJECT).out: $(OBJECTS)
-	$(CXX) -fsanitize=address -fsanitize=undefined -o $@ $^ $(LIBRARIES) $(LDFLAGS)
+$(BUILD_DIRCETORY)/$(PROJECT).out: $(OBJECTS)
+	$(GUARD)
+	@echo [LD] $@
+	@$(CXX) $(LDFLAGS) -o $@ $^ $(LIBRARIES)
+
+$(BUILD_DIRCETORY)/%.o: %.cpp
+	$(GUARD)
+	@echo [CXX] $@
+	@$(CXX) $(CXXFLAGS) -c -o $@ $<
 
 .PHONY: all clean test
 
-all: $(LIBRARIES) $(PROJECT).out
+all: $(LIBRARIES) $(BUILD_DIRCETORY)/$(PROJECT).out
 
 clean:
-	rm -f $(OBJECTS) $(SOURCES:.cpp=.d) $(PROJECT).out
+	rm -f $(OBJECTS) $(SOURCES:.cpp=.d) $(BUILD_DIRCETORY)/$(PROJECT).out
 
-debug: $(LIBRARIES) $(PROJECT).out
-	./$(PROJECT).out
+run: $(LIBRARIES) $(BUILD_DIRCETORY)/$(PROJECT).out
+	$(BUILD_DIRCETORY)/$(PROJECT).out
 
--include $(SOURCES:.cpp=.d)
+-include $(OBJECTS:.o=.d)
