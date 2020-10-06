@@ -44,7 +44,7 @@ $(BUILD_DIRCETORY)/%.o: %.cpp
 all: $(LIBRARIES) $(BUILD_DIRCETORY)/$(PROJECT).out
 
 clean:
-	rm -f $(OBJECTS) $(SOURCES:.cpp=.d) $(BUILD_DIRCETORY)/$(PROJECT).out
+	rm -rf $(BUILD_DIRCETORY)
 
 run: $(LIBRARIES) $(BUILD_DIRCETORY)/$(PROJECT).out
 	$(BUILD_DIRCETORY)/$(PROJECT).out
