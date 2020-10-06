@@ -1,38 +1,38 @@
 #pragma once
 
 #include <functional>
-#include <map>
 #include <string>
 
+#include "utils/HashMap.h"
 #include "utils/OwnPtr.h"
 
-#include "core/components/Component.h"
-#include "core/systems/System.h"
+#include "base/components/Component.h"
+#include "core/System.h"
 
-namespace core::world
+namespace core
 {
     class World;
-} // namespace core::world
+} // namespace core
 
 namespace core
 {
     struct SystemRegistryEntry
     {
         std::string name;
-        std::function<void(core::world::World &, core::systems::System &)> inspect;
+        std::function<void(core::World &, core::System &)> inspect;
     };
 
     struct ComponentRegistryEntry
     {
         std::string name;
-        std::function<void(core::world::World &, entt::entity)> inspect;
+        std::function<void(core::World &, entt::entity)> inspect;
     };
 
     class Registry
     {
     private:
-        std::map<entt::id_type, SystemRegistryEntry> _systems{};
-        std::map<entt::id_type, ComponentRegistryEntry> _components{};
+        utils::HashMap<entt::id_type, SystemRegistryEntry> _systems{};
+        utils::HashMap<entt::id_type, ComponentRegistryEntry> _components{};
 
     public:
         Registry() {}
@@ -44,18 +44,15 @@ namespace core
         {
             auto id = entt::type_info<TSystem>::id();
 
-            auto inspect_wrapper = [](core::world::World &w, core::systems::System &s) { inspect_system<TSystem>(w, sketchy_cast<core::systems::System, TSystem>(s)); };
+            auto inspect_wrapper = [](core::World &w, core::System &s) { inspect_system<TSystem>(w, sketchy_cast<core::System, TSystem>(s)); };
 
-            _systems.insert_or_assign(id, SystemRegistryEntry{name, inspect_wrapper});
+            _systems[id] = SystemRegistryEntry{name, inspect_wrapper};
         }
 
         template <typename TCallback>
         void foreach_system(TCallback callback)
         {
-            for (auto &[id, info] : _systems)
-            {
-                callback(id, info);
-            }
+            _systems.foreach (callback);
         }
 
         SystemRegistryEntry &system_info(entt::id_type id)
@@ -68,18 +65,15 @@ namespace core
         {
             auto id = entt::type_info<TComponent>::id();
 
-            auto inspect_wrapper = [](core::world::World &w, entt::entity e) { inspect_component<TComponent>(w, e); };
+            auto inspect_wrapper = [](core::World &w, entt::entity e) { inspect_component<TComponent>(w, e); };
 
-            _components.insert_or_assign(id, ComponentRegistryEntry{name, inspect_wrapper});
+            _components[id] = ComponentRegistryEntry{name, inspect_wrapper};
         }
 
         template <typename TCallback>
         void foreach_components(TCallback callback)
         {
-            for (auto &[id, info] : _components)
-            {
-                callback(id, info);
-            }
+            _components.foreach (callback);
         }
     };
 } // namespace core

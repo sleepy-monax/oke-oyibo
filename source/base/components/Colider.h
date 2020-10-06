@@ -2,7 +2,7 @@
 
 #include "editor/Inspect.h"
 
-namespace core::components
+namespace base
 {
     struct Colider
     {
@@ -11,10 +11,10 @@ namespace core::components
         float w;
         float h;
     };
-} // namespace core::components
+} // namespace base
 
 template <>
-inline void inspect<core::components::Colider>(core::components::Colider &col)
+inline void inspect<base::Colider>(base::Colider &col)
 {
     ImGui::InputFloat("offx##Colider", &col.offx);
     ImGui::InputFloat("offy##Colider", &col.offy);

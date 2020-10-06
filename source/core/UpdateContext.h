@@ -1,6 +1,6 @@
 #pragma once
 
-namespace core::game
+namespace core
 {
     class UpdateContext
     {
@@ -21,4 +21,4 @@ namespace core::game
         {
         }
     };
-} // namespace core::game
+} // namespace core

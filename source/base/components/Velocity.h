@@ -2,7 +2,7 @@
 
 #include "editor/Inspect.h"
 
-namespace core::components
+namespace base
 {
     struct Velocity
     {
@@ -11,10 +11,10 @@ namespace core::components
         float vz;
     };
 
-} // namespace core::components
+} // namespace base
 
 template <>
-inline void inspect<core::components::Velocity>(core::components::Velocity &vel)
+inline void inspect<base::Velocity>(base::Velocity &vel)
 {
     ImGui::DragFloat("x##Velocity", &vel.vx, 0.1f);
     ImGui::DragFloat("y##Velocity", &vel.vy, 0.1f);

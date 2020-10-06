@@ -2,14 +2,14 @@
 
 #include <raylib.h>
 
-#include "core/components/Position.h"
-#include "core/systems/System.h"
-#include "core/world/World.h"
+#include "base/components/Position.h"
+#include "core/System.h"
+#include "core/World.h"
 
-namespace core::systems
+namespace base
 {
 
-    class DebugRender : public System
+    class DebugRender : public core::System
     {
     private:
     public:
@@ -21,9 +21,9 @@ namespace core::systems
         {
         }
 
-        void render(world::World &world, game::RenderContext &context) override
+        void render(core::World &world, core::RenderContext &context) override
         {
-            auto view = world.entities().view<components::Position>();
+            auto view = world.entities().view<base::Position>();
 
             context.overlay().use_and_do([&]() {
                 view.each([](auto &position) {
@@ -33,4 +33,4 @@ namespace core::systems
         }
     };
 
-} // namespace core::systems
+} // namespace base

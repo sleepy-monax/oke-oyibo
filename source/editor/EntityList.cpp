@@ -48,6 +48,8 @@ namespace editor
                 {
                     _filters.emplace(id);
                 }
+
+                return utils::Iteration::CONTINUE;
             });
 
             ImGui::Unindent();

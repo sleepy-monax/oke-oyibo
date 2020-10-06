@@ -2,16 +2,16 @@
 
 #include <raylib.h>
 
-#include "core/components/Acceleration.h"
-#include "core/components/Position.h"
-#include "core/components/Velocity.h"
+#include "base/components/Acceleration.h"
+#include "base/components/Position.h"
+#include "base/components/Velocity.h"
+#include "core/RenderContext.h"
+#include "core/UpdateContext.h"
+#include "core/World.h"
 #include "core/debug/FPSCounter.h"
 #include "core/debug/Probe.h"
-#include "core/game/RenderContext.h"
-#include "core/game/UpdateContext.h"
 #include "core/glue/Glue.h"
 #include "core/glue/ImGuiExtension.h"
-#include "core/world/World.h"
 
 #include "editor/Panel.h"
 
@@ -23,8 +23,8 @@ namespace editor
         int _view_port_width = 128;
         int _view_port_height = 128;
 
-        core::world::World &_world;
-        core::game::RenderContext _render_context{};
+        core::World &_world;
+        core::RenderContext _render_context{};
 
         core::debug::FPSCounter fps_counter{};
 
@@ -41,7 +41,7 @@ namespace editor
         auto &system() { return _world.systems(); }
         auto &registry() { return _world.registry(); }
 
-        Editor(core::world::World &world)
+        Editor(core::World &world)
             : _world(world)
         {
         }
@@ -78,7 +78,7 @@ namespace editor
 
         void update()
         {
-            core::game::UpdateContext context{GetFrameTime(), GetTime()};
+            core::UpdateContext context{GetFrameTime(), GetTime()};
             _world.update(context);
 
             _panels.foreach ([&](auto &panel) {

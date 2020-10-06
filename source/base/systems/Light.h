@@ -2,15 +2,15 @@
 
 #include <raylib.h>
 
-#include "core/components/LightSource.h"
-#include "core/components/Position.h"
-#include "core/systems/System.h"
-#include "core/world/World.h"
+#include "base/components/LightSource.h"
+#include "base/components/Position.h"
+#include "core/System.h"
+#include "core/World.h"
 
-namespace core::systems
+namespace base
 {
 
-    class Light : public System
+    class Light : public core::System
     {
     private:
     public:
@@ -18,13 +18,9 @@ namespace core::systems
         {
         }
 
-        ~Light() override
+        void render(core::World &world, core::RenderContext &context) override
         {
-        }
-
-        void render(world::World &world, game::RenderContext &context) override
-        {
-            auto view = world.entities().view<components::Position, components::LightSource>();
+            auto view = world.entities().view<Position, LightSource>();
 
             context.light().use_and_do([&]() {
                 ClearBackground(GRAY);
@@ -40,4 +36,4 @@ namespace core::systems
         }
     };
 
-} // namespace core::systems
+} // namespace base

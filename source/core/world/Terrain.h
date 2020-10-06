@@ -2,7 +2,7 @@
 
 #include "core/world/Tile.h"
 
-namespace core::world
+namespace core
 {
     class Terrain
     {
@@ -29,4 +29,4 @@ namespace core::world
             delete[] _tiles;
         }
     };
-} // namespace core::world
+} // namespace core

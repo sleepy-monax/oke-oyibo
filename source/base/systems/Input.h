@@ -2,14 +2,14 @@
 
 #include <raylib.h>
 
-#include "core/components/Acceleration.h"
-#include "core/components/Player.h"
-#include "core/systems/System.h"
-#include "core/world/World.h"
+#include "base/components/Acceleration.h"
+#include "base/components/Player.h"
+#include "core/System.h"
+#include "core/World.h"
 
-namespace core::systems
+namespace base
 {
-    class Input : public System
+    class Input : public core::System
     {
     private:
     public:
@@ -21,11 +21,9 @@ namespace core::systems
         {
         }
 
-        void update(
-            world::World &world,
-            game::UpdateContext &) override
+        void update(core::World &world, core::UpdateContext &) override
         {
-            auto view = world.entities().view<components::Player, components::Acceleration>();
+            auto view = world.entities().view<Player, Acceleration>();
 
             view.each([](auto &player, auto &acceleration) {
                 if (player.player_index == 0)
@@ -53,4 +51,4 @@ namespace core::systems
             });
         }
     };
-} // namespace core::systems
+} // namespace base

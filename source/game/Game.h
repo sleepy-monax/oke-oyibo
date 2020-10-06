@@ -1,25 +1,25 @@
 #pragma once
 
-#include "core/game/RenderContext.h"
-#include "core/game/UpdateContext.h"
+#include "core/RenderContext.h"
+#include "core/UpdateContext.h"
+#include "core/World.h"
 #include "core/glue/Glue.h"
-#include "core/world/World.h"
 #include <raylib.h>
 
-#include "core/components/Acceleration.h"
-#include "core/components/Position.h"
-#include "core/components/Velocity.h"
+#include "base/components/Acceleration.h"
+#include "base/components/Position.h"
+#include "base/components/Velocity.h"
 
 namespace game
 {
     class Game
     {
     private:
-        core::world::World &_world;
-        core::game::RenderContext _render_context{};
+        core::World &_world;
+        core::RenderContext _render_context{};
 
     public:
-        Game(core::world::World &world)
+        Game(core::World &world)
             : _world(world)
         {
         }
@@ -37,7 +37,7 @@ namespace game
 
         void update()
         {
-            core::game::UpdateContext context{GetFrameTime(), GetTime()};
+            core::UpdateContext context{GetFrameTime(), GetTime()};
             _world.update(context);
         }
 

@@ -2,10 +2,10 @@
 
 #include <entt.hpp>
 
+#include "core/RenderContext.h"
+#include "core/System.h"
+#include "core/UpdateContext.h"
 #include "core/entity/Builder.h"
-#include "core/game/RenderContext.h"
-#include "core/game/UpdateContext.h"
-#include "core/systems/System.h"
 #include "core/world/Terrain.h"
 #include "utils/HashMap.h"
 #include "utils/OwnPtr.h"
@@ -16,7 +16,7 @@ namespace core
     class Registry;
 } // namespace core
 
-namespace core::world
+namespace core
 {
     class World
     {
@@ -24,7 +24,7 @@ namespace core::world
         Registry &_registry;
         Terrain _terrain;
         entt::registry _entities;
-        utils::HashMap<entt::id_type, utils::OwnPtr<systems::System>> _systems;
+        utils::HashMap<entt::id_type, utils::OwnPtr<System>> _systems;
 
     public:
         auto &terrain() { return _terrain; }
@@ -54,7 +54,7 @@ namespace core::world
             return entity::Builder{entities()};
         }
 
-        void update(game::UpdateContext &context)
+        void update(UpdateContext &context)
         {
             _systems.foreach ([&](auto &, auto &sys) {
                 sys->do_update(*this, context);
@@ -62,7 +62,7 @@ namespace core::world
             });
         }
 
-        void render(game::RenderContext &context)
+        void render(RenderContext &context)
         {
             _systems.foreach ([&](auto &, auto &sys) {
                 sys->do_render(*this, context);
@@ -70,4 +70,4 @@ namespace core::world
             });
         }
     };
-} // namespace core::world
+} // namespace core

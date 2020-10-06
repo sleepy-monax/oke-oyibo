@@ -2,9 +2,9 @@
 
 #include <imgui.h>
 
-#include "core/render/Target.h"
+#include "core/RenderTarget.h"
 
-namespace core::game
+namespace core
 {
     class RenderContext
     {
@@ -12,24 +12,25 @@ namespace core::game
         int _width = 0;
         int _height = 0;
 
-        render::Target _terrain{};
-        render::Target _shadows{};
-        render::Target _light{};
-        render::Target _entities{};
-        render::Target _overlay{};
+        RenderTarget _terrain{};
+        RenderTarget _shadows{};
+        RenderTarget _light{};
+        RenderTarget _entities{};
+        RenderTarget _overlay{};
 
-        render::Target _composite{};
+        RenderTarget _composite{};
 
     public:
         int width() { return _width; }
         int height() { return _height; }
 
-        render::Target &terrain() { return _terrain; }
-        render::Target &shadows() { return _shadows; }
-        render::Target &light() { return _light; }
-        render::Target &entities() { return _entities; }
-        render::Target &overlay() { return _overlay; }
-        render::Target &composite() { return _composite; }
+        RenderTarget &terrain() { return _terrain; }
+        RenderTarget &shadows() { return _shadows; }
+        RenderTarget &light() { return _light; }
+        RenderTarget &entities() { return _entities; }
+        RenderTarget &overlay() { return _overlay; }
+
+        RenderTarget &composite() { return _composite; }
 
         RenderContext()
         {
@@ -127,4 +128,4 @@ namespace core::game
             ImGui::End();
         }
     };
-} // namespace core::game
+} // namespace core

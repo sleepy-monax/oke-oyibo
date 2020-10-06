@@ -2,17 +2,17 @@
 
 #include <string>
 
+#include "core/RenderContext.h"
+#include "core/UpdateContext.h"
 #include "core/debug/Probe.h"
-#include "core/game/RenderContext.h"
-#include "core/game/UpdateContext.h"
 #include "editor/Inspect.h"
 
-namespace core::world
+namespace core
 {
     class World;
-} // namespace core::world
+} // namespace core
 
-namespace core::systems
+namespace core
 {
     class System
     {
@@ -44,18 +44,18 @@ namespace core::systems
 
         virtual ~System() {}
 
-        void do_update(world::World &, game::UpdateContext &);
+        void do_update(World &, UpdateContext &);
 
-        void do_render(world::World &, game::RenderContext &);
+        void do_render(World &, RenderContext &);
 
-        virtual void update(world::World &, game::UpdateContext &) {}
+        virtual void update(World &, UpdateContext &) {}
 
-        virtual void render(world::World &, game::RenderContext &) {}
+        virtual void render(World &, RenderContext &) {}
     };
-} // namespace core::systems
+} // namespace core
 
 template <class TSystem>
-void inspect_system(core::world::World &world, TSystem &system)
+void inspect_system(core::World &world, TSystem &system)
 {
     __unused(world);
     inspect(system);

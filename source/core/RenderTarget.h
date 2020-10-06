@@ -6,9 +6,9 @@
 #include "utils/Logger.h"
 #include "utils/Macros.h"
 
-namespace core::render
+namespace core
 {
-    class Target
+    class RenderTarget
     {
     private:
         int _width;
@@ -16,14 +16,14 @@ namespace core::render
         RenderTexture2D _texture;
 
         // No point of creating copies of this object.
-        __noncopyable(Target);
-        __nonmovable(Target);
+        __noncopyable(RenderTarget);
+        __nonmovable(RenderTarget);
 
     public:
         int width() { return _width; }
         int height() { return _height; }
 
-        Target()
+        RenderTarget()
         {
             _width = GetScreenWidth();
             _height = GetScreenHeight();
@@ -33,7 +33,7 @@ namespace core::render
             linfo("Created render target of size=%dx%d", _width, _height);
         }
 
-        ~Target()
+        ~RenderTarget()
         {
             UnloadRenderTexture(_texture);
         }
@@ -78,4 +78,4 @@ namespace core::render
             return _texture;
         }
     };
-} // namespace core::render
+} // namespace core

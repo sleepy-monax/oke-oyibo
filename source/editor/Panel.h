@@ -3,8 +3,8 @@
 #include <imgui.h>
 #include <string>
 
-#include "core/game/UpdateContext.h"
-#include "core/world/World.h"
+#include "core/UpdateContext.h"
+#include "core/World.h"
 
 namespace editor
 {
@@ -40,7 +40,7 @@ namespace editor
             ImGui::PopID();
         }
 
-        virtual void update(core::game::UpdateContext &)
+        virtual void update(core::UpdateContext &)
         {
         }
 

@@ -1,15 +1,15 @@
 #pragma once
 
-#include "core/components/Acceleration.h"
-#include "core/components/Position.h"
-#include "core/components/Velocity.h"
-#include "core/systems/System.h"
-#include "core/world/World.h"
+#include "base/components/Acceleration.h"
+#include "base/components/Position.h"
+#include "base/components/Velocity.h"
+#include "core/System.h"
+#include "core/World.h"
 #include "editor/Inspect.h"
 
-namespace core::systems
+namespace base
 {
-    class Physic : public System
+    class Physic : public core::System
     {
     private:
         float _air_friction = 0.9;
@@ -24,13 +24,9 @@ namespace core::systems
         {
         }
 
-        void update(
-            world::World &world,
-            game::UpdateContext &context) override
+        void update(core::World &world, core::UpdateContext &context) override
         {
-            __unused(context);
-
-            auto view = world.entities().view<components::Acceleration, components::Velocity, components::Position>();
+            auto view = world.entities().view<Acceleration, Velocity, Position>();
 
             view.each([&](auto &acceleration, auto &velocity, auto &position) {
                 velocity.vx += acceleration.ax * (context.elapsed_time() / _time_scale);
@@ -47,12 +43,12 @@ namespace core::systems
             });
         }
 
-        friend void inspect<core::systems::Physic>(core::systems::Physic &physic);
+        friend void inspect<base::Physic>(base::Physic &physic);
     };
-} // namespace core::systems
+} // namespace base
 
 template <>
-void inspect<core::systems::Physic>(core::systems::Physic &physic)
+void inspect<base::Physic>(base::Physic &physic)
 {
     ImGui::SliderFloat("Air Friction", &physic._air_friction, 0, 1, "Friction %f", 0);
     ImGui::SliderFloat("Time step", &physic._time_scale, 0, 1, "%fsec", 0);

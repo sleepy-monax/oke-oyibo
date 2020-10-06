@@ -2,11 +2,11 @@
 
 #include <string>
 
-#include "core/game/RenderContext.h"
+#include "core/RenderContext.h"
 #include "core/input/Controller.h"
 #include "utils/OwnPtr.h"
 
-namespace core::game
+namespace core
 {
     class Player
     {
@@ -24,4 +24,4 @@ namespace core::game
         {
         }
     };
-} // namespace core::game
+} // namespace core

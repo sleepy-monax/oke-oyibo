@@ -1,16 +1,16 @@
 #include <imgui.h>
 #include <raylib.h>
 
-#include "core/components/Acceleration.h"
-#include "core/components/LightSource.h"
-#include "core/components/Velocity.h"
+#include "base/components/Acceleration.h"
+#include "base/components/LightSource.h"
+#include "base/components/Velocity.h"
+#include "base/systems/DebugRender.h"
+#include "base/systems/Input.h"
+#include "base/systems/Light.h"
+#include "base/systems/Physic.h"
+#include "base/systems/TerrainRender.h"
+#include "core/World.h"
 #include "core/glue/Glue.h"
-#include "core/systems/DebugRender.h"
-#include "core/systems/Input.h"
-#include "core/systems/Light.h"
-#include "core/systems/Physic.h"
-#include "core/systems/TerrainRender.h"
-#include "core/world/World.h"
 
 #include "core/Registry.h"
 #include "editor/Editor.h"
@@ -18,8 +18,8 @@
 #include "editor/SystemList.h"
 #include "game/Game.h"
 
-using namespace core::components;
-using namespace core::systems;
+using namespace base;
+using namespace base;
 
 int main()
 {
@@ -40,7 +40,7 @@ int main()
     registry.register_component<Velocity>("Velocity");
     registry.register_component<LightSource>("LightSource");
 
-    core::world::World world{registry, 256, 256};
+    core::World world{registry, 256, 256};
 
     world.register_system<Input>();
     world.register_system<DebugRender>();

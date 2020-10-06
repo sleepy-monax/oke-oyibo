@@ -6,17 +6,17 @@
 #include "core/glue/ImGuiExtension.h"
 #include "editor/Inspect.h"
 
-namespace core::components
+namespace base
 {
     struct LightSource
     {
         float radius;
         Color color = WHITE;
     };
-} // namespace core::components
+} // namespace base
 
 template <>
-inline void inspect<core::components::LightSource>(core::components::LightSource &light)
+inline void inspect<base::LightSource>(base::LightSource &light)
 {
     ImGui::InputFloat("radius##LightSource", &light.radius);
     ImGui::SliderUint8("red##LightSource", &light.color.r, 0, 255);

@@ -2,16 +2,16 @@
 
 #include "editor/Inspect.h"
 
-namespace core::components
+namespace base
 {
     struct Player
     {
         int player_index;
     };
-} // namespace core::components
+} // namespace base
 
 template <>
-inline void inspect<core::components::Player>(core::components::Player &pla)
+inline void inspect<base::Player>(base::Player &pla)
 {
     ImGui::InputInt("player##Player", &pla.player_index);
 }

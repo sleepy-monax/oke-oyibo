@@ -1,8 +1,8 @@
-#include "core/systems/System.h"
+#include "core/System.h"
 
-namespace core::systems
+namespace core
 {
-    void System::do_update(world::World &world, game::UpdateContext &context)
+    void System::do_update(World &world, UpdateContext &context)
     {
         _update_probe.mesure_time([&]() {
             if (_enable)
@@ -12,7 +12,7 @@ namespace core::systems
         });
     }
 
-    void System::do_render(world::World &world, game::RenderContext &context)
+    void System::do_render(World &world, RenderContext &context)
     {
         _render_probe.mesure_time([&]() {
             if (_visible)
@@ -21,4 +21,4 @@ namespace core::systems
             }
         });
     }
-} // namespace core::systems
+} // namespace core

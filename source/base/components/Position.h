@@ -2,7 +2,7 @@
 
 #include "editor/Inspect.h"
 
-namespace core::components
+namespace base
 {
     struct Position
     {
@@ -11,10 +11,10 @@ namespace core::components
         float z;
     };
 
-} // namespace core::components
+} // namespace base
 
 template <>
-inline void inspect<core::components::Position>(core::components::Position &pos)
+inline void inspect<base::Position>(base::Position &pos)
 {
     ImGui::InputFloat("x##Position", &pos.x);
     ImGui::InputFloat("y##Position", &pos.y);

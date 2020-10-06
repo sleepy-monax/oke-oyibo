@@ -25,6 +25,8 @@ namespace editor
                     ImGui::Unindent();
                 }
             }
+
+            return utils::Iteration::CONTINUE;
         });
     }
 } // namespace editor

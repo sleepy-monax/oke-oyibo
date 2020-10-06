@@ -1,6 +1,6 @@
 #pragma once
 
-namespace core::world
+namespace core
 {
     class Tile
     {
@@ -14,4 +14,4 @@ namespace core::world
         {
         }
     };
-} // namespace core::world
+} // namespace core

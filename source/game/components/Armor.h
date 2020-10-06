@@ -1,13 +1,6 @@
 #pragma once
 
-#include "game/inventory/Item.h"
-
-namespace components
+namespace game
 {
-    struct Armor
-    {
-        Item helmet;
-        Item body;
-    };
 
-} // namespace component
+} // namespace game
