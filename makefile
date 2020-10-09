@@ -2,15 +2,16 @@
 
 TARGET?=debug
 
-BUILD_DIRCETORY=build/$(TARGET)
+OBJ_DIRECTORY=obj/$(TARGET)
+BIN_DIRECTORY=bin/$(TARGET)
 
 PROJECT = oke-oyibo
-SOURCES = $(wildcard source/*.cpp) \
-		  $(wildcard source/*/*.cpp) \
-		  $(wildcard source/*/*/*.cpp) \
-		  $(wildcard library/*.cpp)
+SOURCES = $(wildcard src/*.cpp) \
+		  $(wildcard src/*/*.cpp) \
+		  $(wildcard src/*/*/*.cpp) \
+		  $(wildcard lib/*.cpp)
 
-OBJECTS = $(patsubst %.cpp, $(BUILD_DIRCETORY)/%.o, $(SOURCES))
+OBJECTS = $(patsubst %.cpp, $(OBJ_DIRECTORY)/%.o, $(SOURCES))
 
 GUARD=@mkdir -p $(@D)
 
@@ -22,31 +23,32 @@ CXXFLAGS = \
 	-Wextra  \
 	-Werror \
 	-I. \
-	-Isource/ \
+	-Isrc/ \
 	$(INCLUDES) \
 	$(DEFINES) \
 
 include library/*.mk
-include config/$(TARGET).mk
+include cfg/$(TARGET).mk
 
-$(BUILD_DIRCETORY)/$(PROJECT).out: $(OBJECTS)
+$(BIN_DIRECTORY)/$(PROJECT).out: $(OBJECTS)
 	$(GUARD)
 	@echo [LD] $@
 	@$(CXX) $(LDFLAGS) -o $@ $^ $(LIBRARIES)
 
-$(BUILD_DIRCETORY)/%.o: %.cpp
+$(OBJ_DIRECTORY)/%.o: %.cpp
 	$(GUARD)
 	@echo [CXX] $@
 	@$(CXX) $(CXXFLAGS) -c -o $@ $<
 
 .PHONY: all clean test
 
-all: $(LIBRARIES) $(BUILD_DIRCETORY)/$(PROJECT).out
+all: $(LIBRARIES) $(BIN_DIRECTORY)/$(PROJECT).out
 
 clean:
-	rm -rf $(BUILD_DIRCETORY)
+	rm -rf $(OBJ_DIRECTORY)
+	rm -rf $(BIN_DIRECTORY)
 
-run: $(LIBRARIES) $(BUILD_DIRCETORY)/$(PROJECT).out
-	$(BUILD_DIRCETORY)/$(PROJECT).out
+run: $(LIBRARIES) $(BIN_DIRECTORY)/$(PROJECT).out
+	$(BIN_DIRECTORY)/$(PROJECT).out
 
 -include $(OBJECTS:.o=.d)
