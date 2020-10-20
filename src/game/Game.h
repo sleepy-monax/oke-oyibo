@@ -1,10 +1,11 @@
 #pragma once
 
+#include <raylib.h>
+
 #include "core/RenderContext.h"
 #include "core/UpdateContext.h"
 #include "core/World.h"
 #include "core/glue/Glue.h"
-#include <raylib.h>
 
 #include "base/components/Acceleration.h"
 #include "base/components/Position.h"

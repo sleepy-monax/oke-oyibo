@@ -1,6 +1,6 @@
 #pragma once
 
-#include <cstdint>
+#include "utils/Common.h"
 
 namespace core::glue
 {

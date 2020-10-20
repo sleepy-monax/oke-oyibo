@@ -1,5 +1,7 @@
 #pragma once
 
+#define __packed __attribute__((packed))
+
 template <typename TFrom, typename TTo>
 constexpr TTo &sketchy_cast(TFrom &from)
 {

@@ -177,7 +177,7 @@ namespace utils
     template <typename Type, typename... Args>
     inline RefPtr<Type> make(Args &&... args)
     {
-        return RefPtr<Type>(adopt(*new Type(forward<Args>(args)...)));
+        return RefPtr<Type>(adopt(*new Type(std::forward<Args>(args)...)));
     }
 
 } // namespace utils

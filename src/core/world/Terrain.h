@@ -1,5 +1,7 @@
 #pragma once
 
+#include "utils/Rect.h"
+
 #include "core/world/Tile.h"
 
 namespace core
@@ -12,6 +14,8 @@ namespace core
         Tile *_tiles;
 
     public:
+        utils::Recti bound() { return {_width, _height}; }
+
         int width() { return _width; }
 
         int height() { return _height; }

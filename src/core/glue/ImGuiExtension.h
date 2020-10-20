@@ -2,7 +2,8 @@
 
 #define IMGUI_DEFINE_MATH_OPERATORS
 
-#include <cstdint>
+#include "utils/Common.h"
+
 #include <imgui.h>
 #include <imgui_internal.h>
 

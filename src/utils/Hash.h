@@ -1,7 +1,6 @@
 #pragma once
 
-#include <cstddef>
-#include <cstdint>
+#include "utils/Common.h"
 
 static inline uint32_t hash(const void *object, size_t size)
 {
