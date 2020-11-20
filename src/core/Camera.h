@@ -2,6 +2,7 @@
 
 #include "core/Surface.h"
 #include "utils/Math.h"
+#include "utils/Rect.h"
 
 namespace core
 {
@@ -76,10 +77,30 @@ namespace core
         Surface _composite{};
 
     public:
-        int width() { return _width; }
-        int height() { return _height; }
+        auto width() { return _width / _current.zoom(); }
+        auto height() { return _height / _current.zoom(); }
+        utils::Vec2f position() { return {_current.x(), _current.y()}; }
+        utils::Vec2f size() { return {width(), height()}; }
+        utils::Rectf bound()
+        {
+            return {position() - size() / 2, size()};
+        }
 
-        void speed(double speed) { _speed = speed; }
+        Camera2D raylib_camera()
+        {
+            return {
+                {0, 0},
+                {position().x(), position().y()},
+                0,
+                _current.zoom(),
+            };
+        }
+
+        void
+        speed(double speed)
+        {
+            _speed = speed;
+        }
 
         CameraState current() { return _current; }
 

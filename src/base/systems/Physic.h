@@ -17,8 +17,7 @@ namespace base
     class Physic : public core::System
     {
     private:
-        float _air_friction = 0.9;
-        float _time_scale = 1 / 60.0;
+        float _air_friction = 0.99;
         bool _show_quadtree = false;
 
         utils::QuadTree<float, entt::entity> _entities{utils::Rectf::empty()};
@@ -46,64 +45,66 @@ namespace base
             }
         }
 
-        void apply_acceleration(core::World &world, core::Time &context)
+        void apply_acceleration(core::World &world, float dt)
         {
             auto view = world.entities().view<Acceleration, Velocity>();
 
             view.each([&](auto &acceleration, auto &velocity) {
-                velocity.vx += acceleration.ax * (context.elapsed_time() / _time_scale);
-                velocity.vy += acceleration.ay * (context.elapsed_time() / _time_scale);
+                velocity.vx += acceleration.ax * dt;
+                velocity.vy += acceleration.ay * dt;
 
                 acceleration.ax = 0;
                 acceleration.ay = 0;
             });
         }
 
-        void check_for_colisions(core::World &world, core::Time &context)
+        void check_for_colisions(core::World &world, float dt)
         {
             __unused(world);
-            __unused(context);
+            __unused(dt);
 
             // FIXME: Implement colisions.
         }
 
-        void apply_friction(core::World &world, core::Time &context)
+        void apply_friction(core::World &world, float dt)
         {
             auto view = world.entities().view<Velocity>();
 
             view.each([&](auto &velocity) {
-                velocity.vx *= (1 - _air_friction) * (context.elapsed_time() / _time_scale);
-                velocity.vy *= (1 - _air_friction) * (context.elapsed_time() / _time_scale);
+                velocity.vx -= (velocity.vx) * (1 - _air_friction) * dt;
+                velocity.vy -= (velocity.vy) * (1 - _air_friction) * dt;
             });
         }
 
-        void apply_velocity(core::World &world, core::Time &context)
+        void apply_velocity(core::World &world, float dt)
         {
             auto view = world.entities().view<Velocity, Position>();
 
             view.each([&](auto &velocity, auto &position) {
-                position.x += velocity.vx * (context.elapsed_time() / _time_scale);
-                position.y += velocity.vy * (context.elapsed_time() / _time_scale);
+                position.x += velocity.vx * dt;
+                position.y += velocity.vy * dt;
             });
         }
 
-        void update(core::World &world, core::Time &context) override
+        void update(core::World &world, core::Time &time) override
         {
+            auto dt = time.elapsed() * 60;
+
             rebuild_quad_tree(world);
-            apply_acceleration(world, context);
-            check_for_colisions(world, context);
-            apply_friction(world, context);
-            apply_velocity(world, context);
+            apply_acceleration(world, dt);
+            check_for_colisions(world, dt);
+            apply_friction(world, dt);
+            apply_velocity(world, dt);
         }
 
-        void render(core::World &world, core::Camera &context) override
+        void render(core::World &world, core::Camera &camera) override
         {
             __unused(world);
 
             if (!_show_quadtree)
                 return;
 
-            context.overlay().use_and_do([&]() {
+            camera.overlay().use_and_do([&]() {
                 _entities.query_structure([](auto &rect) {
                     DrawRectangleLines(rect.x(), rect.y(), rect.width(), rect.height(), RED);
                     return utils::Iteration::CONTINUE;
@@ -120,5 +121,4 @@ void inspect<base::Physic>(base::Physic &physic)
 {
     ImGui::Checkbox("Show QuadTree", &physic._show_quadtree);
     ImGui::SliderFloat("Air Friction", &physic._air_friction, 0, 1, "Friction %f", 0);
-    ImGui::SliderFloat("Time step", &physic._time_scale, 0, 1, "%fsec", 0);
 }

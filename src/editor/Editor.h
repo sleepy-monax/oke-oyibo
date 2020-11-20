@@ -5,13 +5,13 @@
 #include "base/components/Acceleration.h"
 #include "base/components/Position.h"
 #include "base/components/Velocity.h"
+#include "core/Probe.h"
 #include "core/Time.h"
 #include "core/World.h"
-#include "core/debug/FPSCounter.h"
-#include "core/debug/Probe.h"
 #include "core/glue/Glue.h"
 #include "core/glue/ImGuiExtension.h"
 
+#include "editor/FPSCounter.h"
 #include "editor/Panel.h"
 
 namespace editor
@@ -23,14 +23,14 @@ namespace editor
         int _view_port_height = 128;
 
         core::World &_world;
-        core::Camera _render_context{};
+        core::Camera _camera{};
 
-        core::debug::FPSCounter fps_counter{};
+        editor::FPSCounter fps_counter{};
 
-        core::debug::Probe frame_time_probe{"Frame Time"};
-        core::debug::Probe update_probe{"Update"};
-        core::debug::Probe render_probe{"Render"};
-        core::debug::Probe display_probe{"Display"};
+        core::Probe frame_time_probe{"Frame Time"};
+        core::Probe update_probe{"Update"};
+        core::Probe render_probe{"Render"};
+        core::Probe display_probe{"Display"};
 
         utils::Vector<utils::OwnPtr<Panel>> _panels{};
 
@@ -61,7 +61,7 @@ namespace editor
             fps_counter.mesure_fps();
 
             frame_time_probe.mesure_time([&]() {
-                _render_context.resize_to_fit(_view_port_width, _view_port_height);
+                _camera.resize_to_fit(_view_port_width, _view_port_height);
 
                 update_probe.mesure_time([&]() {
                     update();
@@ -79,11 +79,11 @@ namespace editor
 
         void update()
         {
-            core::Time context{GetFrameTime(), GetTime()};
-            _world.update(context);
+            core::Time time{GetFrameTime(), GetTime()};
+            _world.update(time);
 
             _panels.foreach ([&](auto &panel) {
-                panel->update(context);
+                panel->update(time);
 
                 return utils::Iteration::CONTINUE;
             });
@@ -91,9 +91,9 @@ namespace editor
 
         void render()
         {
-            _render_context.clear();
+            _camera.clear();
 
-            _world.render(_render_context);
+            _world.render(_camera);
 
             _panels.foreach ([](auto &panel) {
                 panel->render();
@@ -101,7 +101,7 @@ namespace editor
                 return utils::Iteration::CONTINUE;
             });
 
-            _render_context.compose();
+            _camera.compose();
         }
 
         void display()
@@ -124,7 +124,7 @@ namespace editor
             _view_port_width = size.x;
             _view_port_height = size.y;
 
-            ImGui::Viewport(reinterpret_cast<void *>(_render_context.composite().underlying_texture().id), ImVec2(_render_context.composite().width(), _render_context.composite().height()));
+            ImGui::Viewport(reinterpret_cast<void *>(_camera.composite().underlying_texture().id), ImVec2(_camera.composite().width(), _camera.composite().height()));
 
             ImGui::End();
 
@@ -136,7 +136,7 @@ namespace editor
             inspect(display_probe);
             ImGui::End();
 
-            _render_context.display();
+            _camera.display();
         }
     };
 } // namespace editor

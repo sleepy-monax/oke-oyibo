@@ -20,7 +20,7 @@ namespace base
         {
         }
 
-        void update(core::World &world, core::Time &context)
+        void update(core::World &world, core::Time &time)
         {
             auto view = world.entities().view<base::Position, base::Player>();
 
@@ -31,16 +31,16 @@ namespace base
                     auto &camera = world.players()[player.player_index].camera();
 
                     camera.move_to(position.x, position.y);
-                    camera.animate(context.elapsed_time());
+                    camera.animate(time.elapsed());
                 }
             });
         }
 
-        void render(core::World &world, core::Camera &context) override
+        void render(core::World &world, core::Camera &camera) override
         {
             auto view = world.entities().view<base::Position, base::Player>();
 
-            context.overlay().use_and_do([&]() {
+            camera.overlay().use_and_do([&]() {
                 view.each([&](base::Position &position, base::Player &player) {
                     if (player.player_index >= 0 &&
                         (size_t)player.player_index < world.players().count())

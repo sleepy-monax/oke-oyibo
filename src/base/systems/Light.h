@@ -9,20 +9,19 @@
 
 namespace base
 {
-
     class Light : public core::System
     {
     private:
     public:
-        Light() : System("Debug Render")
+        Light() : System("Light")
         {
         }
 
-        void render(core::World &world, core::Camera &context) override
+        void render(core::World &world, core::Camera &camera) override
         {
             auto view = world.entities().view<Position, LightSource>();
 
-            context.light().use_and_do([&]() {
+            camera.light().use_and_do([&]() {
                 ClearBackground(GRAY);
 
                 BeginBlendMode(BLEND_ADDITIVE);
@@ -35,5 +34,4 @@ namespace base
             });
         }
     };
-
 } // namespace base

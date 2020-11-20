@@ -14,10 +14,7 @@
 namespace core
 {
     class Registry;
-} // namespace core
 
-namespace core
-{
     class World
     {
     private:
@@ -38,44 +35,14 @@ namespace core
 
         auto &players() { return _players; }
 
-        World(Registry &registry, int width, int height)
-            : _registry(registry),
-              _terrain{width, height},
-              _entities{},
-              _systems{}
-        {
-        }
+        World(Registry &, int width, int height);
 
-        template <typename TSystem, typename... TArgs>
-        void register_system(TArgs &&... args)
-        {
-            _systems[entt::type_info<TSystem>::id()] = utils::own<TSystem>(std::forward<TArgs>(args)...);
-        }
+        void add_player(core::Player &&);
 
-        void add_player(core::Player &&player)
-        {
-            _players.push_back(std::move(player));
-        }
+        entity::Builder create_entity();
 
-        entity::Builder create_entity()
-        {
-            return entity::Builder{entities()};
-        }
+        void update(Time &);
 
-        void update(Time &context)
-        {
-            _systems.foreach ([&](auto &, auto &sys) {
-                sys->do_update(*this, context);
-                return utils::Iteration::CONTINUE;
-            });
-        }
-
-        void render(Camera &context)
-        {
-            _systems.foreach ([&](auto &, auto &sys) {
-                sys->do_render(*this, context);
-                return utils::Iteration::CONTINUE;
-            });
-        }
+        void render(Camera &);
     };
 } // namespace core

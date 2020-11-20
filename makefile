@@ -24,6 +24,8 @@ CXXFLAGS = \
 	-Werror \
 	-I. \
 	-Isrc/ \
+	-fsanitize=undefined \
+	-fsanitize=address \
 	$(INCLUDES) \
 	$(DEFINES) \
 

@@ -45,15 +45,15 @@ namespace game
 
         void update()
         {
-            core::Time context{GetFrameTime(), GetTime()};
-            _world.update(context);
+            core::Time time{GetFrameTime(), GetTime()};
+            _world.update(time);
         }
 
-        void render(core::Camera &context)
+        void render(core::Camera &camera)
         {
-            context.clear();
-            _world.render(context);
-            context.compose();
+            camera.clear();
+            _world.render(camera);
+            camera.compose();
         }
 
         void compose()

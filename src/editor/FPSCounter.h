@@ -3,20 +3,20 @@
 #include <imgui.h>
 #include <raylib.h>
 
-#include "core/debug/Probe.h"
+#include "core/Probe.h"
 
-namespace core::debug
+namespace editor
 {
-    class FPSCounter : public Probe
+    class FPSCounter : public core::Probe
     {
     public:
         FPSCounter() : Probe("FPSCounter") {}
         void mesure_fps() { mesure(GetFPS()); }
     };
-} // namespace core::debug
+} // namespace editor
 
 template <>
-inline void inspect<core::debug::FPSCounter>(core::debug::FPSCounter &fps_counter)
+inline void inspect<editor::FPSCounter>(editor::FPSCounter &fps_counter)
 {
     ImGui::Text("%s", fps_counter.name());
     ImGui::Text("avg: %3.0ffps", fps_counter.average());

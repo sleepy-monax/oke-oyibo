@@ -21,11 +21,11 @@ namespace base
         {
         }
 
-        void render(core::World &world, core::Camera &context) override
+        void render(core::World &world, core::Camera &camera) override
         {
             auto view = world.entities().view<base::Position>();
 
-            context.overlay().use_and_do([&]() {
+            camera.overlay().use_and_do([&]() {
                 view.each([](auto &position) {
                     DrawCircle(position.x, position.y, 4, RED);
                 });

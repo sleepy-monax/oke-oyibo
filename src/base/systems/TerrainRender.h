@@ -13,16 +13,21 @@ namespace base
     public:
         TerrainRender() : System("Terrain Render") {}
 
-        void render(core::World &world, core::Camera &context) override
+        void render(core::World &world, core::Camera &camera) override
         {
-            context.terrain().use_and_do([&]() {
+            camera.terrain().use_and_do([&]() {
                 auto &terrain = world.terrain();
 
                 for (int x = 0; x < terrain.width(); x++)
                 {
                     for (int y = 0; y < terrain.height(); y++)
                     {
-                        DrawRectangleLines(x, y, 1, 1, GREEN);
+                        DrawRectangleLines(
+                            x * core::Tile::SIZE,
+                            y * core::Tile::SIZE,
+                            core::Tile::SIZE,
+                            core::Tile::SIZE,
+                            GREEN);
                     }
                 }
             });

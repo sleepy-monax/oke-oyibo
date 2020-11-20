@@ -29,25 +29,20 @@ int main()
 
     core::Registry registry{};
 
-    registry.register_system<Input>("Input");
-    registry.register_system<DebugRender>("DebugRender");
-    registry.register_system<Physic>("Physic");
-    registry.register_system<TerrainRender>("TerrainRender");
+    registry.register_system<Input>("input");
+    registry.register_system<DebugRender>("debug");
+    registry.register_system<Physic>("physic");
+    registry.register_system<TerrainRender>("terrain");
+    registry.register_system<base::Light>("light");
+    registry.register_system<base::Camera>("camera");
 
-    registry.register_component<Acceleration>("Acceleration");
-    registry.register_component<Player>("Player");
-    registry.register_component<Position>("Position");
-    registry.register_component<Velocity>("Velocity");
-    registry.register_component<LightSource>("LightSource");
+    registry.register_component<Acceleration>("acceleration");
+    registry.register_component<Player>("player");
+    registry.register_component<Position>("position");
+    registry.register_component<Velocity>("velocity");
+    registry.register_component<LightSource>("light-source");
 
     core::World world{registry, 256, 256};
-
-    world.register_system<Input>();
-    world.register_system<DebugRender>();
-    world.register_system<Physic>();
-    world.register_system<TerrainRender>();
-    world.register_system<Light>();
-    world.register_system<base::Camera>();
 
     world.add_player({"bob", utils::own<core::input::Controller>()});
 

@@ -5,19 +5,15 @@ namespace core
     class Time
     {
     private:
-        double _elapsed_time;
-        double _total_time;
+        double _elapsed;
+        double _total;
 
     public:
-        double elapsed_time() { return _elapsed_time; }
-        double total_time() { return _total_time; }
+        double elapsed() { return _elapsed; }
+        double total() { return _total; }
 
-        Time(double elapsed_time, double total_time)
-            : _elapsed_time(elapsed_time), _total_time(total_time)
-        {
-        }
-
-        ~Time()
+        Time(double elapsed, double total)
+            : _elapsed(elapsed), _total(total)
         {
         }
     };

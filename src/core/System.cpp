@@ -2,22 +2,22 @@
 
 namespace core
 {
-    void System::do_update(World &world, Time &context)
+    void System::do_update(World &world, Time &time)
     {
         _update_probe.mesure_time([&]() {
             if (_enable)
             {
-                update(world, context);
+                update(world, time);
             }
         });
     }
 
-    void System::do_render(World &world, Camera &context)
+    void System::do_render(World &world, Camera &camera)
     {
         _render_probe.mesure_time([&]() {
             if (_visible)
             {
-                render(world, context);
+                render(world, camera);
             }
         });
     }

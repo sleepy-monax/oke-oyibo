@@ -5,7 +5,7 @@
 #include "core/glue/Glue.h"
 #include "editor/Inspect.h"
 
-namespace core::debug
+namespace core
 {
     class Probe
     {
@@ -68,10 +68,10 @@ namespace core::debug
             }
         }
     };
-} // namespace core::debug
+} // namespace core
 
 template <>
-inline void inspect<core::debug::Probe>(core::debug::Probe &probe)
+inline void inspect<core::Probe>(core::Probe &probe)
 {
     ImGui::Text("%s", probe.name());
     ImGui::Text("avg: %5.2fµs budget: %3.2f%%", probe.average(), probe.average() / 160.0);
