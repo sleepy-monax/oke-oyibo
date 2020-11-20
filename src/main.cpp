@@ -4,6 +4,7 @@
 #include "base/components/Acceleration.h"
 #include "base/components/LightSource.h"
 #include "base/components/Velocity.h"
+#include "base/systems/Camera.h"
 #include "base/systems/DebugRender.h"
 #include "base/systems/Input.h"
 #include "base/systems/Light.h"
@@ -18,7 +19,6 @@
 #include "editor/SystemList.h"
 #include "game/Game.h"
 
-using namespace base;
 using namespace base;
 
 int main()
@@ -47,13 +47,16 @@ int main()
     world.register_system<Physic>();
     world.register_system<TerrainRender>();
     world.register_system<Light>();
+    world.register_system<base::Camera>();
+
+    world.add_player({"bob", utils::own<core::input::Controller>()});
 
     world.create_entity()
         .with<Position>(64.0f, 64.0f, 0.0f)
         .with<Acceleration>()
         .with<Velocity>()
         .with<LightSource>(16.0f, WHITE)
-        .with<Player>();
+        .with<Player>(0);
 
     editor::Editor editor{world};
     editor.open<editor::EntityList>();

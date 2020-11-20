@@ -21,7 +21,7 @@ namespace base
         {
         }
 
-        void render(core::World &world, core::RenderContext &context) override
+        void render(core::World &world, core::Camera &context) override
         {
             auto view = world.entities().view<base::Position>();
 

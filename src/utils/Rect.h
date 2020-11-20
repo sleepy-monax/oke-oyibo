@@ -22,10 +22,10 @@ namespace utils
 
         static Rect from_two_point(Vec2<TScalar> a, Vec2<TScalar> b)
         {
-            auto x0 = __min(a.x(), b.x());
-            auto y0 = __min(a.y(), b.y());
-            auto x1 = __max(a.x(), b.x());
-            auto y1 = __max(a.y(), b.y());
+            auto x0 = MIN(a.x(), b.x());
+            auto y0 = MIN(a.y(), b.y());
+            auto x1 = MAX(a.x(), b.x());
+            auto y1 = MAX(a.y(), b.y());
 
             return {x0, y0, x1 - x0, y1 - y0};
         }
@@ -155,12 +155,12 @@ namespace utils
         Rect merged_with(Rect other) const
         {
             Vec2<TScalar> topleft(
-                __min(_x, other._x),
-                __min(_y, other._y));
+                MIN(_x, other._x),
+                MIN(_y, other._y));
 
             Vec2<TScalar> bottomright(
-                __max(_x + _width, other._x + other._width),
-                __max(_y + _height, other._y + other._height));
+                MAX(_x + _width, other._x + other._width),
+                MAX(_y + _height, other._y + other._height));
 
             return Rect::from_two_point(topleft, bottomright);
         }
@@ -168,12 +168,12 @@ namespace utils
         Rect clipped_with(Rect other) const
         {
             Vec2<TScalar> topleft(
-                __max(_x, other._x),
-                __max(_y, other._y));
+                MAX(_x, other._x),
+                MAX(_y, other._y));
 
             Vec2<TScalar> bottomright(
-                __min(_x + _width, other._x + other._width),
-                __min(_y + _height, other._y + other._height));
+                MIN(_x + _width, other._x + other._width),
+                MIN(_y + _height, other._y + other._height));
 
             return Rect::from_two_point(topleft, bottomright);
         }
@@ -261,7 +261,7 @@ namespace utils
             TScalar current_row_position =
                 row_height * index +
                 (spacing * index) +
-                __min(index, correction);
+                MIN(index, correction);
 
             return Rect{
                 x(),
@@ -298,7 +298,7 @@ namespace utils
             TScalar current_column_position =
                 column_width * index +
                 (spacing * index) +
-                __min(index, correction);
+                MIN(index, correction);
 
             return Rect{
                 x() + current_column_position,
@@ -315,8 +315,8 @@ namespace utils
             return Rect(
                 _x + gaps,
                 _y + gaps,
-                __max(0, _width - gaps - gaps),
-                __max(0, _height - gaps - gaps));
+                MAX(0, _width - gaps - gaps),
+                MAX(0, _height - gaps - gaps));
         }
 
         Rect expended(TScalar gaps) const

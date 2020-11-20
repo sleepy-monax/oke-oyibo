@@ -8,22 +8,22 @@
 
 namespace core
 {
-    class RenderTarget
+    class Surface
     {
     private:
-        int _width;
-        int _height;
-        RenderTexture2D _texture;
+        int _width = 0;
+        int _height = 0;
+
+        RenderTexture2D _texture{};
 
         // No point of creating copies of this object.
-        __noncopyable(RenderTarget);
-        __nonmovable(RenderTarget);
+        __noncopyable(Surface);
 
     public:
         int width() { return _width; }
         int height() { return _height; }
 
-        RenderTarget()
+        Surface()
         {
             _width = GetScreenWidth();
             _height = GetScreenHeight();
@@ -33,9 +33,34 @@ namespace core
             linfo("Created render target of size=%dx%d", _width, _height);
         }
 
-        ~RenderTarget()
+        Surface(Surface &&other)
         {
-            UnloadRenderTexture(_texture);
+            _texture.id = 0;
+
+            std::swap(_width, other._width);
+            std::swap(_height, other._height);
+            std::swap(_texture, other._texture);
+        }
+
+        Surface &operator=(Surface &&other)
+        {
+            if (this != &other)
+            {
+                std::swap(_width, other._width);
+                std::swap(_height, other._height);
+                std::swap(_texture, other._texture);
+            }
+
+            return *this;
+        }
+
+        ~Surface()
+        {
+            if (_texture.id)
+            {
+                UnloadRenderTexture(_texture);
+                _texture.id = 0;
+            }
         }
 
         // This function let us not think about starting and ending texture mode.

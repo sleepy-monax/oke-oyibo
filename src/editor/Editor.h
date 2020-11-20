@@ -5,8 +5,7 @@
 #include "base/components/Acceleration.h"
 #include "base/components/Position.h"
 #include "base/components/Velocity.h"
-#include "core/RenderContext.h"
-#include "core/UpdateContext.h"
+#include "core/Time.h"
 #include "core/World.h"
 #include "core/debug/FPSCounter.h"
 #include "core/debug/Probe.h"
@@ -24,7 +23,7 @@ namespace editor
         int _view_port_height = 128;
 
         core::World &_world;
-        core::RenderContext _render_context{};
+        core::Camera _render_context{};
 
         core::debug::FPSCounter fps_counter{};
 
@@ -80,7 +79,7 @@ namespace editor
 
         void update()
         {
-            core::UpdateContext context{GetFrameTime(), GetTime()};
+            core::Time context{GetFrameTime(), GetTime()};
             _world.update(context);
 
             _panels.foreach ([&](auto &panel) {

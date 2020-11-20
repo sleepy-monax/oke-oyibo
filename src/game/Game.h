@@ -2,8 +2,8 @@
 
 #include <raylib.h>
 
-#include "core/RenderContext.h"
-#include "core/UpdateContext.h"
+#include "core/Camera.h"
+#include "core/Time.h"
 #include "core/World.h"
 #include "core/glue/Glue.h"
 
@@ -17,7 +17,6 @@ namespace game
     {
     private:
         core::World &_world;
-        core::RenderContext _render_context{};
 
     public:
         Game(core::World &world)
@@ -29,27 +28,43 @@ namespace game
 
         void run()
         {
-            _render_context.resize_to_fit_the_screen();
+            for (size_t i = 0; i < _world.players().count(); i++)
+            {
+                _world.players()[i].camera().resize_to_fit_the_screen();
+            }
 
             update();
 
-            render();
+            for (size_t i = 0; i < _world.players().count(); i++)
+            {
+                render(_world.players()[i].camera());
+            }
+
+            compose();
         }
 
         void update()
         {
-            core::UpdateContext context{GetFrameTime(), GetTime()};
+            core::Time context{GetFrameTime(), GetTime()};
             _world.update(context);
         }
 
-        void render()
+        void render(core::Camera &context)
         {
-            _render_context.clear();
-            _world.render(_render_context);
-            _render_context.compose();
+            context.clear();
+            _world.render(context);
+            context.compose();
+        }
 
-            Rectangle rect{0, 0, _render_context.width() * 1.0f, _render_context.height() * 1.0f};
-            DrawTexturePro(_render_context.composite().underlying_texture(), rect, rect, (Vector2){0, 0}, 0.0f, WHITE);
+        void compose()
+        {
+            for (size_t i = 0; i < _world.players().count(); i++)
+            {
+                auto &cam = _world.players()[i].camera();
+
+                Rectangle rect{0, 0, cam.width() * 1.0f, cam.height() * 1.0f};
+                DrawTexturePro(cam.composite().underlying_texture(), rect, rect, (Vector2){0, 0}, 0.0f, WHITE);
+            }
         }
     };
 } // namespace game

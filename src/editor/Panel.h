@@ -3,7 +3,7 @@
 #include <imgui.h>
 #include <string>
 
-#include "core/UpdateContext.h"
+#include "core/Time.h"
 #include "core/World.h"
 
 namespace editor
@@ -40,7 +40,7 @@ namespace editor
             ImGui::PopID();
         }
 
-        virtual void update(core::UpdateContext &)
+        virtual void update(core::Time &)
         {
         }
 

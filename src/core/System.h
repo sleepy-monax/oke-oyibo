@@ -2,8 +2,8 @@
 
 #include <string>
 
-#include "core/RenderContext.h"
-#include "core/UpdateContext.h"
+#include "core/Camera.h"
+#include "core/Time.h"
 #include "core/debug/Probe.h"
 #include "editor/Inspect.h"
 
@@ -44,13 +44,13 @@ namespace core
 
         virtual ~System() {}
 
-        void do_update(World &, UpdateContext &);
+        void do_update(World &, Time &);
 
-        void do_render(World &, RenderContext &);
+        void do_render(World &, Camera &);
 
-        virtual void update(World &, UpdateContext &) {}
+        virtual void update(World &, Time &) {}
 
-        virtual void render(World &, RenderContext &) {}
+        virtual void render(World &, Camera &) {}
     };
 } // namespace core
 

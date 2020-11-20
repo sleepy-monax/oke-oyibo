@@ -46,7 +46,7 @@ namespace base
             }
         }
 
-        void apply_acceleration(core::World &world, core::UpdateContext &context)
+        void apply_acceleration(core::World &world, core::Time &context)
         {
             auto view = world.entities().view<Acceleration, Velocity>();
 
@@ -59,7 +59,7 @@ namespace base
             });
         }
 
-        void check_for_colisions(core::World &world, core::UpdateContext &context)
+        void check_for_colisions(core::World &world, core::Time &context)
         {
             __unused(world);
             __unused(context);
@@ -67,7 +67,7 @@ namespace base
             // FIXME: Implement colisions.
         }
 
-        void apply_friction(core::World &world, core::UpdateContext &context)
+        void apply_friction(core::World &world, core::Time &context)
         {
             auto view = world.entities().view<Velocity>();
 
@@ -77,7 +77,7 @@ namespace base
             });
         }
 
-        void apply_velocity(core::World &world, core::UpdateContext &context)
+        void apply_velocity(core::World &world, core::Time &context)
         {
             auto view = world.entities().view<Velocity, Position>();
 
@@ -87,7 +87,7 @@ namespace base
             });
         }
 
-        void update(core::World &world, core::UpdateContext &context) override
+        void update(core::World &world, core::Time &context) override
         {
             rebuild_quad_tree(world);
             apply_acceleration(world, context);
@@ -96,7 +96,7 @@ namespace base
             apply_velocity(world, context);
         }
 
-        void render(core::World &world, core::RenderContext &context) override
+        void render(core::World &world, core::Camera &context) override
         {
             __unused(world);
 

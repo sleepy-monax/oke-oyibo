@@ -21,7 +21,7 @@ namespace base
         {
         }
 
-        void update(core::World &world, core::UpdateContext &) override
+        void update(core::World &world, core::Time &) override
         {
             auto view = world.entities().view<Player, Acceleration>();
 

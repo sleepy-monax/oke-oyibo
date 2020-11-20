@@ -124,8 +124,8 @@ namespace utils
 
         Vec2 clamped(const Vec2 &min, const Vec2 &max) const
         {
-            Scalar xx = __max(min.x(), __min(max.x(), x()));
-            Scalar yy = __max(min.y(), __min(max.y(), y()));
+            Scalar xx = MAX(min.x(), MIN(max.x(), x()));
+            Scalar yy = MAX(min.y(), MIN(max.y(), y()));
 
             return Vec2(xx, yy);
         }

@@ -2,7 +2,7 @@
 
 namespace core
 {
-    class UpdateContext
+    class Time
     {
     private:
         double _elapsed_time;
@@ -12,12 +12,12 @@ namespace core
         double elapsed_time() { return _elapsed_time; }
         double total_time() { return _total_time; }
 
-        UpdateContext(double elapsed_time, double total_time)
+        Time(double elapsed_time, double total_time)
             : _elapsed_time(elapsed_time), _total_time(total_time)
         {
         }
 
-        ~UpdateContext()
+        ~Time()
         {
         }
     };

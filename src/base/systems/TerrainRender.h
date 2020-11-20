@@ -13,7 +13,7 @@ namespace base
     public:
         TerrainRender() : System("Terrain Render") {}
 
-        void render(core::World &world, core::RenderContext &context) override
+        void render(core::World &world, core::Camera &context) override
         {
             context.terrain().use_and_do([&]() {
                 auto &terrain = world.terrain();

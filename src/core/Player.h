@@ -2,7 +2,7 @@
 
 #include <string>
 
-#include "core/RenderContext.h"
+#include "core/Camera.h"
 #include "core/input/Controller.h"
 #include "utils/OwnPtr.h"
 
@@ -12,12 +12,15 @@ namespace core
     {
     private:
         std::string _name;
+
         utils::OwnPtr<input::Controller> _controller = nullptr;
-        RenderContext _render{};
+        core::Camera _camera{};
 
     public:
+        std::string name() { return _name; }
+
         input::Controller &controller() { return *_controller; }
-        RenderContext &render() { return _render; }
+        core::Camera &camera() { return _camera; }
 
         Player(std::string name, utils::OwnPtr<input::Controller> controller)
             : _name(name), _controller(controller)

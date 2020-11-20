@@ -24,6 +24,8 @@ namespace core::input
     public:
         Controller() {}
 
+        virtual ~Controller() {}
+
         virtual bool pressed(Control control)
         {
             __unused(control);

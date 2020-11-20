@@ -6,6 +6,8 @@ namespace core
     {
     private:
     public:
+        static constexpr auto SIZE = 16;
+
         Tile()
         {
         }
