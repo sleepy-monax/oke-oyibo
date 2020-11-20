@@ -99,5 +99,6 @@ namespace core::render
         {
             _current = lerp(_current, _target, dt);
         }
+
     };
 } // namespace core::render
