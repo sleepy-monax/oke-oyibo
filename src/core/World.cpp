@@ -4,7 +4,7 @@
 namespace core
 {
 
-    World::World(utils::RefPtr<Registry> &registry, int width, int height)
+    World::World(utils::RefPtr<Registry> registry, int width, int height)
         : _registry(registry),
           _terrain{width, height},
           _entities{},
