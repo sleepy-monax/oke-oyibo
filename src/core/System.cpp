@@ -4,7 +4,7 @@ namespace core
 {
     void System::do_update(World &world, Time &time)
     {
-        _update_probe.mesure_time([&]() {
+        _update_probe.mesure([&]() {
             if (_enable)
             {
                 update(world, time);
@@ -14,7 +14,7 @@ namespace core
 
     void System::do_render(World &world, Camera &camera)
     {
-        _render_probe.mesure_time([&]() {
+        _render_probe.mesure([&]() {
             if (_visible)
             {
                 render(world, camera);

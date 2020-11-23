@@ -13,45 +13,25 @@
 
 #include "editor/FPSCounter.h"
 #include "editor/Panel.h"
+#include "editor/model/Model.h"
 
 namespace editor
 {
     class Editor
     {
     private:
-        int _view_port_width = 128;
-        int _view_port_height = 128;
-
-        core::World &_world;
-        core::Camera _camera{};
-
-        editor::FPSCounter fps_counter{};
-
-        core::Probe frame_time_probe{"Frame Time"};
-        core::Probe update_probe{"Update"};
-        core::Probe render_probe{"Render"};
-        core::Probe display_probe{"Display"};
-
+        Model _model;
         utils::Vector<utils::OwnPtr<Panel>> _panels{};
 
     public:
-        auto &world() { return _world; }
-        auto &entities() { return _world.entities(); }
-        auto &system() { return _world.systems(); }
-        auto &registry() { return _world.registry(); }
-
-        Editor(core::World &world)
-            : _world(world)
+        Editor(core::World &world) : _model{world}
         {
-            _camera.speed(10);
         }
-
-        ~Editor() {}
 
         template <typename TPanel, typename... TArgs>
         TPanel &open(TArgs &&... args)
         {
-            auto ptr = utils::own<TPanel>(*this, std::forward<TArgs>(args)...);
+            auto ptr = utils::own<TPanel>(std::forward<TArgs>(args)...);
             auto &ref = *ptr;
             _panels.push_back(ptr);
             return ref;
@@ -59,20 +39,18 @@ namespace editor
 
         void run()
         {
-            fps_counter.mesure_fps();
+            _model.fps.mesure();
 
-            frame_time_probe.mesure_time([&]() {
-                _camera.resize_to_fit(_view_port_width, _view_port_height);
-
-                update_probe.mesure_time([&]() {
+            _model.total_time.mesure([&]() {
+                _model.update_time.mesure([&]() {
                     update();
                 });
 
-                render_probe.mesure_time([&]() {
+                _model.render_time.mesure([&]() {
                     render();
                 });
 
-                display_probe.mesure_time([&]() {
+                _model.display_time.mesure([&]() {
                     display();
                 });
             });
@@ -81,87 +59,32 @@ namespace editor
         void update()
         {
             core::Time time{GetFrameTime(), GetTime()};
-            _world.update(time);
+            _model.world.update(time);
 
             _panels.foreach ([&](auto &panel) {
-                panel->update(time);
-
+                panel->update(_model, time);
                 return utils::Iteration::CONTINUE;
             });
-
-            _camera.animate(time.elapsed());
         }
 
         void render()
         {
-            _camera.clear();
-
-            _world.render(_camera);
-
-            _panels.foreach ([](auto &panel) {
-                panel->render();
+            _panels.foreach ([this](auto &panel) {
+                panel->render(_model);
 
                 return utils::Iteration::CONTINUE;
             });
-
-            _camera.compose();
         }
 
         void display()
         {
             ImGui::DockSpaceOverViewport();
 
-            _panels.foreach ([](auto &panel) {
-                panel->do_display();
+            _panels.foreach ([this](auto &panel) {
+                panel->do_display(_model);
 
                 return utils::Iteration::CONTINUE;
             });
-
-            ImGui::Begin("Viewport", nullptr, ImGuiWindowFlags_NoScrollbar | ImGuiWindowFlags_NoScrollWithMouse);
-            ImGui::SetScrollX(0);
-            ImGui::SetScrollY(0);
-
-            ImGui::GetWindowSize();
-            auto size = ImGui::GetWindowSize();
-
-            _view_port_width = size.x;
-            _view_port_height = size.y - 4;
-
-            auto viewport_focused = ImGui::Viewport(reinterpret_cast<void *>(_camera.composite().underlying_texture().id), ImVec2(_camera.composite().width(), _camera.composite().height()));
-
-            if (viewport_focused)
-            {
-                if (ImGui::IsMouseDragging(ImGuiMouseButton_Left))
-                {
-                    auto vec = ImGui::GetMouseDragDelta();
-                    ImGui::ResetMouseDragDelta();
-
-                    _camera.move(-vec.x / _camera.zoom(), -vec.y / _camera.zoom());
-                }
-
-                float v = ImGui::GetIO().MouseWheel;
-
-                if (v < 0)
-                {
-                    _camera.zoom_out();
-                }
-                else if (v > 0)
-                {
-                    _camera.zoom_in();
-                }
-            }
-
-            ImGui::End();
-
-            ImGui::Begin("Profiler");
-            inspect(fps_counter);
-            inspect(frame_time_probe);
-            inspect(update_probe);
-            inspect(render_probe);
-            inspect(display_probe);
-            ImGui::End();
-
-            _camera.display();
         }
     };
 } // namespace editor

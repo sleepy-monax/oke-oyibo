@@ -3,54 +3,38 @@
 #include <imgui.h>
 #include <string>
 
-#include "core/Time.h"
-#include "core/World.h"
+#include "editor/model/Model.h"
 
 namespace editor
 {
-    class Editor;
 
     class Panel
     {
     private:
         std::string _name;
-        Editor &_editor;
 
     public:
         const char *name() { return _name.c_str(); }
 
-        auto &editor() { return _editor; }
+        void name(std::string name) { _name = name; }
 
-        Panel(Editor &editor, const char *name) : _name(name), _editor(editor)
-        {
-        }
+        virtual ~Panel() {}
 
-        virtual ~Panel()
-        {
-        }
-
-        void do_display()
+        void do_display(Model &model)
         {
             ImGui::PushID(this);
             ImGui::Begin(_name.c_str());
 
-            display();
+            display(model);
 
             ImGui::End();
             ImGui::PopID();
         }
 
-        virtual void update(core::Time &)
-        {
-        }
+        virtual void update(Model &, core::Time &) {}
 
-        virtual void render()
-        {
-        }
+        virtual void render(Model &) {}
 
-        virtual void display()
-        {
-            ImGui::Text("Nothing to show here!");
-        }
+        virtual void display(Model &) { ImGui::Text("Nothing to show here..."); }
     };
 } // namespace editor

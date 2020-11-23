@@ -11,7 +11,7 @@ namespace editor
     {
     public:
         FPSCounter() : Probe("FPSCounter") {}
-        void mesure_fps() { mesure(GetFPS()); }
+        void mesure() { Probe::mesure(GetFPS()); }
     };
 } // namespace editor
 

@@ -16,8 +16,11 @@
 
 #include "core/Registry.h"
 #include "editor/Editor.h"
-#include "editor/EntityList.h"
-#include "editor/SystemList.h"
+#include "editor/panels/Entities.h"
+#include "editor/panels/Inspector.h"
+#include "editor/panels/Profiler.h"
+#include "editor/panels/Systems.h"
+#include "editor/panels/Viewport.h"
 #include "game/Game.h"
 
 using namespace base;
@@ -29,7 +32,6 @@ int main()
     core::glue::initialize();
 
     core::Registry registry{};
-
     registry.register_system<Input>("input");
     registry.register_system<DebugRender>("debug");
     registry.register_system<Physic>("physic");
@@ -44,10 +46,8 @@ int main()
     registry.register_component<LightSource>("light-source");
 
     core::World world{registry, 256, 256};
-
     world.add_player({"bob", utils::own<core::input::Keyboard>()});
     world.players()[0].camera().zoom_in();
-
     world.create_entity()
         .with<Position>(64.0f, 64.0f, 0.0f)
         .with<Acceleration>()
@@ -56,8 +56,11 @@ int main()
         .with<Player>(0);
 
     editor::Editor editor{world};
-    editor.open<editor::EntityList>();
-    editor.open<editor::SystemList>();
+    editor.open<editor::Entities>();
+    editor.open<editor::Inspector>();
+    editor.open<editor::Viewport>();
+    editor.open<editor::Profiler>();
+    editor.open<editor::Systems>();
 
     game::Game game{world};
 

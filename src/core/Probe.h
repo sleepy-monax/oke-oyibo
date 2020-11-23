@@ -1,6 +1,7 @@
 #pragma once
 
 #include <chrono>
+#include <concepts>
 
 #include "core/glue/Glue.h"
 #include "editor/Inspect.h"
@@ -37,8 +38,7 @@ namespace core
 
         Probe(const char *name) : _name(name) {}
 
-        template <typename TMeasuredFunction>
-        void mesure_time(TMeasuredFunction function)
+        void mesure(std::invocable auto function)
         {
             auto start = std::chrono::high_resolution_clock::now();
             function();

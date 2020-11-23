@@ -17,7 +17,7 @@ GUARD=@mkdir -p $(@D)
 
 LDFLAGS = -lm
 CXXFLAGS = \
-	-std=c++17 \
+	-std=c++20 \
 	-MD \
 	-Wall \
 	-Wextra  \

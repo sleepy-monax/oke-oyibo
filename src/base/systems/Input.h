@@ -30,22 +30,22 @@ namespace base
 
                 if (controller.down(core::input::Control::MOVE_UP))
                 {
-                    acceleration.ay -= 0.1;
+                    acceleration.ay -= 0.05;
                 }
 
                 if (controller.down(core::input::Control::MOVE_DOWN))
                 {
-                    acceleration.ay += 0.1;
+                    acceleration.ay += 0.05;
                 }
 
                 if (controller.down(core::input::Control::MOVE_LEFT))
                 {
-                    acceleration.ax -= 0.1;
+                    acceleration.ax -= 0.05;
                 }
 
                 if (controller.down(core::input::Control::MOVE_RIGHT))
                 {
-                    acceleration.ax += 0.1;
+                    acceleration.ax += 0.05;
                 }
 
                 if (controller.pressed(core::input::Control::ZOOM_IN))
