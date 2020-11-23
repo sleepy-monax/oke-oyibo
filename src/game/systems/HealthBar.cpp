@@ -20,13 +20,9 @@ namespace game
         auto view = world.entities().view<base::Position, Health>();
 
         camera.with_overlay([&]() {
-            BeginBlendMode(BLEND_ADDITIVE);
-
             view.each([](auto &position, auto &) {
                 DrawRectangle(position.x, position.y, 100, 20, BLUE);
             });
-
-            EndBlendMode();
         });
     }
 

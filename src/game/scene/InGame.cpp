@@ -47,6 +47,7 @@ namespace game
 
         world->add_player({"bob", utils::own<core::input::Keyboard>()});
         world->players()[0].camera().zoom_in();
+        world->players()[0].camera().speed(10);
 
         world->create_entity()
             .with<base::Position>(64.0f, 64.0f, 0.0f)

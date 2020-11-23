@@ -16,7 +16,7 @@ namespace editor
         Viewport()
         {
             name("Viewport");
-            _camera.speed(10);
+            _camera.speed(26);
         }
 
         ~Viewport() override
