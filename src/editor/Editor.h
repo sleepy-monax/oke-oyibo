@@ -24,7 +24,7 @@ namespace editor
         utils::Vector<utils::OwnPtr<Panel>> _panels{};
 
     public:
-        Editor(core::World &world) : _model{world}
+        Editor(utils::RefPtr<core::World> world) : _model{world}
         {
         }
 
@@ -59,7 +59,7 @@ namespace editor
         void update()
         {
             core::Time time{GetFrameTime(), GetTime()};
-            _model.world.update(time);
+            _model.world->update(time);
 
             _panels.foreach ([&](auto &panel) {
                 panel->update(_model, time);

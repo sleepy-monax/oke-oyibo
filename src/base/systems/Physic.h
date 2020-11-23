@@ -117,7 +117,7 @@ namespace base
 } // namespace base
 
 template <>
-void inspect<base::Physic>(base::Physic &physic)
+inline void inspect<base::Physic>(base::Physic &physic)
 {
     ImGui::Checkbox("Show QuadTree", &physic._show_quadtree);
     ImGui::SliderFloat("Air Friction", &physic._air_friction, 0, 1, "Friction %f", 0);

@@ -45,7 +45,7 @@ namespace editor
                     model
                         .registry()
                         .system_info(id)
-                        .inspect(model.world, *system);
+                        .inspect(*model.world, *system);
 
                     ImGui::Unindent();
                     ImGui::PopID();

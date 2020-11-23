@@ -10,15 +10,16 @@
 #include "utils/HashMap.h"
 #include "utils/OwnPtr.h"
 #include "utils/Vector.h"
+#include "utils/RefPtr.h"
 
 namespace core
 {
     class Registry;
 
-    class World
+    class World : public utils::RefCounted<World>
     {
     private:
-        Registry &_registry;
+        utils::RefPtr<Registry> &_registry;
         Terrain _terrain;
         entt::registry _entities;
         utils::HashMap<entt::id_type, utils::OwnPtr<System>> _systems;
@@ -35,7 +36,7 @@ namespace core
 
         auto &players() { return _players; }
 
-        World(Registry &, int width, int height);
+        World(utils::RefPtr<Registry> &, int width, int height);
 
         void add_player(core::Player &&);
 

@@ -1,96 +1,29 @@
 #include <imgui.h>
 #include <raylib.h>
 
-#include "base/components/Acceleration.h"
-#include "base/components/LightSource.h"
-#include "base/components/Velocity.h"
-#include "base/systems/Camera.h"
-#include "base/systems/DebugRender.h"
-#include "base/systems/Input.h"
-#include "base/systems/Light.h"
-#include "base/systems/Physic.h"
-#include "base/systems/TerrainRender.h"
-#include "core/World.h"
-#include "core/glue/Glue.h"
-#include "core/input/Keyboard.h"
-
-#include "core/Registry.h"
-#include "editor/Editor.h"
-#include "editor/panels/Entities.h"
-#include "editor/panels/Inspector.h"
-#include "editor/panels/Profiler.h"
-#include "editor/panels/Systems.h"
-#include "editor/panels/Viewport.h"
-#include "game/Game.h"
-#include "game/components/Health.h"
-#include "game/systems/HealthBar.h"
-
-using namespace base;
+#include "core/Director.h"
+#include "game/scene/InGame.h"
+#include "game/scene/MainMenu.h"
 
 int main()
 {
-    bool debugging = false;
-
     core::glue::initialize();
+    
+    core::Director director;
 
-    core::Registry registry{};
-    registry.register_system<Input>("input");
-    registry.register_system<DebugRender>("debug");
-    registry.register_system<Physic>("physic");
-    registry.register_system<TerrainRender>("terrain");
-    registry.register_system<base::Light>("light");
-    registry.register_system<base::Camera>("camera");
-    registry.register_system<game::HealthBar>("health");
-
-    registry.register_component<Acceleration>("acceleration");
-    registry.register_component<Player>("player");
-    registry.register_component<Position>("position");
-    registry.register_component<Velocity>("velocity");
-    registry.register_component<LightSource>("light-source");
-    registry.register_component<game::Health>("health");
-
-    core::World world{registry, 256, 256};
-    world.add_player({"bob", utils::own<core::input::Keyboard>()});
-    world.players()[0].camera().zoom_in();
-    world.create_entity()
-        .with<Position>(64.0f, 64.0f, 0.0f)
-        .with<Acceleration>()
-        .with<Velocity>()
-        .with<LightSource>(128.0f, WHITE)
-        .with<Player>(0)
-        .with<game::Health>();
-
-    editor::Editor editor{world};
-    editor.open<editor::Entities>();
-    editor.open<editor::Inspector>();
-    editor.open<editor::Viewport>();
-    editor.open<editor::Profiler>();
-    editor.open<editor::Systems>();
-
-    game::Game game{world};
+    director.switch_scene(new game::InGame());
 
     while (!core::glue::should_exit())
     {
-        if (IsKeyPressed(KEY_F3))
-        {
-            debugging = !debugging;
-        }
-
         core::glue::begin_frame();
 
-        if (debugging)
-        {
-            editor.run();
-        }
-        else
-        {
-            game.run();
-        }
+        director.run();
 
         core::glue::end_frame();
     }
 
     core::glue::uninitialize();
+
 
     return 0;
 }

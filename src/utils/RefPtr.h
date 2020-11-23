@@ -1,6 +1,6 @@
 #pragma once
 
-#include "utils/RefPtr.h"
+#include "utils/RefCounter.h"
 
 namespace utils
 {

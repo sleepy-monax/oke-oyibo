@@ -4,13 +4,13 @@
 namespace core
 {
 
-    World::World(Registry &registry, int width, int height)
+    World::World(utils::RefPtr<Registry> &registry, int width, int height)
         : _registry(registry),
           _terrain{width, height},
           _entities{},
           _systems{}
     {
-        registry.foreach_system([&](auto &key, auto &value) {
+        registry->foreach_system([&](auto &key, auto &value) {
             _systems[key] = value.create();
             return utils::Iteration::CONTINUE;
         });

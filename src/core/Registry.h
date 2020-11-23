@@ -5,6 +5,7 @@
 
 #include "utils/HashMap.h"
 #include "utils/OwnPtr.h"
+#include "utils/RefCounter.h"
 
 #include "base/components/Component.h"
 #include "core/System.h"
@@ -31,7 +32,7 @@ namespace core
         std::function<void(core::World &, entt::entity)> inspect;
     };
 
-    class Registry
+    class Registry : public utils::RefCounted<Registry>
     {
     private:
         utils::HashMap<entt::id_type, SystemDescription> _systems{};

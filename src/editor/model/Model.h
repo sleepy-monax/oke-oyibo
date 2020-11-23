@@ -10,7 +10,7 @@ namespace editor
     struct Model
     {
         entt::entity selected_entity;
-        core::World &world;
+        utils::RefPtr<core::World> world;
 
         editor::FPSCounter fps{};
 
@@ -19,12 +19,12 @@ namespace editor
         core::Probe render_time{"Render"};
         core::Probe display_time{"Display"};
 
-        Model(core::World &world) : world{world} {}
+        Model(utils::RefPtr<core::World> world) : world{world} {}
 
-        auto &entities() { return world.entities(); }
+        auto &entities() { return world->entities(); }
 
-        auto &registry() { return world.registry(); }
+        auto &registry() { return *world->registry(); }
 
-        auto &systems() { return world.systems(); }
+        auto &systems() { return world->systems(); }
     };
 } // namespace editor

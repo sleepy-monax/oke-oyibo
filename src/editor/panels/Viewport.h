@@ -32,7 +32,7 @@ namespace editor
         void render(Model &model) override
         {
             _camera.clear();
-            model.world.render(_camera);
+            model.world->render(_camera);
             _camera.compose();
         }
 

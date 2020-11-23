@@ -30,7 +30,7 @@ namespace editor
                     {
                         ImGui::Indent();
                         ImGui::PushID("Widget");
-                        info.inspect(model.world, model.selected_entity);
+                        info.inspect(*model.world, model.selected_entity);
                         ImGui::PopID();
                         ImGui::Unindent();
                     }
