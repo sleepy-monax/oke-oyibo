@@ -9,14 +9,14 @@ namespace core
     class CameraState
     {
     private:
-        double _x;
-        double _y;
-        double _zoom;
+        float _x;
+        float _y;
+        float _zoom;
 
     public:
-        double x() const { return _x; }
-        double y() const { return _y; }
-        double zoom() const { return _zoom; }
+        float x() const { return _x; }
+        float y() const { return _y; }
+        float zoom() const { return _zoom; }
 
         CameraState zoomed_in()
         {
@@ -32,7 +32,7 @@ namespace core
             return copy;
         }
 
-        CameraState moved_to(double x, double y)
+        CameraState moved_to(float x, float y)
         {
             CameraState copy = *this;
             copy._x = x;
@@ -44,12 +44,12 @@ namespace core
         {
         }
 
-        CameraState(double x, double y, double zoom) : _x(x), _y(y), _zoom(zoom)
+        CameraState(float x, float y, float zoom) : _x(x), _y(y), _zoom(zoom)
         {
         }
     };
 
-    static inline CameraState lerp(const CameraState from, const CameraState to, double t)
+    static inline CameraState lerp(const CameraState from, const CameraState to, float t)
     {
         return {
             utils::lerp(from.x(), to.x(), t),
@@ -61,7 +61,7 @@ namespace core
     class Camera
     {
     private:
-        double _speed = 1;
+        float _speed = 1;
         int _width = 0;
         int _height = 0;
 
@@ -96,8 +96,7 @@ namespace core
             };
         }
 
-        void
-        speed(double speed)
+        void speed(float speed)
         {
             _speed = speed;
         }

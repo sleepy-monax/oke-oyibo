@@ -17,7 +17,7 @@ namespace base
     class Physic : public core::System
     {
     private:
-        float _air_friction = 0.99;
+        float _air_friction = 0.9;
         bool _show_quadtree = false;
 
         utils::QuadTree<float, entt::entity> _entities{utils::Rectf::empty()};

@@ -1,5 +1,7 @@
 #pragma once
 
+#include "utils/Common.h"
+
 namespace utils
 {
     enum class Dimension

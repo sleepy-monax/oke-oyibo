@@ -30,22 +30,22 @@ namespace base
                 {
                     if (IsKeyDown(KEY_UP))
                     {
-                        acceleration.ay -= 1.0;
+                        acceleration.ay -= 0.1;
                     }
 
                     if (IsKeyDown(KEY_DOWN))
                     {
-                        acceleration.ay += 1.0;
+                        acceleration.ay += 0.1;
                     }
 
                     if (IsKeyDown(KEY_LEFT))
                     {
-                        acceleration.ax -= 1.0;
+                        acceleration.ax -= 0.1;
                     }
 
                     if (IsKeyDown(KEY_RIGHT))
                     {
-                        acceleration.ax += 1.0;
+                        acceleration.ax += 0.1;
                     }
                 }
             });
