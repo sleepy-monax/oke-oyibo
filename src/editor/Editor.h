@@ -43,6 +43,7 @@ namespace editor
         Editor(core::World &world)
             : _world(world)
         {
+            _camera.speed(10);
         }
 
         ~Editor() {}
@@ -87,6 +88,8 @@ namespace editor
 
                 return utils::Iteration::CONTINUE;
             });
+
+            _camera.animate(time.elapsed());
         }
 
         void render()
@@ -125,6 +128,28 @@ namespace editor
             _view_port_height = size.y;
 
             ImGui::Viewport(reinterpret_cast<void *>(_camera.composite().underlying_texture().id), ImVec2(_camera.composite().width(), _camera.composite().height()));
+
+            if (ImGui::IsWindowHovered())
+            {
+                if (ImGui::IsMouseDragging(ImGuiMouseButton_Left))
+                {
+                    auto vec = ImGui::GetMouseDragDelta();
+                    ImGui::ResetMouseDragDelta();
+
+                    _camera.move(-vec.x / _camera.zoom(), -vec.y / _camera.zoom());
+                }
+
+                float v = ImGui::GetIO().MouseWheel;
+
+                if (v < 0)
+                {
+                    _camera.zoom_out();
+                }
+                else if (v > 0)
+                {
+                    _camera.zoom_in();
+                }
+            }
 
             ImGui::End();
 

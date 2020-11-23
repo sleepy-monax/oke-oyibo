@@ -52,7 +52,7 @@ int main()
         .with<Position>(64.0f, 64.0f, 0.0f)
         .with<Acceleration>()
         .with<Velocity>()
-        .with<LightSource>(16.0f, WHITE)
+        .with<LightSource>(128.0f, WHITE)
         .with<Player>(0);
 
     editor::Editor editor{world};

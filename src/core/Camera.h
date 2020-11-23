@@ -40,6 +40,14 @@ namespace core
             return copy;
         }
 
+        CameraState move(float x, float y)
+        {
+            CameraState copy = *this;
+            copy._x += x;
+            copy._y += y;
+            return copy;
+        }
+
         CameraState() : _x(0), _y(0), _zoom(1)
         {
         }
@@ -79,6 +87,7 @@ namespace core
     public:
         auto x() { return _current.x(); }
         auto y() { return _current.y(); }
+        auto zoom() { return _current.zoom(); }
         auto width() { return _width; }
         auto height() { return _height; }
         auto width_world() { return _width / _current.zoom(); }
@@ -271,6 +280,11 @@ namespace core
             _target = _target.moved_to(x, y);
         }
 
+        void move(double x, double y)
+        {
+            _target = _target.move(x, y);
+        }
+
         void jump_to(double x, double y)
         {
             _target = _target.moved_to(x, y);
@@ -279,7 +293,7 @@ namespace core
 
         void animate(double dt)
         {
-            _current = lerp(_current, _target, dt);
+            _current = lerp(_current, _target, dt * _speed);
         }
     };
 } // namespace core

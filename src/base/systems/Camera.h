@@ -47,7 +47,7 @@ namespace base
                     {
                         auto &camera = world.players()[player.player_index].camera();
 
-                        DrawCircle(camera.target().x(), camera.target().y(), 4, BLUE);
+                        DrawCircleLines(camera.target().x(), camera.target().y(), 16, BLUE);
                         DrawCircle(camera.current().x(), camera.current().y(), 4, ORANGE);
 
                         auto r = camera.bound_world();
