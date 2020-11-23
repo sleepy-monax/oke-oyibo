@@ -5,6 +5,8 @@
 #include "core/Camera.h"
 #include "core/input/Controller.h"
 #include "utils/OwnPtr.h"
+ 
+#include "game/components/Health.h"
 
 namespace core
 {
@@ -17,6 +19,7 @@ namespace core
         core::Camera _camera{};
 
     public:
+
         std::string name() { return _name; }
 
         input::Controller &controller() { return *_controller; }

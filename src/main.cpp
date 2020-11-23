@@ -22,6 +22,8 @@
 #include "editor/panels/Systems.h"
 #include "editor/panels/Viewport.h"
 #include "game/Game.h"
+#include "game/components/Health.h"
+#include "game/systems/HealthBar.h"
 
 using namespace base;
 
@@ -38,12 +40,14 @@ int main()
     registry.register_system<TerrainRender>("terrain");
     registry.register_system<base::Light>("light");
     registry.register_system<base::Camera>("camera");
+    registry.register_system<game::HealthBar>("health");
 
     registry.register_component<Acceleration>("acceleration");
     registry.register_component<Player>("player");
     registry.register_component<Position>("position");
     registry.register_component<Velocity>("velocity");
     registry.register_component<LightSource>("light-source");
+    registry.register_component<game::Health>("health");
 
     core::World world{registry, 256, 256};
     world.add_player({"bob", utils::own<core::input::Keyboard>()});
@@ -53,7 +57,8 @@ int main()
         .with<Acceleration>()
         .with<Velocity>()
         .with<LightSource>(128.0f, WHITE)
-        .with<Player>(0);
+        .with<Player>(0)
+        .with<game::Health>();
 
     editor::Editor editor{world};
     editor.open<editor::Entities>();
