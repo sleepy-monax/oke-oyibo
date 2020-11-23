@@ -17,6 +17,7 @@
 #include "base/systems/TerrainRender.h"
 #include "game/systems/HealthBar.h"
 #include "game/systems/HungerSystem.h"
+#include "game/systems/ThirstSystem.h"
 
 namespace game
 {
@@ -34,6 +35,7 @@ namespace game
         registry->register_system<base::Camera>("camera");
         registry->register_system<game::HealthBar>("health_bar");
         registry->register_system<game::HungerSystem>("hunger");
+        registry->register_system<game::ThirstSystem>("thirstSystem");
 
         registry->register_component<base::Player>("player");
         registry->register_component<base::Position>("position");
@@ -42,6 +44,7 @@ namespace game
         registry->register_component<base::LightSource>("light-source");
         registry->register_component<game::Health>("health");
         registry->register_component<game::Hunger>("hunger");
+        registry->register_component<game::Thirst>("thirst");
 
         auto world = utils::make<core::World>(registry, 256, 256);
 
@@ -56,6 +59,7 @@ namespace game
             .with<base::LightSource>(128.0f, WHITE)
             .with<game::Health>(10)
             .with<game::Hunger>(10.0f, 10.0f)
+            .with<game::Thirst>(20.0f, 20.0f)
             .with<base::Player>(0);
 
         _editor = utils::own<editor::Editor>(world);
