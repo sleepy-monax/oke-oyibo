@@ -12,6 +12,7 @@
 #include "base/systems/TerrainRender.h"
 #include "core/World.h"
 #include "core/glue/Glue.h"
+#include "core/input/Keyboard.h"
 
 #include "core/Registry.h"
 #include "editor/Editor.h"
@@ -44,7 +45,8 @@ int main()
 
     core::World world{registry, 256, 256};
 
-    world.add_player({"bob", utils::own<core::input::Controller>()});
+    world.add_player({"bob", utils::own<core::input::Keyboard>()});
+    world.players()[0].camera().zoom_in();
 
     world.create_entity()
         .with<Position>(64.0f, 64.0f, 0.0f)

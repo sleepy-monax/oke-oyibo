@@ -50,8 +50,8 @@ namespace base
                         DrawCircle(camera.target().x(), camera.target().y(), 4, BLUE);
                         DrawCircle(camera.current().x(), camera.current().y(), 4, ORANGE);
 
-                        auto r = camera.bound();
-                        DrawRectanglePro({r.x(), r.y(), r.width(), r.height()}, {}, 0, RED);
+                        auto r = camera.bound_world();
+                        DrawRectangleLinesEx({r.x(), r.y(), r.width(), r.height()}, 1, RED);
                     }
                 });
             });

@@ -77,13 +77,18 @@ namespace core
         Surface _composite{};
 
     public:
-        auto width() { return _width / _current.zoom(); }
-        auto height() { return _height / _current.zoom(); }
+        auto x() { return _current.x(); }
+        auto y() { return _current.y(); }
+        auto width() { return _width; }
+        auto height() { return _height; }
+        auto width_world() { return _width / _current.zoom(); }
+        auto height_world() { return _height / _current.zoom(); }
+
         utils::Vec2f position() { return {_current.x(), _current.y()}; }
-        utils::Vec2f size() { return {width(), height()}; }
-        utils::Rectf bound()
+        utils::Vec2f size_world() { return {width_world(), height_world()}; }
+        utils::Rectf bound_world()
         {
-            return {position() - size() / 2, size()};
+            return {position() - size_world() / 2, size_world()};
         }
 
         Camera2D raylib_camera()

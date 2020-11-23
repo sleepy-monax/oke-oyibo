@@ -16,6 +16,9 @@ namespace core::input
 
         ACTION_MAIN,
         ACTION_SECONDARY,
+
+        ZOOM_IN,
+        ZOOM_OUT,
     };
 
     class Controller
@@ -25,6 +28,13 @@ namespace core::input
         Controller() {}
 
         virtual ~Controller() {}
+
+        virtual bool down(Control control)
+        {
+            __unused(control);
+
+            return false;
+        }
 
         virtual bool pressed(Control control)
         {

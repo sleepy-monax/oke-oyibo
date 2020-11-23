@@ -25,28 +25,37 @@ namespace base
         {
             auto view = world.entities().view<Player, Acceleration>();
 
-            view.each([](auto &player, auto &acceleration) {
-                if (player.player_index == 0)
+            view.each([&](auto &player, auto &acceleration) {
+                core::input::Controller &controller = world.players()[player.player_index].controller();
+
+                if (controller.down(core::input::Control::MOVE_UP))
                 {
-                    if (IsKeyDown(KEY_UP))
-                    {
-                        acceleration.ay -= 0.1;
-                    }
+                    acceleration.ay -= 0.1;
+                }
 
-                    if (IsKeyDown(KEY_DOWN))
-                    {
-                        acceleration.ay += 0.1;
-                    }
+                if (controller.down(core::input::Control::MOVE_DOWN))
+                {
+                    acceleration.ay += 0.1;
+                }
 
-                    if (IsKeyDown(KEY_LEFT))
-                    {
-                        acceleration.ax -= 0.1;
-                    }
+                if (controller.down(core::input::Control::MOVE_LEFT))
+                {
+                    acceleration.ax -= 0.1;
+                }
 
-                    if (IsKeyDown(KEY_RIGHT))
-                    {
-                        acceleration.ax += 0.1;
-                    }
+                if (controller.down(core::input::Control::MOVE_RIGHT))
+                {
+                    acceleration.ax += 0.1;
+                }
+
+                if (controller.pressed(core::input::Control::ZOOM_IN))
+                {
+                    world.players()[player.player_index].camera().zoom_in();
+                }
+
+                if (controller.pressed(core::input::Control::ZOOM_OUT))
+                {
+                    world.players()[player.player_index].camera().zoom_out();
                 }
             });
         }

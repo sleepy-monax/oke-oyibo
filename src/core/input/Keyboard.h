@@ -12,22 +12,67 @@ namespace core::input
     public:
         Keyboard() {}
 
+        bool down(Control control) override
+        {
+            switch (control)
+            {
+            case Control::MOVE_UP:
+                return IsKeyDown(KEY_W);
+
+            case Control::MOVE_DOWN:
+                return IsKeyDown(KEY_S);
+
+            case Control::MOVE_LEFT:
+                return IsKeyDown(KEY_A);
+
+            case Control::MOVE_RIGHT:
+                return IsKeyDown(KEY_D);
+
+            case Control::ACTION_MAIN:
+                return IsKeyDown(KEY_J);
+
+            case Control::ACTION_SECONDARY:
+                return IsKeyDown(KEY_K);
+
+            case Control::ZOOM_IN:
+                return IsKeyDown(KEY_PAGE_UP);
+
+            case Control::ZOOM_OUT:
+                return IsKeyDown(KEY_PAGE_DOWN);
+
+            default:
+                return false;
+            }
+        }
+
         bool pressed(Control control) override
         {
             switch (control)
             {
             case Control::MOVE_UP:
-                return IsKeyDown(KEY_Z);
+                return IsKeyPressed(KEY_W);
+
             case Control::MOVE_DOWN:
-                return IsKeyDown(KEY_S);
+                return IsKeyPressed(KEY_S);
+
             case Control::MOVE_LEFT:
-                return IsKeyDown(KEY_Q);
+                return IsKeyPressed(KEY_A);
+
             case Control::MOVE_RIGHT:
-                return IsKeyDown(KEY_D);
+                return IsKeyPressed(KEY_D);
+
             case Control::ACTION_MAIN:
-                return IsKeyDown(KEY_J);
+                return IsKeyPressed(KEY_J);
+
             case Control::ACTION_SECONDARY:
-                return IsKeyDown(KEY_K);
+                return IsKeyPressed(KEY_K);
+
+            case Control::ZOOM_IN:
+                return IsKeyPressed(KEY_PAGE_UP);
+
+            case Control::ZOOM_OUT:
+                return IsKeyPressed(KEY_PAGE_DOWN);
+
             default:
                 return false;
             }

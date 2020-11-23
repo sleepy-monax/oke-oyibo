@@ -18,9 +18,15 @@ namespace base
             camera.terrain().use_and_do([&]() {
                 auto &terrain = world.terrain();
 
-                for (int x = 0; x < terrain.width(); x++)
+                utils::Rectf bound = camera.bound_world();
+
+                for (int x = MAX(0, bound.left() / core::Tile::SIZE);
+                     x < MIN(bound.right() / core::Tile::SIZE, terrain.width());
+                     x++)
                 {
-                    for (int y = 0; y < terrain.height(); y++)
+                    for (int y = MAX(0, bound.top() / core::Tile::SIZE);
+                         y < MIN(bound.bottom() / core::Tile::SIZE, terrain.height());
+                         y++)
                     {
                         DrawRectangleLines(
                             x * core::Tile::SIZE,
