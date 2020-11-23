@@ -4,6 +4,7 @@
 
 namespace base
 {
+
     struct Acceleration
     {
         float ax;

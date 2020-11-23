@@ -9,11 +9,12 @@
 
 namespace base
 {
-    class Light : public core::System
+    class Light: public core::System
     {
     private:
     public:
-        Light() : System("Light")
+        Light() :
+            System("Light")
         {
         }
 

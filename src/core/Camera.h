@@ -48,11 +48,13 @@ namespace core
             return copy;
         }
 
-        CameraState() : _x(0), _y(0), _zoom(1)
+        CameraState() :
+            _x(0), _y(0), _zoom(1)
         {
         }
 
-        CameraState(float x, float y, float zoom) : _x(x), _y(y), _zoom(zoom)
+        CameraState(float x, float y, float zoom) :
+            _x(x), _y(y), _zoom(zoom)
         {
         }
     };

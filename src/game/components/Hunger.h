@@ -18,5 +18,3 @@ inline void inspect<game::Hunger>(game::Hunger &hunger)
     ImGui::InputFloat("currentFood##Hunger", &hunger.current_food);
     ImGui::InputFloat("maxFood##Hunger", &hunger.max_food);
 }
-
-

@@ -24,12 +24,13 @@ namespace editor
         utils::Vector<utils::OwnPtr<Panel>> _panels{};
 
     public:
-        Editor(utils::RefPtr<core::World> world) : _model{world}
+        Editor(utils::RefPtr<core::World> world) :
+            _model{world}
         {
         }
 
         template <typename TPanel, typename... TArgs>
-        TPanel &open(TArgs &&... args)
+        TPanel &open(TArgs &&...args)
         {
             auto ptr = utils::own<TPanel>(std::forward<TArgs>(args)...);
             auto &ref = *ptr;

@@ -7,11 +7,12 @@
 
 namespace base
 {
-    class TerrainRender : public core::System
+    class TerrainRender: public core::System
     {
     private:
     public:
-        TerrainRender() : System("Terrain Render") {}
+        TerrainRender() :
+            System("Terrain Render") {}
 
         void render(core::World &world, core::Camera &camera) override
         {

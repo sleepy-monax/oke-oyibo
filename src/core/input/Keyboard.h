@@ -6,7 +6,7 @@
 
 namespace core::input
 {
-    class Keyboard : public Controller
+    class Keyboard: public Controller
     {
     private:
     public:

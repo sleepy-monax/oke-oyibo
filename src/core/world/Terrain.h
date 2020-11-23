@@ -22,8 +22,8 @@ namespace core
 
         Tile &tile(int x, int y) { return _tiles[y * _width + x]; }
 
-        Terrain(int width, int height)
-            : _width(width), _height(height)
+        Terrain(int width, int height) :
+            _width(width), _height(height)
         {
             _tiles = new Tile[width * height];
         }

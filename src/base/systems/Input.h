@@ -9,11 +9,12 @@
 
 namespace base
 {
-    class Input : public core::System
+    class Input: public core::System
     {
     private:
     public:
-        Input() : System("Input")
+        Input() :
+            System("Input")
         {
         }
 

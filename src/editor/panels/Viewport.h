@@ -4,7 +4,7 @@
 
 namespace editor
 {
-    class Viewport : public Panel
+    class Viewport: public Panel
     {
     private:
         int _width = 128;

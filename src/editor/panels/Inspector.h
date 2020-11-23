@@ -4,7 +4,7 @@
 
 namespace editor
 {
-    class Inspector : public Panel
+    class Inspector: public Panel
     {
     private:
     public:

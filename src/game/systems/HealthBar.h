@@ -10,19 +10,18 @@
 
 #include "game/components/Health.h"
 
-
 namespace game
-{   
-    class HealthBar : public core::System
+{
+    class HealthBar: public core::System
     {
-        private:
-            Health health;
+    private:
+        Health health;
 
-        public: 
-            HealthBar();
-            ~HealthBar() override;
+    public:
+        HealthBar();
+        ~HealthBar() override;
 
-            void update();
-            void render(core::World &world, core::Camera &camera);
+        void update();
+        void render(core::World &world, core::Camera &camera);
     };
 } // namespace game

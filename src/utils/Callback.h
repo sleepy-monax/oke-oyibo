@@ -20,14 +20,14 @@ namespace utils
         };
 
         template <typename CallableType>
-        class CallableWrapper final : public CallableWrapperBase
+        class CallableWrapper final: public CallableWrapperBase
         {
         private:
             CallableType _callable;
 
         public:
-            explicit CallableWrapper(CallableType &&callable)
-                : _callable(std::move(callable))
+            explicit CallableWrapper(CallableType &&callable) :
+                _callable(std::move(callable))
             {
             }
 
@@ -47,14 +47,14 @@ namespace utils
         Callback(nullptr_t) {}
 
         template <typename CallableType, class = typename EnableIf<!(IsPointer<CallableType>::value && IsFunction<typename RemovePointer<CallableType>::Type>::value) && IsRvalueReference<CallableType &&>::value>::Type>
-        Callback(CallableType &&callable)
-            : _wrapper(own<CallableWrapper<CallableType>>(std::move(callable)))
+        Callback(CallableType &&callable) :
+            _wrapper(own<CallableWrapper<CallableType>>(std::move(callable)))
         {
         }
 
         template <typename FunctionType, class = typename EnableIf<IsPointer<FunctionType>::value && IsFunction<typename RemovePointer<FunctionType>::Type>::value>::Type>
-        Callback(FunctionType f)
-            : _wrapper(own<CallableWrapper<FunctionType>>(std::move(f)))
+        Callback(FunctionType f) :
+            _wrapper(own<CallableWrapper<FunctionType>>(std::move(f)))
         {
         }
 

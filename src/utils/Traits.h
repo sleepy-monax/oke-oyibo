@@ -66,162 +66,162 @@ namespace utils
     typedef IntegralConstant<bool, true> TrueType;
 
     template <class T>
-    struct IsLvalueReference : FalseType
+    struct IsLvalueReference: FalseType
     {
     };
 
     template <class T>
-    struct IsLvalueReference<T &> : TrueType
+    struct IsLvalueReference<T &>: TrueType
     {
     };
 
     template <class T>
-    struct __IsPointerHelper : FalseType
+    struct __IsPointerHelper: FalseType
     {
     };
 
     template <class T>
-    struct __IsPointerHelper<T *> : TrueType
+    struct __IsPointerHelper<T *>: TrueType
     {
     };
 
     template <class T>
-    struct IsPointer : __IsPointerHelper<typename RemoveConstVolatile<T>::Type>
+    struct IsPointer: __IsPointerHelper<typename RemoveConstVolatile<T>::Type>
     {
     };
 
     template <class>
-    struct IsFunction : FalseType
+    struct IsFunction: FalseType
     {
     };
 
     template <class Ret, class... Args>
-    struct IsFunction<Ret(Args...)> : TrueType
+    struct IsFunction<Ret(Args...)>: TrueType
     {
     };
 
     template <class Ret, class... Args>
-    struct IsFunction<Ret(Args..., ...)> : TrueType
+    struct IsFunction<Ret(Args..., ...)>: TrueType
     {
     };
 
     template <class Ret, class... Args>
-    struct IsFunction<Ret(Args...) const> : TrueType
+    struct IsFunction<Ret(Args...) const>: TrueType
     {
     };
 
     template <class Ret, class... Args>
-    struct IsFunction<Ret(Args..., ...) const> : TrueType
+    struct IsFunction<Ret(Args..., ...) const>: TrueType
     {
     };
 
     template <class Ret, class... Args>
-    struct IsFunction<Ret(Args...) volatile> : TrueType
+    struct IsFunction<Ret(Args...) volatile>: TrueType
     {
     };
 
     template <class Ret, class... Args>
-    struct IsFunction<Ret(Args..., ...) volatile> : TrueType
+    struct IsFunction<Ret(Args..., ...) volatile>: TrueType
     {
     };
 
     template <class Ret, class... Args>
-    struct IsFunction<Ret(Args...) const volatile> : TrueType
+    struct IsFunction<Ret(Args...) const volatile>: TrueType
     {
     };
 
     template <class Ret, class... Args>
-    struct IsFunction<Ret(Args..., ...) const volatile> : TrueType
+    struct IsFunction<Ret(Args..., ...) const volatile>: TrueType
     {
     };
 
     template <class Ret, class... Args>
-    struct IsFunction<Ret(Args...) &> : TrueType
+    struct IsFunction<Ret(Args...) &>: TrueType
     {
     };
 
     template <class Ret, class... Args>
-    struct IsFunction<Ret(Args..., ...) &> : TrueType
+    struct IsFunction<Ret(Args..., ...) &>: TrueType
     {
     };
 
     template <class Ret, class... Args>
-    struct IsFunction<Ret(Args...) const &> : TrueType
+    struct IsFunction<Ret(Args...) const &>: TrueType
     {
     };
 
     template <class Ret, class... Args>
-    struct IsFunction<Ret(Args..., ...) const &> : TrueType
+    struct IsFunction<Ret(Args..., ...) const &>: TrueType
     {
     };
 
     template <class Ret, class... Args>
-    struct IsFunction<Ret(Args...) volatile &> : TrueType
+    struct IsFunction<Ret(Args...) volatile &>: TrueType
     {
     };
 
     template <class Ret, class... Args>
-    struct IsFunction<Ret(Args..., ...) volatile &> : TrueType
+    struct IsFunction<Ret(Args..., ...) volatile &>: TrueType
     {
     };
 
     template <class Ret, class... Args>
-    struct IsFunction<Ret(Args...) const volatile &> : TrueType
+    struct IsFunction<Ret(Args...) const volatile &>: TrueType
     {
     };
 
     template <class Ret, class... Args>
-    struct IsFunction<Ret(Args..., ...) const volatile &> : TrueType
+    struct IsFunction<Ret(Args..., ...) const volatile &>: TrueType
     {
     };
 
     template <class Ret, class... Args>
-    struct IsFunction<Ret(Args...) &&> : TrueType
+    struct IsFunction<Ret(Args...) &&>: TrueType
     {
     };
 
     template <class Ret, class... Args>
-    struct IsFunction<Ret(Args..., ...) &&> : TrueType
+    struct IsFunction<Ret(Args..., ...) &&>: TrueType
     {
     };
 
     template <class Ret, class... Args>
-    struct IsFunction<Ret(Args...) const &&> : TrueType
+    struct IsFunction<Ret(Args...) const &&>: TrueType
     {
     };
 
     template <class Ret, class... Args>
-    struct IsFunction<Ret(Args..., ...) const &&> : TrueType
+    struct IsFunction<Ret(Args..., ...) const &&>: TrueType
     {
     };
 
     template <class Ret, class... Args>
-    struct IsFunction<Ret(Args...) volatile &&> : TrueType
+    struct IsFunction<Ret(Args...) volatile &&>: TrueType
     {
     };
 
     template <class Ret, class... Args>
-    struct IsFunction<Ret(Args..., ...) volatile &&> : TrueType
+    struct IsFunction<Ret(Args..., ...) volatile &&>: TrueType
     {
     };
 
     template <class Ret, class... Args>
-    struct IsFunction<Ret(Args...) const volatile &&> : TrueType
+    struct IsFunction<Ret(Args...) const volatile &&>: TrueType
     {
     };
 
     template <class Ret, class... Args>
-    struct IsFunction<Ret(Args..., ...) const volatile &&> : TrueType
+    struct IsFunction<Ret(Args..., ...) const volatile &&>: TrueType
     {
     };
 
     template <class T>
-    struct IsRvalueReference : FalseType
+    struct IsRvalueReference: FalseType
     {
     };
 
     template <class T>
-    struct IsRvalueReference<T &&> : TrueType
+    struct IsRvalueReference<T &&>: TrueType
     {
     };
 
@@ -434,57 +434,57 @@ namespace utils
     };
 
     template <class T>
-    struct IsVoid : IsSame<void, typename RemoveConstVolatile<T>::Type>
+    struct IsVoid: IsSame<void, typename RemoveConstVolatile<T>::Type>
     {
     };
 
     template <class T>
-    struct IsConst : FalseType
+    struct IsConst: FalseType
     {
     };
 
     template <class T>
-    struct IsConst<const T> : TrueType
+    struct IsConst<const T>: TrueType
     {
     };
 
     template <typename T>
-    struct IsUnion : public IntegralConstant<bool, __is_union(T)>
+    struct IsUnion: public IntegralConstant<bool, __is_union(T)>
     {
     };
 
     template <typename T>
-    struct IsClass : public IntegralConstant<bool, __is_class(T)>
+    struct IsClass: public IntegralConstant<bool, __is_class(T)>
     {
     };
 
     template <typename Base, typename Derived>
-    struct IsBaseOf : public IntegralConstant<bool, __is_base_of(Base, Derived)>
+    struct IsBaseOf: public IntegralConstant<bool, __is_base_of(Base, Derived)>
     {
     };
 
     template <typename T>
-    struct __IsIntegral : FalseType
+    struct __IsIntegral: FalseType
     {
     };
 
     template <>
-    struct __IsIntegral<uint8_t> : TrueType
+    struct __IsIntegral<uint8_t>: TrueType
     {
     };
 
     template <>
-    struct __IsIntegral<uint16_t> : TrueType
+    struct __IsIntegral<uint16_t>: TrueType
     {
     };
 
     template <>
-    struct __IsIntegral<uint32_t> : TrueType
+    struct __IsIntegral<uint32_t>: TrueType
     {
     };
 
     template <>
-    struct __IsIntegral<uint64_t> : TrueType
+    struct __IsIntegral<uint64_t>: TrueType
     {
     };
 
@@ -492,17 +492,17 @@ namespace utils
     using IsIntegral = __IsIntegral<typename MakeUnsigned<typename RemoveConstVolatile<T>::Type>::Type>;
 
     template <typename T>
-    struct __IsFloatingPoint : FalseType
+    struct __IsFloatingPoint: FalseType
     {
     };
 
     template <>
-    struct __IsFloatingPoint<float> : TrueType
+    struct __IsFloatingPoint<float>: TrueType
     {
     };
 
     template <>
-    struct __IsFloatingPoint<double> : TrueType
+    struct __IsFloatingPoint<double>: TrueType
     {
     };
 

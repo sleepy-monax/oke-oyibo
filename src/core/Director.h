@@ -7,7 +7,8 @@
 
 namespace core
 {
-    class Director {
+    class Director
+    {
 
     private:
         Scene *_current;
@@ -21,6 +22,5 @@ namespace core
 
         void switch_scene(Scene *scene);
         void run();
-
     };
-}
+} // namespace core

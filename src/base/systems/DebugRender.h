@@ -9,11 +9,12 @@
 namespace base
 {
 
-    class DebugRender : public core::System
+    class DebugRender: public core::System
     {
     private:
     public:
-        DebugRender() : System("DebugRender")
+        DebugRender() :
+            System("DebugRender")
         {
         }
 

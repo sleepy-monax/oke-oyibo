@@ -4,7 +4,7 @@
 
 namespace editor
 {
-    class Profiler : public Panel
+    class Profiler: public Panel
     {
     private:
     public:

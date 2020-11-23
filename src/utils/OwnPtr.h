@@ -1,7 +1,7 @@
 #pragma once
 
-#include <utility>
 #include <cstddef>
+#include <utility>
 
 namespace utils
 {
@@ -15,17 +15,22 @@ namespace utils
         OwnPtr() {}
         OwnPtr(std::nullptr_t) {}
 
-        OwnPtr(T *ptr) : _ptr(ptr) {}
+        OwnPtr(T *ptr) :
+            _ptr(ptr) {}
 
-        OwnPtr(OwnPtr &other) : _ptr(other.give_ref()) {}
-
-        template <typename U>
-        OwnPtr(OwnPtr<U> &other) : _ptr(static_cast<U *>(other.give_ref())) {}
-
-        OwnPtr(OwnPtr &&other) : _ptr(other.give_ref()) {}
+        OwnPtr(OwnPtr &other) :
+            _ptr(other.give_ref()) {}
 
         template <typename U>
-        OwnPtr(OwnPtr<U> &&other) : _ptr(static_cast<U *>(other.give_ref())) {}
+        OwnPtr(OwnPtr<U> &other) :
+            _ptr(static_cast<U *>(other.give_ref())) {}
+
+        OwnPtr(OwnPtr &&other) :
+            _ptr(other.give_ref()) {}
+
+        template <typename U>
+        OwnPtr(OwnPtr<U> &&other) :
+            _ptr(static_cast<U *>(other.give_ref())) {}
 
         ~OwnPtr()
         {
@@ -144,7 +149,7 @@ namespace utils
     };
 
     template <typename Type, typename... Args>
-    inline OwnPtr<Type> own(Args &&... args)
+    inline OwnPtr<Type> own(Args &&...args)
     {
         return OwnPtr<Type>(new Type(std::forward<Args>(args)...));
     }

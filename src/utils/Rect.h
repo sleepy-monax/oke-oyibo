@@ -88,44 +88,44 @@ namespace utils
 
         Rect() = default;
 
-        Rect(TScalar width, TScalar height)
-            : _x(0),
-              _y(0),
-              _width(width),
-              _height(height)
+        Rect(TScalar width, TScalar height) :
+            _x(0),
+            _y(0),
+            _width(width),
+            _height(height)
         {
         }
 
-        Rect(Vec2<TScalar> size)
-            : _x(0),
-              _y(0),
-              _width(size.x()),
-              _height(size.y())
+        Rect(Vec2<TScalar> size) :
+            _x(0),
+            _y(0),
+            _width(size.x()),
+            _height(size.y())
         {
         }
 
-        Rect(Vec2<TScalar> position, Vec2<TScalar> size)
-            : _x(position.x()),
-              _y(position.y()),
-              _width(size.x()),
-              _height(size.y())
+        Rect(Vec2<TScalar> position, Vec2<TScalar> size) :
+            _x(position.x()),
+            _y(position.y()),
+            _width(size.x()),
+            _height(size.y())
         {
         }
 
         template <typename TOtherScalar>
-        Rect(const Rect<TOtherScalar> &other)
-            : _x(other.x()),
-              _y(other.y()),
-              _width(other.width()),
-              _height(other.height())
+        Rect(const Rect<TOtherScalar> &other) :
+            _x(other.x()),
+            _y(other.y()),
+            _width(other.width()),
+            _height(other.height())
         {
         }
 
-        Rect(TScalar x, TScalar y, TScalar width, TScalar height)
-            : _x(x),
-              _y(y),
-              _width(width),
-              _height(height)
+        Rect(TScalar x, TScalar y, TScalar width, TScalar height) :
+            _x(x),
+            _y(y),
+            _width(width),
+            _height(height)
         {
         }
 

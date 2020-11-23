@@ -5,11 +5,12 @@
 
 #include "core/Scene.h"
 
-namespace game {
-    class MainMenu : public core::Scene {
+namespace game
+{
+    class MainMenu: public core::Scene
+    {
 
     private:
-
     public:
         MainMenu();
 
@@ -23,4 +24,4 @@ namespace game {
 
         void on_switch_out() override;
     };
-}
+} // namespace game

@@ -19,21 +19,29 @@ namespace utils
         RefPtr() {}
         RefPtr(nullptr_t) {}
 
-        RefPtr(T &object) : _ptr(&object) { _ptr->ref(); }
-        RefPtr(AdoptTag, T &object) : _ptr(const_cast<T *>(&object)) {}
+        RefPtr(T &object) :
+            _ptr(&object) { _ptr->ref(); }
+        RefPtr(AdoptTag, T &object) :
+            _ptr(const_cast<T *>(&object)) {}
 
-        RefPtr(RefPtr &other) : _ptr(other.naked()) { _ptr->ref(); }
-        RefPtr(AdoptTag, RefPtr &other) : _ptr(other.give_ref()) {}
-        RefPtr(RefPtr &&other) : _ptr(other.give_ref()) {}
+        RefPtr(RefPtr &other) :
+            _ptr(other.naked()) { _ptr->ref(); }
+        RefPtr(AdoptTag, RefPtr &other) :
+            _ptr(other.give_ref()) {}
+        RefPtr(RefPtr &&other) :
+            _ptr(other.give_ref()) {}
 
         template <typename U>
-        RefPtr(RefPtr<U> &other) : _ptr(static_cast<T *>(other.naked())) { _ptr->ref(); }
+        RefPtr(RefPtr<U> &other) :
+            _ptr(static_cast<T *>(other.naked())) { _ptr->ref(); }
 
         template <typename U>
-        RefPtr(AdoptTag, RefPtr<U> &other) : _ptr(static_cast<T *>(other.give_ref())) {}
+        RefPtr(AdoptTag, RefPtr<U> &other) :
+            _ptr(static_cast<T *>(other.give_ref())) {}
 
         template <typename U>
-        RefPtr(RefPtr<U> &&other) : _ptr(static_cast<T *>(other.give_ref())) {}
+        RefPtr(RefPtr<U> &&other) :
+            _ptr(static_cast<T *>(other.give_ref())) {}
 
         ~RefPtr()
         {
@@ -175,7 +183,7 @@ namespace utils
     }
 
     template <typename Type, typename... Args>
-    inline RefPtr<Type> make(Args &&... args)
+    inline RefPtr<Type> make(Args &&...args)
     {
         return RefPtr<Type>(adopt(*new Type(std::forward<Args>(args)...)));
     }

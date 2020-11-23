@@ -12,9 +12,9 @@ namespace core
         double elapsed() { return _elapsed; }
         double total() { return _total; }
 
-        Time(double elapsed, double total)
-            : _elapsed(elapsed),
-              _total(total)
+        Time(double elapsed, double total) :
+            _elapsed(elapsed),
+            _total(total)
         {
         }
     };

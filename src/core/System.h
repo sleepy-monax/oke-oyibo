@@ -40,7 +40,8 @@ namespace core
 
         Probe &render_probe() { return _render_probe; }
 
-        System(const char *name) : _name(name + std::string(" System")) {}
+        System(const char *name) :
+            _name(name + std::string(" System")) {}
 
         virtual ~System() {}
 

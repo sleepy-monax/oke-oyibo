@@ -8,7 +8,7 @@
 int main()
 {
     core::glue::initialize();
-    
+
     core::Director director;
 
     director.switch_scene(new game::InGame());
@@ -23,7 +23,6 @@ int main()
     }
 
     core::glue::uninitialize();
-
 
     return 0;
 }

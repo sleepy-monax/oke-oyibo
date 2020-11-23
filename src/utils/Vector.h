@@ -55,7 +55,8 @@ namespace utils
 
         T *raw_storage() { return _storage; }
 
-        Vector() : Vector(16) {}
+        Vector() :
+            Vector(16) {}
 
         Vector(size_t capacity)
         {

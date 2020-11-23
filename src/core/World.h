@@ -16,7 +16,7 @@ namespace core
 {
     class Registry;
 
-    class World : public utils::RefCounted<World>
+    class World: public utils::RefCounted<World>
     {
     private:
         utils::RefPtr<Registry> _registry;

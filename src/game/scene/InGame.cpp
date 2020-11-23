@@ -1,12 +1,26 @@
 #include "game/scene/InGame.h"
+
 #include "editor/panels/Entities.h"
 #include "editor/panels/Inspector.h"
 #include "editor/panels/Profiler.h"
 #include "editor/panels/Systems.h"
 #include "editor/panels/Viewport.h"
 
+#include "base/components/Acceleration.h"
+#include "base/components/LightSource.h"
+#include "base/components/Velocity.h"
+#include "base/systems/Camera.h"
+#include "base/systems/DebugRender.h"
+#include "base/systems/Input.h"
+#include "base/systems/Light.h"
+#include "base/systems/Physic.h"
+#include "base/systems/TerrainRender.h"
+#include "game/systems/HealthBar.h"
+#include "game/systems/HungerSystem.h"
+
 namespace game
 {
+
     InGame::InGame()
     {
 
@@ -18,12 +32,16 @@ namespace game
         registry->register_system<base::TerrainRender>("terrain");
         registry->register_system<base::Light>("light");
         registry->register_system<base::Camera>("camera");
+        registry->register_system<game::HealthBar>("health_bar");
+        registry->register_system<game::HungerSystem>("hunger");
 
         registry->register_component<base::Player>("player");
         registry->register_component<base::Position>("position");
         registry->register_component<base::Velocity>("velocity");
         registry->register_component<base::Acceleration>("acceleration");
         registry->register_component<base::LightSource>("light-source");
+        registry->register_component<game::Health>("health");
+        registry->register_component<game::Hunger>("hunger");
 
         auto world = utils::make<core::World>(registry, 256, 256);
 
@@ -35,6 +53,8 @@ namespace game
             .with<base::Acceleration>()
             .with<base::Velocity>()
             .with<base::LightSource>(128.0f, WHITE)
+            .with<game::Health>(10)
+            .with<game::Hunger>(10.0f, 10.0f)
             .with<base::Player>(0);
 
         _editor = utils::own<editor::Editor>(world);
@@ -46,7 +66,8 @@ namespace game
 
         _game = utils::own<game::Game>(world);
     }
-    InGame::~InGame() {
+    InGame::~InGame()
+    {
     }
 
     void InGame::update(core::Time &time)

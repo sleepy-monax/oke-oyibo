@@ -36,7 +36,8 @@ namespace core
             return total / RECORD_COUNT;
         }
 
-        Probe(const char *name) : _name(name) {}
+        Probe(const char *name) :
+            _name(name) {}
 
         void mesure(std::invocable auto function)
         {

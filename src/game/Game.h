@@ -19,8 +19,8 @@ namespace game
         utils::RefPtr<core::World> _world;
 
     public:
-        Game(utils::RefPtr<core::World> world)
-            : _world(world)
+        Game(utils::RefPtr<core::World> world) :
+            _world(world)
         {
         }
 

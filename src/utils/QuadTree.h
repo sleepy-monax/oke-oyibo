@@ -40,7 +40,8 @@ namespace utils
             Vector<Element> _elements{};
 
         public:
-            Node(Rect<TScalar> bound) : _bound(bound)
+            Node(Rect<TScalar> bound) :
+                _bound(bound)
             {
             }
 
@@ -172,8 +173,8 @@ namespace utils
         Rect<TScalar> _bound;
 
     public:
-        QuadTree(Rect<TScalar> bound)
-            : _root(own<Node>(bound)), _bound(bound)
+        QuadTree(Rect<TScalar> bound) :
+            _root(own<Node>(bound)), _bound(bound)
         {
         }
 

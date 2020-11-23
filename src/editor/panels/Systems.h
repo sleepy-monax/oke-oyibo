@@ -4,7 +4,7 @@
 
 namespace editor
 {
-    class Systems : public Panel
+    class Systems: public Panel
     {
     private:
     public:

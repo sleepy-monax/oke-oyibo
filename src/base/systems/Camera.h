@@ -8,11 +8,12 @@
 
 namespace base
 {
-    class Camera : public core::System
+    class Camera: public core::System
     {
     private:
     public:
-        Camera() : System("Camera")
+        Camera() :
+            System("Camera")
         {
         }
 

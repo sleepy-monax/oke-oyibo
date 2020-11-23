@@ -7,10 +7,11 @@
 
 namespace editor
 {
-    class FPSCounter : public core::Probe
+    class FPSCounter: public core::Probe
     {
     public:
-        FPSCounter() : Probe("FPSCounter") {}
+        FPSCounter() :
+            Probe("FPSCounter") {}
         void mesure() { Probe::mesure(GetFPS()); }
     };
 } // namespace editor

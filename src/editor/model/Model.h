@@ -19,7 +19,8 @@ namespace editor
         core::Probe render_time{"Render"};
         core::Probe display_time{"Display"};
 
-        Model(utils::RefPtr<core::World> world) : world{world} {}
+        Model(utils::RefPtr<core::World> world) :
+            world{world} {}
 
         auto &entities() { return world->entities(); }
 

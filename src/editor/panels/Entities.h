@@ -4,13 +4,14 @@
 
 namespace editor
 {
-    class Entities : public Panel
+    class Entities: public Panel
     {
     private:
         std::set<ENTT_ID_TYPE> _filters{};
 
     public:
-        Entities() : Panel()
+        Entities() :
+            Panel()
         {
             name("Entities");
         }

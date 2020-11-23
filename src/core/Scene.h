@@ -3,20 +3,21 @@
 //
 #pragma once
 
-#include <iostream>
-#include "Time.h"
+#include "core/Time.h"
 
 namespace core
 {
-    class Scene {
 
+    class Scene
+    {
     public:
-        Scene();
-        virtual ~Scene();
+        Scene() {}
+        virtual ~Scene() {}
 
-        virtual void update(Time& time);
-        virtual void render();
-        virtual void on_switch_in();
-        virtual void on_switch_out();
+        virtual void update(Time &) {}
+        virtual void render() {}
+        virtual void on_switch_in() {}
+        virtual void on_switch_out() {}
     };
-}
+
+} // namespace core
