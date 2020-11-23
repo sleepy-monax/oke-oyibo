@@ -40,7 +40,7 @@ namespace base
         {
             auto view = world.entities().view<base::Player>();
 
-            camera.overlay().use_and_do([&]() {
+            camera.with_overlay([&]() {
                 view.each([&](base::Player &player) {
                     if (player.player_index >= 0 &&
                         (size_t)player.player_index < world.players().count())

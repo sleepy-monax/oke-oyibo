@@ -21,7 +21,7 @@ namespace base
         {
             auto view = world.entities().view<Position, LightSource>();
 
-            camera.light().use_and_do([&]() {
+            camera.with_light([&]() {
                 ClearBackground(GRAY);
 
                 BeginBlendMode(BLEND_ADDITIVE);

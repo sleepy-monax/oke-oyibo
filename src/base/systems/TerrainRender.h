@@ -15,7 +15,7 @@ namespace base
 
         void render(core::World &world, core::Camera &camera) override
         {
-            camera.terrain().use_and_do([&]() {
+            camera.with_terrain([&]() {
                 auto &terrain = world.terrain();
 
                 utils::Rectf bound = camera.bound_world();

@@ -104,7 +104,7 @@ namespace base
             if (!_show_quadtree)
                 return;
 
-            camera.overlay().use_and_do([&]() {
+            camera.with_overlay([&]() {
                 _entities.query_structure([](auto &rect) {
                     DrawRectangleLines(rect.x(), rect.y(), rect.width(), rect.height(), RED);
                     return utils::Iteration::CONTINUE;

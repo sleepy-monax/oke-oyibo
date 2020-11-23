@@ -25,7 +25,7 @@ namespace base
         {
             auto view = world.entities().view<base::Position>();
 
-            camera.overlay().use_and_do([&]() {
+            camera.with_overlay([&]() {
                 view.each([](auto &position) {
                     DrawCircle(position.x, position.y, 4, RED);
                 });

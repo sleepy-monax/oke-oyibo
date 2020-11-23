@@ -94,7 +94,7 @@ namespace core
         Camera2D raylib_camera()
         {
             return {
-                {0, 0},
+                {width() / 2.0f, height() / 2.0f},
                 {position().x(), position().y()},
                 0,
                 _current.zoom(),
@@ -115,6 +115,54 @@ namespace core
         Surface &light() { return _light; }
         Surface &entities() { return _entities; }
         Surface &overlay() { return _overlay; }
+
+        template <typename TCallback>
+        void use_and_do(TCallback callback)
+        {
+            BeginMode2D(raylib_camera());
+            callback();
+            EndMode2D();
+        }
+
+        template <typename TCallback>
+        void with_terrain(TCallback callback)
+        {
+            _terrain.use_and_do([&]() {
+                use_and_do(callback);
+            });
+        }
+
+        template <typename TCallback>
+        void with_shadows(TCallback callback)
+        {
+            _shadows.use_and_do([&]() {
+                use_and_do(callback);
+            });
+        }
+
+        template <typename TCallback>
+        void with_light(TCallback callback)
+        {
+            _light.use_and_do([&]() {
+                use_and_do(callback);
+            });
+        }
+
+        template <typename TCallback>
+        void with_entities(TCallback callback)
+        {
+            _entities.use_and_do([&]() {
+                use_and_do(callback);
+            });
+        }
+
+        template <typename TCallback>
+        void with_overlay(TCallback callback)
+        {
+            _overlay.use_and_do([&]() {
+                use_and_do(callback);
+            });
+        }
 
         Surface &composite() { return _composite; }
 
