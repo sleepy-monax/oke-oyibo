@@ -27,12 +27,27 @@ namespace ImGui
         return SliderScalar(label, ImGuiDataType_U8, v, &v_min, &v_max, format, flags);
     }
 
-    static inline void Viewport(ImTextureID user_texture_id, const ImVec2 &size)
+    static inline bool Viewport(ImTextureID user_texture_id, const ImVec2 &size)
     {
         ImGuiWindow *window = GetCurrentWindow();
         if (window->SkipItems)
-            return;
+        {
+            return false;
+        }
+
+        int id = window->GetID(user_texture_id);
         ImRect bb(window->Pos, window->Pos + size);
+        ImGui::ItemSize(bb);
+
+        if (!ItemAdd(bb, id, &bb))
+        {
+            return false;
+        }
+
+        ImGui::ItemHoverable(bb, id);
+
         window->DrawList->AddImage(user_texture_id, bb.Min, bb.Max, ImVec2(0, 0), ImVec2(1, 1), GetColorU32(ImVec4(1, 1, 1, 1)));
+
+        return ImGui::IsItemHovered();
     }
 } // namespace ImGui

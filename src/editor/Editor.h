@@ -125,11 +125,11 @@ namespace editor
             auto size = ImGui::GetWindowSize();
 
             _view_port_width = size.x;
-            _view_port_height = size.y;
+            _view_port_height = size.y - 4;
 
-            ImGui::Viewport(reinterpret_cast<void *>(_camera.composite().underlying_texture().id), ImVec2(_camera.composite().width(), _camera.composite().height()));
+            auto viewport_focused = ImGui::Viewport(reinterpret_cast<void *>(_camera.composite().underlying_texture().id), ImVec2(_camera.composite().width(), _camera.composite().height()));
 
-            if (ImGui::IsWindowHovered())
+            if (viewport_focused)
             {
                 if (ImGui::IsMouseDragging(ImGuiMouseButton_Left))
                 {
