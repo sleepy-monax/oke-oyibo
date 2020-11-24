@@ -14,7 +14,6 @@ namespace editor
 
         editor::FPSCounter fps{};
 
-        core::Probe total_time{"Total"};
         core::Probe update_time{"Update"};
         core::Probe render_time{"Render"};
         core::Probe display_time{"Display"};
@@ -24,7 +23,7 @@ namespace editor
 
         auto &entities() { return world->entities(); }
 
-        auto &registry() { return *world->registry(); }
+        auto &registry() { return world->registry(); }
 
         auto &systems() { return world->systems(); }
     };

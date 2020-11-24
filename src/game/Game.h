@@ -26,34 +26,28 @@ namespace game
 
         ~Game() {}
 
-        void run()
+        void update(core::Time &time)
         {
             for (size_t i = 0; i < _world->players().count(); i++)
             {
                 _world->players()[i].camera().resize_to_fit_the_screen();
             }
 
-            update();
-
-            for (size_t i = 0; i < _world->players().count(); i++)
-            {
-                render(_world->players()[i].camera());
-            }
-
-            compose();
-        }
-
-        void update()
-        {
-            core::Time time{GetFrameTime(), GetTime()};
             _world->update(time);
         }
 
-        void render(core::Camera &camera)
+        void render()
         {
-            camera.clear();
-            _world->render(camera);
-            camera.compose();
+            for (size_t i = 0; i < _world->players().count(); i++)
+            {
+                auto &camera = _world->players()[i].camera();
+
+                camera.clear();
+                _world->render(camera);
+                camera.compose();
+            }
+
+            compose();
         }
 
         void compose()

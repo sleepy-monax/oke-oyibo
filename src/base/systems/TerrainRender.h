@@ -11,8 +11,9 @@ namespace base
     {
     private:
     public:
-        TerrainRender() :
-            System("Terrain Render") {}
+        TerrainRender()
+        {
+        }
 
         void render(core::World &world, core::Camera &camera) override
         {

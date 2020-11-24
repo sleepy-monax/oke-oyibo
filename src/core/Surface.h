@@ -1,6 +1,5 @@
 #pragma once
 
-#include <imgui.h>
 #include <raylib.h>
 
 #include "utils/Logger.h"
@@ -86,11 +85,6 @@ namespace core
 
                 linfo("Render target resized with size=%dx%d", _width, _height);
             }
-        }
-
-        void display(double scale)
-        {
-            ImGui::Image(reinterpret_cast<void *>(_texture.texture.id), ImVec2(_width * scale, _height * scale));
         }
 
         Texture2D &underlying_texture()

@@ -3,7 +3,7 @@
 #include <string>
 
 #include "core/Camera.h"
-#include "core/input/Controller.h"
+#include "core/Controller.h"
 #include "utils/OwnPtr.h"
 
 #include "game/components/Health.h"
@@ -15,16 +15,16 @@ namespace core
     private:
         std::string _name;
 
-        utils::OwnPtr<input::Controller> _controller = nullptr;
+        utils::OwnPtr<Controller> _controller = nullptr;
         core::Camera _camera{};
 
     public:
         std::string name() { return _name; }
 
-        input::Controller &controller() { return *_controller; }
+        core::Controller &controller() { return *_controller; }
         core::Camera &camera() { return _camera; }
 
-        Player(std::string name, utils::OwnPtr<input::Controller> controller) :
+        Player(std::string name, utils::OwnPtr<core::Controller> controller) :
             _name(name), _controller(controller)
         {
         }

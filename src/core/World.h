@@ -2,11 +2,11 @@
 
 #include <entt.hpp>
 
+#include "core/Builder.h"
 #include "core/Player.h"
 #include "core/System.h"
+#include "core/Terrain.h"
 #include "core/Time.h"
-#include "core/entity/Builder.h"
-#include "core/world/Terrain.h"
 #include "utils/HashMap.h"
 #include "utils/OwnPtr.h"
 #include "utils/RefPtr.h"
@@ -30,7 +30,7 @@ namespace core
 
         auto &entities() { return _entities; }
 
-        auto &registry() { return _registry; }
+        auto &registry() { return *_registry; }
 
         auto &systems() { return _systems; }
 

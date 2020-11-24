@@ -2,12 +2,7 @@
 
 namespace game
 {
-    HealthBar::HealthBar() :
-        System("HealthBar")
-    {
-    }
-
-    HealthBar::~HealthBar()
+    HealthBar::HealthBar()
     {
     }
 

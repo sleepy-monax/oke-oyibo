@@ -1,7 +1,5 @@
 #pragma once
 
-#include <string>
-
 #include "core/Camera.h"
 #include "core/Probe.h"
 #include "core/Time.h"
@@ -17,8 +15,6 @@ namespace core
     class System
     {
     private:
-        std::string _name;
-
         bool _enable = true;
         bool _visible = true;
 
@@ -26,8 +22,6 @@ namespace core
         Probe _render_probe{"Render"};
 
     public:
-        const char *name() { return _name.c_str(); }
-
         bool enable() { return _enable; }
 
         void enable(bool enable) { _enable = enable; }
@@ -40,8 +34,7 @@ namespace core
 
         Probe &render_probe() { return _render_probe; }
 
-        System(const char *name) :
-            _name(name + std::string(" System")) {}
+        System() {}
 
         virtual ~System() {}
 

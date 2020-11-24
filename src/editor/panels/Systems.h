@@ -16,7 +16,9 @@ namespace editor
         void display(Model &model) override
         {
             model.systems().foreach ([&](auto &id, auto &system) {
-                if (ImGui::CollapsingHeader(system->name()))
+                auto &info = model.registry().system_info(id);
+
+                if (ImGui::CollapsingHeader(info.name.c_str()))
                 {
                     ImGui::PushID(system.naked());
                     ImGui::Indent();
@@ -42,10 +44,7 @@ namespace editor
                     ImGui::Separator();
                     ImGui::Text("Properties:");
 
-                    model
-                        .registry()
-                        .system_info(id)
-                        .inspect(*model.world, *system);
+                    info.inspect(*model.world, *system);
 
                     ImGui::Unindent();
                     ImGui::PopID();

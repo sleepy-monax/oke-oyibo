@@ -7,17 +7,18 @@
 
 namespace core
 {
-
-    class Scene
+    struct Scene
     {
-    public:
         Scene() {}
+
         virtual ~Scene() {}
 
         virtual void update(Time &) {}
+
         virtual void render() {}
+
         virtual void on_switch_in() {}
+
         virtual void on_switch_out() {}
     };
-
 } // namespace core

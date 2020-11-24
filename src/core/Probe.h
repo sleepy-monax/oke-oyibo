@@ -37,7 +37,9 @@ namespace core
         }
 
         Probe(const char *name) :
-            _name(name) {}
+            _name(name)
+        {
+        }
 
         void mesure(std::invocable auto function)
         {

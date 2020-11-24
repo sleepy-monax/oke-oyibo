@@ -19,7 +19,6 @@ namespace game
 
     public:
         HealthBar();
-        ~HealthBar() override;
 
         void update();
         void render(core::World &world, core::Camera &camera);

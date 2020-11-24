@@ -24,7 +24,6 @@ namespace game
 
     InGame::InGame()
     {
-
         auto registry = utils::make<core::Registry>();
 
         registry->register_system<base::Input>("input");
@@ -33,9 +32,9 @@ namespace game
         registry->register_system<base::TerrainRender>("terrain");
         registry->register_system<base::Light>("light");
         registry->register_system<base::Camera>("camera");
-        registry->register_system<game::HealthBar>("health_bar");
+        registry->register_system<game::HealthBar>("health-bar");
         registry->register_system<game::HungerSystem>("hunger");
-        registry->register_system<game::ThirstSystem>("thirstSystem");
+        registry->register_system<game::ThirstSystem>("thirst");
 
         registry->register_component<base::Player>("player");
         registry->register_component<base::Position>("position");
@@ -48,7 +47,7 @@ namespace game
 
         auto world = utils::make<core::World>(registry, 256, 256);
 
-        world->add_player({"bob", utils::own<core::input::Keyboard>()});
+        world->add_player({"bob", utils::own<core::Keyboard>()});
         world->players()[0].camera().zoom_in();
         world->players()[0].camera().speed(10);
 
@@ -77,7 +76,6 @@ namespace game
 
     void InGame::update(core::Time &time)
     {
-        time.elapsed();
         if (IsKeyPressed(KEY_F3))
         {
             _debugging = !_debugging;
@@ -85,16 +83,25 @@ namespace game
 
         if (_debugging)
         {
-            _editor->run();
+            _editor->update(time);
         }
         else
         {
-            _game->run();
+            _game->update(time);
         }
     }
 
     void InGame::render()
     {
+        if (_debugging)
+        {
+            _editor->render();
+            _editor->display();
+        }
+        else
+        {
+            _game->render();
+        }
     }
 
     void InGame::on_switch_in()

@@ -15,8 +15,7 @@ namespace game
         double _accumulator = 0;
 
     public:
-        ThirstSystem() :
-            System("ThirstSystem")
+        ThirstSystem()
         {
         }
 

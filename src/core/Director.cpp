@@ -1,7 +1,8 @@
 //
 // Created by oslo on 11/23/20.
 //
-#include "Director.h"
+#include "core/Director.h"
+#include <raylib.h>
 
 namespace core
 {
@@ -29,7 +30,8 @@ namespace core
 
     void Director::run()
     {
-        Time time(12, 12);
+        Time time{GetFrameTime(), GetTime()};
+
         _current->update(time);
         _current->render();
     }

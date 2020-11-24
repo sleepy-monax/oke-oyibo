@@ -38,53 +38,41 @@ namespace editor
             return ref;
         }
 
-        void run()
+        void update(core::Time &time)
         {
             _model.fps.mesure();
 
-            _model.total_time.mesure([&]() {
-                _model.update_time.mesure([&]() {
-                    update();
+            _model.update_time.mesure([&]() {
+                _model.world->update(time);
+
+                _panels.foreach ([&](auto &panel) {
+                    panel->update(_model, time);
+                    return utils::Iteration::CONTINUE;
                 });
-
-                _model.render_time.mesure([&]() {
-                    render();
-                });
-
-                _model.display_time.mesure([&]() {
-                    display();
-                });
-            });
-        }
-
-        void update()
-        {
-            core::Time time{GetFrameTime(), GetTime()};
-            _model.world->update(time);
-
-            _panels.foreach ([&](auto &panel) {
-                panel->update(_model, time);
-                return utils::Iteration::CONTINUE;
             });
         }
 
         void render()
         {
-            _panels.foreach ([this](auto &panel) {
-                panel->render(_model);
+            _model.render_time.mesure([&]() {
+                _panels.foreach ([this](auto &panel) {
+                    panel->render(_model);
 
-                return utils::Iteration::CONTINUE;
+                    return utils::Iteration::CONTINUE;
+                });
             });
         }
 
         void display()
         {
-            ImGui::DockSpaceOverViewport();
+            _model.display_time.mesure([&]() {
+                ImGui::DockSpaceOverViewport();
 
-            _panels.foreach ([this](auto &panel) {
-                panel->do_display(_model);
+                _panels.foreach ([this](auto &panel) {
+                    panel->do_display(_model);
 
-                return utils::Iteration::CONTINUE;
+                    return utils::Iteration::CONTINUE;
+                });
             });
         }
     };

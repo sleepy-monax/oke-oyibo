@@ -2,7 +2,7 @@
 
 #include "utils/Macros.h"
 
-namespace core::input
+namespace core
 {
 
     enum class Control
@@ -44,4 +44,4 @@ namespace core::input
         }
     };
 
-} // namespace core::input
+} // namespace core

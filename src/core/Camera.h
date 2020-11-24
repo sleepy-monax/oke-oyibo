@@ -236,37 +236,6 @@ namespace core
             });
         }
 
-        void display()
-        {
-            ImGui::Begin("Render Context");
-
-            ImGui::Text("Terrain Map");
-            _terrain.display(1 / 6.0);
-            ImGui::Separator();
-
-            ImGui::Text("Shadow Map");
-            _shadows.display(1 / 6.0);
-            ImGui::Separator();
-
-            ImGui::Text("Light Map");
-            _light.display(1 / 6.0);
-            ImGui::Separator();
-
-            ImGui::Text("Entities Map");
-            _entities.display(1 / 6.0);
-            ImGui::Separator();
-
-            ImGui::Text("Overlay Map");
-            _overlay.display(1 / 6.0);
-            ImGui::Separator();
-
-            ImGui::Text("Final Result");
-            _composite.display(1 / 6.0);
-            ImGui::Separator();
-
-            ImGui::End();
-        }
-
         void zoom_in()
         {
             _target = _target.zoomed_in();

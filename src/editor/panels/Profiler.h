@@ -16,7 +16,6 @@ namespace editor
         void display(Model &model) override
         {
             inspect(model.fps);
-            inspect(model.total_time);
             inspect(model.update_time);
             inspect(model.render_time);
             inspect(model.display_time);

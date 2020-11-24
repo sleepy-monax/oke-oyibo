@@ -2,9 +2,9 @@
 
 #include <raylib.h>
 
-#include "core/input/Controller.h"
+#include "core/Controller.h"
 
-namespace core::input
+namespace core
 {
     class Keyboard: public Controller
     {
@@ -78,4 +78,4 @@ namespace core::input
             }
         }
     };
-} // namespace core::input
+} // namespace core

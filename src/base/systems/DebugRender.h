@@ -13,12 +13,7 @@ namespace base
     {
     private:
     public:
-        DebugRender() :
-            System("DebugRender")
-        {
-        }
-
-        ~DebugRender() override
+        DebugRender()
         {
         }
 

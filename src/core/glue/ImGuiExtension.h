@@ -12,6 +12,7 @@ namespace ImGui
     static inline void Help(const char *desc)
     {
         ImGui::TextDisabled("(?)");
+
         if (ImGui::IsItemHovered())
         {
             ImGui::BeginTooltip();

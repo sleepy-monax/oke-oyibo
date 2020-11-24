@@ -12,12 +12,7 @@ namespace base
     {
     private:
     public:
-        Camera() :
-            System("Camera")
-        {
-        }
-
-        ~Camera() override
+        Camera()
         {
         }
 

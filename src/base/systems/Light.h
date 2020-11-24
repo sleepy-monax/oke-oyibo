@@ -13,8 +13,7 @@ namespace base
     {
     private:
     public:
-        Light() :
-            System("Light")
+        Light()
         {
         }
 

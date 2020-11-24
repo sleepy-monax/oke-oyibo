@@ -23,12 +23,7 @@ namespace base
         utils::QuadTree<float, entt::entity> _entities{utils::Rectf::empty()};
 
     public:
-        Physic() :
-            System("Physic")
-        {
-        }
-
-        ~Physic()
+        Physic()
         {
         }
 

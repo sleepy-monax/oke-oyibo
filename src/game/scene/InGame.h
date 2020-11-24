@@ -1,19 +1,15 @@
 #pragma once
 
-#include "core/Scene.h"
-#include "core/Time.h"
-#include "editor/Editor.h"
-#include "game/Game.h"
-
 #include <imgui.h>
 #include <raylib.h>
-#include <src/core/Director.h>
 
+#include "core/Director.h"
+#include "core/Keyboard.h"
+#include "core/Registry.h"
+#include "core/Scene.h"
+#include "core/Time.h"
 #include "core/World.h"
 #include "core/glue/Glue.h"
-#include "core/input/Keyboard.h"
-
-#include "core/Registry.h"
 #include "editor/Editor.h"
 #include "game/Game.h"
 

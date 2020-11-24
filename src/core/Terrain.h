@@ -2,7 +2,7 @@
 
 #include "utils/Rect.h"
 
-#include "core/world/Tile.h"
+#include "core/Tile.h"
 
 namespace core
 {

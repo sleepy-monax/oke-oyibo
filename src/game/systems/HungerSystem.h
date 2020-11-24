@@ -15,12 +15,7 @@ namespace game
         double _accumulator = 0;
 
     public:
-        HungerSystem() :
-            System("HungerSystem")
-        {
-        }
-
-        ~HungerSystem() override
+        HungerSystem()
         {
         }
 
