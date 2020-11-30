@@ -193,21 +193,25 @@ namespace utils
         Rect take_left() const { return take_left(_width / 2); }
         Rect take_right() const { return take_right(_width / 2); }
 
+        Rect take_top_percent(double v) const { return take_top((TScalar)(v * width())); }
         Rect take_top(TScalar size) const
         {
             return Rect(x(), y(), width(), size);
         }
 
+        Rect take_bottom_percent(double v) const { return take_bottom((TScalar)(v * width())); }
         Rect take_bottom(TScalar size) const
         {
             return Rect(x(), y() + height() - size, width(), size);
         }
 
+        Rect take_left_percent(double v) const { return take_left((TScalar)(v * width())); }
         Rect take_left(TScalar size) const
         {
             return Rect(x(), y(), size, height());
         }
 
+        Rect take_right_percent(double v) const { return take_right((TScalar)(v * width())); }
         Rect take_right(TScalar size) const
         {
             return Rect(x() + width() - size, y(), size, height());

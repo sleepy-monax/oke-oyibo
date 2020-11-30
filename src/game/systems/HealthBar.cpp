@@ -34,7 +34,7 @@ namespace game
                 utils::Rectf bound = {-15, -20, 30, 2};
 
                 bound = bound.offset(position.pos2d());
-                bound = bound.take_left((health.health / (float)health.maxHealth) * 30);
+                bound = bound.take_left_percent(health.health / (float)health.maxHealth);
 
                 core::draw_rect(bound, RED);
             });
