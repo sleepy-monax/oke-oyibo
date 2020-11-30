@@ -26,18 +26,18 @@ namespace game
             if (stackFrame(time))
             {
                 view.each([&](game::Hunger &hunger, game::Health &health) {
-                    if ((hunger.current_food - 0.5) <= 0)
+                    if ((hunger.current_food - 0.3) <= 0)
                     {
                         hunger.current_food = 0;
                     }
                     else
                     {
-                        hunger.current_food -= 0.5;
+                        hunger.current_food -= 0.3;
                     }
 
                     if (hunger.current_food < (hunger.max_food / 3.0))
                     {
-                        health.health -= 0.5;
+                        health.health -= 0.3;
                     }
                 });
             }

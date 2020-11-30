@@ -41,7 +41,7 @@ namespace game
             .with<base::Velocity>()
             .with<base::LightSource>(128.0f, WHITE)
             .with<game::Health>(10, 10)
-            .with<game::Hunger>(10.0f, 10.0f)
+            .with<game::Hunger>(20.0f, 20.0f)
             .with<game::Thirst>(20.0f, 20.0f)
             .with<base::Player>(0)
             .with<base::Sprite>(registry().texture("CharacterSprite"))
