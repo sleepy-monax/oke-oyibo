@@ -31,12 +31,12 @@ namespace game
 
         camera.with_overlay([&]() {
             view.each([](auto &position, auto &health) {
-                utils::Rectf bound = {-15, -20, 30, 2};
+                utils::Rectf bound = {-15, -24, 30, 2};
 
                 bound = bound.offset(position.pos2d());
                 bound = bound.take_left_percent(health.health / (float)health.maxHealth);
 
-                core::draw_rect(bound, RED);
+                core::fill_rect(bound, RED);
             });
         });
     }

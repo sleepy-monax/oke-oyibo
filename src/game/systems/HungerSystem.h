@@ -58,6 +58,22 @@ namespace game
             }
         }
 
+        void render(core::World &world, core::Camera &camera)
+        {
+            auto view = world.entities().view<base::Position, Hunger>();
+
+            camera.with_overlay([&]() {
+                view.each([](auto &position, auto &hunger) {
+                    utils::Rectf bound = {-15, -20, 30, 2};
+
+                    bound = bound.offset(position.pos2d());
+                    bound = bound.take_left_percent(hunger.current_food / (float)hunger.max_food);
+
+                    core::fill_rect(bound, ORANGE);
+                });
+        });
+    }
+
         friend void inspect<game::HungerSystem>(game::HungerSystem &hungerSystem);
     };
 } // namespace game
