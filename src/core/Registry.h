@@ -32,11 +32,28 @@ namespace core
         std::function<void(core::World &, entt::entity)> inspect;
     };
 
+    struct TextureDescription
+    {
+        std::string name;
+        Texture2D texture;
+    };
+
+    struct FontDescription
+    {
+        std::string name;
+        Font font;
+    };
+
+    using TextureHandle = int;
+    using FontHandle = int;
+
     class Registry: public utils::RefCounted<Registry>
     {
     private:
         utils::HashMap<entt::id_type, SystemDescription> _systems{};
         utils::HashMap<entt::id_type, ComponentDescription> _components{};
+        utils::Vector<TextureDescription> _textures;
+        utils::Vector<FontDescription> _fonts;
 
     public:
         Registry() {}
@@ -88,6 +105,35 @@ namespace core
         void foreach_components(TCallback callback)
         {
             _components.foreach (callback);
+        }
+
+        TextureHandle register_texture(std::string name)
+        {
+            auto path = "assets/" + name + ".png";
+            auto tex = LoadTexture(path.c_str());
+
+            _textures.push_back({name, tex});
+
+            return _textures.count() - 1;
+        }
+
+        const Texture2D &texture(TextureHandle hnd)
+        {
+            return _textures[hnd].texture;
+        }
+
+        FontHandle register_font(std::string name)
+        {
+            auto path = "assets/" + name + ".ttf";
+            auto ttf = LoadFont(path.c_str());
+
+            _fonts.push_back({name, ttf});
+            return _fonts.count() - 1;
+        }
+
+        const Font &font(FontHandle hnd)
+        {
+            return _fonts[hnd].font;
         }
     };
 } // namespace core

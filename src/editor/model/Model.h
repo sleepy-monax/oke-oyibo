@@ -9,7 +9,7 @@ namespace editor
 {
     struct Model
     {
-        entt::entity selected_entity;
+        entt::entity selected_entity{};
         utils::RefPtr<core::World> world;
 
         editor::FPSCounter fps{};

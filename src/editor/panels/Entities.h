@@ -31,7 +31,7 @@ namespace editor
             }
             else
             {
-                ImGui::Text("Invalid Entity: %d", entt::to_integral(e));
+                ImGui::Text("No Entity selected.");
             }
         }
 
