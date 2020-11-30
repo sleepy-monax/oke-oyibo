@@ -34,8 +34,6 @@ namespace game {
                             }
                         }
 
-                        
-
                         if (acceleration.ax == 0.0f && acceleration.ay == 0.0f) {
                             if (stamina.current_stamina + 0.3f > stamina.max_stamina) {
                                 stamina.current_stamina = stamina.max_stamina;
