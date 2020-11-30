@@ -6,7 +6,8 @@
 
 namespace game
 {
-    MainMenu::MainMenu() {}
+    MainMenu::MainMenu(core::Director &dir, core::Registry &reg) :
+        core::Scene(dir, reg) {}
 
     MainMenu::~MainMenu()
     {

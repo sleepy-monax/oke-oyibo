@@ -14,7 +14,8 @@ namespace game
         core::Scheduler _scheduler{};
 
     public:
-        SplashScreen()
+        SplashScreen(core::Director &dir, core::Registry &reg) :
+            core::Scene(dir, reg)
         {
             _scheduler.schedule(3, []() {
 

@@ -15,7 +15,7 @@ int main()
 
     core::Director director{registry};
 
-    director.switch_scene(utils::own<game::InGame>());
+    director.switch_scene<game::InGame>();
 
     while (!core::glue::should_exit())
     {

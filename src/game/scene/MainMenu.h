@@ -12,7 +12,7 @@ namespace game
 
     private:
     public:
-        MainMenu();
+        MainMenu(core::Director &dir, core::Registry &reg);
 
         virtual ~MainMenu();
 

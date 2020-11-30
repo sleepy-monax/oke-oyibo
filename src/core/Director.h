@@ -21,7 +21,13 @@ namespace core
 
         Scene &current();
 
-        void switch_scene(utils::OwnPtr<Scene> scene);
+        template <typename TScene, typename... TArgs>
+        void switch_scene(TArgs &&...args)
+        {
+            _current->on_switch_out();
+            _current = utils::own<TScene>(*this, *_registry, std::forward<TArgs>(args)...);
+            _current->on_switch_in();
+        }
 
         void run();
     };

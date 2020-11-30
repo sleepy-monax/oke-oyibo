@@ -9,7 +9,7 @@
 namespace core
 {
     Director::Director(utils::RefPtr<Registry> registry) :
-        _current{utils::own<BlankScene>()},
+        _current{utils::own<BlankScene>(*this, *registry)},
         _registry(registry)
     {
     }
@@ -17,17 +17,6 @@ namespace core
     Scene &Director::current()
     {
         return *_current;
-    }
-
-    void Director::switch_scene(utils::OwnPtr<Scene> scene)
-    {
-        _current->on_switch_out();
-        _current = scene;
-
-        _current->director(*this);
-        _current->registry(*_registry);
-
-        _current->on_switch_in();
     }
 
     void Director::run()

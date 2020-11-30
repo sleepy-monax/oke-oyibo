@@ -15,27 +15,22 @@ namespace core
     struct Scene
     {
     private:
-        Director *_director{nullptr};
-        Registry *_registry{nullptr};
+        Director &_director;
+        Registry &_registry;
 
     public:
         Director &director()
         {
-            assert(_director);
-            return *_director;
+            return _director;
         }
 
         Registry &registry()
         {
-            assert(_registry);
-            return *_registry;
+            return _registry;
         }
 
-        void director(Director &director) { _director = &director; };
-
-        void registry(Registry &registry) { _registry = &registry; };
-
-        Scene()
+        Scene(Director &director, Registry &registry) :
+            _director(director), _registry(registry)
         {
         }
 

@@ -1,5 +1,7 @@
 #include "game/scene/InGame.h"
 
+#include "core/Keyboard.h"
+
 #include "editor/panels/Entities.h"
 #include "editor/panels/Inspector.h"
 #include "editor/panels/Profiler.h"
@@ -14,7 +16,8 @@
 namespace game
 {
 
-    InGame::InGame()
+    InGame::InGame(core::Director &dir, core::Registry &reg) :
+        core::Scene(dir, reg)
     {
     }
 
@@ -83,7 +86,5 @@ namespace game
             _game->render();
         }
     }
-
-
 
 } // namespace game

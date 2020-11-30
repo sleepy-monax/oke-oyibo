@@ -4,12 +4,9 @@
 #include <raylib.h>
 
 #include "core/Director.h"
-#include "core/Keyboard.h"
 #include "core/Registry.h"
 #include "core/Scene.h"
 #include "core/Time.h"
-#include "core/World.h"
-#include "core/glue/Glue.h"
 #include "editor/Editor.h"
 #include "game/Game.h"
 
@@ -25,8 +22,8 @@ namespace game
         utils::OwnPtr<editor::Editor> _editor;
 
     public:
-        InGame();
-        ~InGame();
+        InGame(core::Director &dir, core::Registry &reg);
+        ~InGame() override;
 
         void update(core::Time &time) override;
         void render() override;
