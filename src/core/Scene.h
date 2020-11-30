@@ -3,13 +3,41 @@
 //
 #pragma once
 
+#include <cassert>
+
 #include "core/Time.h"
 
 namespace core
 {
+    class Director;
+    class Registry;
+
     struct Scene
     {
-        Scene() {}
+    private:
+        Director *_director{nullptr};
+        Registry *_registry{nullptr};
+
+    public:
+        Director &director()
+        {
+            assert(_director);
+            return *_director;
+        }
+
+        Registry &registry()
+        {
+            assert(_registry);
+            return *_registry;
+        }
+
+        void director(Director &director) { _director = &director; };
+
+        void registry(Registry &registry) { _registry = &registry; };
+
+        Scene()
+        {
+        }
 
         virtual ~Scene() {}
 

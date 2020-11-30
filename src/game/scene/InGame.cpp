@@ -6,46 +6,25 @@
 #include "editor/panels/Systems.h"
 #include "editor/panels/Viewport.h"
 
-#include "base/components/Acceleration.h"
 #include "base/components/LightSource.h"
-#include "base/components/Velocity.h"
-#include "base/systems/Camera.h"
-#include "base/systems/DebugRender.h"
-#include "base/systems/Input.h"
-#include "base/systems/Light.h"
-#include "base/systems/Physic.h"
-#include "base/systems/TerrainRender.h"
-#include "game/systems/HealthBar.h"
-#include "game/systems/HungerSystem.h"
-#include "game/systems/ThirstSystem.h"
+#include "base/components/Player.h"
+#include "game/components/Hunger.h"
+#include "game/components/Thirst.h"
 
 namespace game
 {
 
     InGame::InGame()
     {
-        auto registry = utils::make<core::Registry>();
+    }
 
-        registry->register_system<base::Input>("input");
-        registry->register_system<base::DebugRender>("debug");
-        registry->register_system<base::Physic>("physic");
-        registry->register_system<base::TerrainRender>("terrain");
-        registry->register_system<base::Light>("light");
-        registry->register_system<base::Camera>("camera");
-        registry->register_system<game::HealthBar>("health-bar");
-        registry->register_system<game::HungerSystem>("hunger");
-        registry->register_system<game::ThirstSystem>("thirst");
+    InGame::~InGame()
+    {
+    }
 
-        registry->register_component<base::Player>("player");
-        registry->register_component<base::Position>("position");
-        registry->register_component<base::Velocity>("velocity");
-        registry->register_component<base::Acceleration>("acceleration");
-        registry->register_component<base::LightSource>("light-source");
-        registry->register_component<game::Health>("health");
-        registry->register_component<game::Hunger>("hunger");
-        registry->register_component<game::Thirst>("thirst");
-
-        auto world = utils::make<core::World>(registry, 256, 256);
+    void InGame::on_switch_in()
+    {
+        auto world = utils::make<core::World>(registry(), 256, 256);
 
         world->add_player({"bob", utils::own<core::Keyboard>()});
         world->players()[0].camera().zoom_in();
@@ -71,7 +50,7 @@ namespace game
         _game = utils::own<game::Game>(world);
     }
 
-    InGame::~InGame()
+    void InGame::on_switch_out()
     {
     }
 
@@ -105,12 +84,6 @@ namespace game
         }
     }
 
-    void InGame::on_switch_in()
-    {
-    }
 
-    void InGame::on_switch_out()
-    {
-    }
 
 } // namespace game

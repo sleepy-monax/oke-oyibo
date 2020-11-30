@@ -2,6 +2,8 @@
 #include <raylib.h>
 
 #include "core/Director.h"
+
+#include "game/Registery.h"
 #include "game/scene/InGame.h"
 #include "game/scene/MainMenu.h"
 
@@ -9,7 +11,9 @@ int main()
 {
     core::glue::initialize();
 
-    core::Director director;
+    auto registry = game::make_registry();
+
+    core::Director director{registry};
 
     director.switch_scene(utils::own<game::InGame>());
 

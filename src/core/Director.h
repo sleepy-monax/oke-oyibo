@@ -3,6 +3,7 @@
 //
 #pragma once
 
+#include "core/Registry.h"
 #include "core/Scene.h"
 
 #include "utils/OwnPtr.h"
@@ -13,9 +14,10 @@ namespace core
     {
     private:
         utils::OwnPtr<Scene> _current;
+        utils::RefPtr<Registry> _registry;
 
     public:
-        Director();
+        Director(utils::RefPtr<Registry> registry);
 
         Scene &current();
 
