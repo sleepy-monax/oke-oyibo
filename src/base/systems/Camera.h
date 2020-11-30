@@ -26,7 +26,11 @@ namespace base
                 {
                     auto &camera = world.players()[player.player_index].camera();
 
-                    camera.move_to(position.x, position.y);
+                    auto world_bound = world.terrain().bound();
+
+                    auto camera_allowed_bound = world_bound.shrinked(camera.bound_world().size() / 2);
+
+                    camera.move_to(position.pos2d().clamped(camera_allowed_bound.top_left(), camera_allowed_bound.bottom_right()));
                     camera.animate(time.elapsed());
                 }
             });
@@ -43,8 +47,8 @@ namespace base
                     {
                         auto &camera = world.players()[player.player_index].camera();
 
-                        DrawCircleLines(camera.target().x(), camera.target().y(), 16, BLUE);
-                        DrawCircle(camera.current().x(), camera.current().y(), 1, ORANGE);
+                        //DrawCircleLines(camera.target().x(), camera.target().y(), 16, BLUE);
+                        //DrawCircle(camera.current().x(), camera.current().y(), 1, ORANGE);
 
                         auto r = camera.bound_world();
                         DrawRectangleLinesEx({r.x(), r.y(), r.width(), r.height()}, 1, RED);

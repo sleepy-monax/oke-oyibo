@@ -3,19 +3,18 @@
 #include "core/Surface.h"
 #include "utils/Math.h"
 #include "utils/Rect.h"
+#include "utils/Vec.h"
 
 namespace core
 {
     class CameraState
     {
     private:
-        float _x;
-        float _y;
+        utils::Vec2f _position;
         float _zoom;
 
     public:
-        float x() const { return _x; }
-        float y() const { return _y; }
+        utils::Vec2f position() const { return _position; }
         float zoom() const { return _zoom; }
 
         CameraState zoomed_in()
@@ -32,29 +31,27 @@ namespace core
             return copy;
         }
 
-        CameraState moved_to(float x, float y)
+        CameraState moved_to(utils::Vec2f position)
         {
             CameraState copy = *this;
-            copy._x = x;
-            copy._y = y;
+            copy._position = position;
             return copy;
         }
 
-        CameraState move(float x, float y)
+        CameraState move(utils::Vec2f position)
         {
             CameraState copy = *this;
-            copy._x += x;
-            copy._y += y;
+            copy._position += position;
             return copy;
         }
 
         CameraState() :
-            _x(0), _y(0), _zoom(4)
+            _position{0, 0}, _zoom(4)
         {
         }
 
-        CameraState(float x, float y, float zoom) :
-            _x(x), _y(y), _zoom(zoom)
+        CameraState(utils::Vec2f position, float zoom) :
+            _position{position}, _zoom(zoom)
         {
         }
     };
@@ -62,8 +59,7 @@ namespace core
     static inline CameraState lerp(const CameraState from, const CameraState to, float t)
     {
         return {
-            utils::lerp(from.x(), to.x(), t),
-            utils::lerp(from.y(), to.y(), t),
+            utils::lerp(from.position(), to.position(), t),
             utils::lerp(from.zoom(), to.zoom(), t),
         };
     }
@@ -87,15 +83,13 @@ namespace core
         Surface _composite{};
 
     public:
-        auto x() { return _current.x(); }
-        auto y() { return _current.y(); }
         auto zoom() { return _current.zoom(); }
         auto width() { return _width; }
         auto height() { return _height; }
         auto width_world() { return _width / _current.zoom(); }
         auto height_world() { return _height / _current.zoom(); }
 
-        utils::Vec2f position() { return {_current.x(), _current.y()}; }
+        auto position() { return _current.position(); }
         utils::Vec2f size_world() { return {width_world(), height_world()}; }
         utils::Rectf bound_world()
         {
@@ -246,20 +240,20 @@ namespace core
             _target = _target.zoomed_out();
         }
 
-        void move_to(double x, double y)
+        void move_to(utils::Vec2f pos)
         {
-            _target = _target.moved_to(x, y);
+            _target = _target.moved_to(pos);
         }
 
-        void move(double x, double y)
+        void move(utils::Vec2f pos)
         {
-            _target = _target.move(x, y);
+            _target = _target.move(pos);
         }
 
-        void jump_to(double x, double y)
+        void jump_to(utils::Vec2f pos)
         {
-            _target = _target.moved_to(x, y);
-            _current = _current.moved_to(x, y);
+            _target = _target.moved_to(pos);
+            _current = _current.moved_to(pos);
         }
 
         void animate(double dt)

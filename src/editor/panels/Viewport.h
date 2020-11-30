@@ -52,7 +52,7 @@ namespace editor
                     auto vec = ImGui::GetMouseDragDelta();
                     ImGui::ResetMouseDragDelta();
 
-                    _camera.move(-vec.x / _camera.zoom(), -vec.y / _camera.zoom());
+                    _camera.move({-vec.x / _camera.zoom(), -vec.y / _camera.zoom()});
                 }
 
                 float v = ImGui::GetIO().MouseWheel;

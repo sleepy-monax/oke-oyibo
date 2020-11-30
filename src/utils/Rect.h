@@ -333,6 +333,15 @@ namespace utils
                 MAX(0, _height - gaps - gaps));
         }
 
+        Rect shrinked(Vec2<TScalar> gaps) const
+        {
+            return Rect(
+                _x + gaps.x(),
+                _y + gaps.y(),
+                MAX(0, _width - gaps.x() - gaps.x()),
+                MAX(0, _height - gaps.y() - gaps.y()));
+        }
+
         Rect expended(TScalar gaps) const
         {
             assert(gaps >= 0);

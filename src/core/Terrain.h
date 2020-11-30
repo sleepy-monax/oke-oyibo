@@ -14,7 +14,7 @@ namespace core
         Tile *_tiles;
 
     public:
-        utils::Recti bound() { return {_width, _height}; }
+        utils::Recti bound() { return {_width * Tile::SIZE, _height * Tile::SIZE}; }
 
         int width() { return _width; }
 
