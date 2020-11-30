@@ -13,6 +13,7 @@
 #include "base/components/Sprite.h"
 #include "game/components/Hunger.h"
 #include "game/components/Thirst.h"
+#include "game/components/Stamina.h"
 
 namespace game
 {
@@ -43,7 +44,8 @@ namespace game
             .with<game::Hunger>(10.0f, 10.0f)
             .with<game::Thirst>(20.0f, 20.0f)
             .with<base::Player>(0)
-            .with<base::Sprite>(registry().texture("zombie"));
+            .with<base::Sprite>(registry().texture("zombie"))
+            .with<game::Stamina>(20.0f, 20.0f);
 
         _editor = utils::own<editor::Editor>(world);
         _editor->open<editor::Entities>();
