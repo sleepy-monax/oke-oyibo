@@ -15,12 +15,11 @@ namespace game
     class HealthBar: public core::System
     {
     private:
-        Health health;
 
     public:
         HealthBar();
 
-        void update();
-        void render(core::World &world, core::Camera &camera);
+        void update(core::World &world, core::Time &time) override;
+        void render(core::World &world, core::Camera &camera) override;
     };
 } // namespace game

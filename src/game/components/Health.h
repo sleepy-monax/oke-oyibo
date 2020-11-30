@@ -8,6 +8,7 @@ namespace game
 {
     struct Health
     {
+        int maxHealth;
         int health;
     };
 } // namespace game
