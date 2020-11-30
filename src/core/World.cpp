@@ -32,6 +32,13 @@ namespace core
             sys->do_update(*this, time);
             return utils::Iteration::CONTINUE;
         });
+
+        for (size_t i = 0; i < _entities_removed.count(); i++)
+        {
+            _entities.remove(_entities_removed[i]);
+        }
+
+        _entities_removed.clear();
     }
 
     void World::render(Camera &camera)

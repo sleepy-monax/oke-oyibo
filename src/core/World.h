@@ -21,7 +21,10 @@ namespace core
     private:
         utils::RefPtr<Registry> _registry;
         Terrain _terrain;
+
         entt::registry _entities;
+        utils::Vector<entt::entity> _entities_removed;
+
         utils::HashMap<entt::id_type, utils::OwnPtr<System>> _systems;
         utils::Vector<core::Player> _players;
 
@@ -41,6 +44,11 @@ namespace core
         void add_player(core::Player &&);
 
         entity::Builder create_entity();
+
+        void remove_entity(entt::entity entity)
+        {
+            _entities_removed.push_back(entity);
+        }
 
         void update(Time &);
 
