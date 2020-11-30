@@ -35,3 +35,5 @@
 imgui.ini
 bin/
 obj/
+projet.layout
+projet.depend

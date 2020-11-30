@@ -24,15 +24,13 @@ CXXFLAGS = \
 	-Werror \
 	-I. \
 	-Isrc/ \
-	-fsanitize=undefined \
-	-fsanitize=address \
 	$(INCLUDES) \
-	$(DEFINES) \
+	$(DEFINES)
 
 include library/*.mk
 include cfg/$(TARGET).mk
 
-$(BIN_DIRECTORY)/$(PROJECT).out: $(OBJECTS)
+$(BIN_DIRECTORY)/$(PROJECT): $(OBJECTS)
 	$(GUARD)
 	@echo [LD] $@
 	@$(CXX) $(LDFLAGS) -o $@ $^ $(LIBRARIES)
@@ -44,13 +42,13 @@ $(OBJ_DIRECTORY)/%.o: %.cpp
 
 .PHONY: all clean test
 
-all: $(LIBRARIES) $(BIN_DIRECTORY)/$(PROJECT).out
+all: $(LIBRARIES) $(BIN_DIRECTORY)/$(PROJECT)
 
 clean:
 	rm -rf $(OBJ_DIRECTORY)
 	rm -rf $(BIN_DIRECTORY)
 
-run: $(LIBRARIES) $(BIN_DIRECTORY)/$(PROJECT).out
-	$(BIN_DIRECTORY)/$(PROJECT).out
+run: $(LIBRARIES) $(BIN_DIRECTORY)/$(PROJECT)
+	$(BIN_DIRECTORY)/$(PROJECT)
 
 -include $(OBJECTS:.o=.d)

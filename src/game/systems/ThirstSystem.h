@@ -63,7 +63,7 @@ namespace game
         }
 
         void render(core::World &world, core::Camera &camera)
-        {   
+        {
             auto view = world.entities().view<base::Position, Thirst>();
 
             camera.with_overlay([&]() {
@@ -75,8 +75,8 @@ namespace game
 
                     core::fill_rect(bound, BLUE);
                 });
-        });
-    }
+            });
+        }
 
         friend void inspect<game::ThirstSystem>(game::ThirstSystem &thirstSystem);
     };
