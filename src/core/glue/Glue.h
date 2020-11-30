@@ -1,6 +1,7 @@
 #pragma once
 
 #include "utils/Common.h"
+#include "utils/Rect.h"
 
 namespace core::glue
 {
@@ -15,4 +16,6 @@ namespace core::glue
     void end_frame();
 
     void uninitialize();
+
+    utils::Rectf screen();
 } // namespace core::glue

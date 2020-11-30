@@ -7,8 +7,10 @@
 #include "utils/OwnPtr.h"
 #include "utils/RefCounter.h"
 
-#include "base/components/Component.h"
 #include "core/System.h"
+#include "core/Texture.h"
+
+#include "base/components/Component.h"
 
 namespace core
 {
@@ -35,7 +37,7 @@ namespace core
     struct TextureDescription
     {
         std::string name;
-        Texture2D texture;
+        Texture texture;
     };
 
     struct FontDescription
@@ -107,13 +109,13 @@ namespace core
             _components.foreach (callback);
         }
 
-        TextureHandle register_texture(std::string name)
+        Texture texture(std::string name)
         {
             for (size_t i = 0; i < _textures.count(); i++)
             {
                 if (_textures[i].name == name)
                 {
-                    return i;
+                    return _textures[i].texture;
                 }
             }
 
@@ -122,12 +124,7 @@ namespace core
 
             _textures.push_back({name, tex});
 
-            return _textures.count() - 1;
-        }
-
-        const Texture2D &texture(TextureHandle hnd)
-        {
-            return _textures[hnd].texture;
+            return _textures[_textures.count() - 1].texture;
         }
 
         FontHandle register_font(std::string name)

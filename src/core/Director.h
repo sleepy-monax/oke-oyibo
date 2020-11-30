@@ -14,6 +14,7 @@ namespace core
     {
     private:
         utils::OwnPtr<Scene> _current;
+        utils::OwnPtr<Scene> _next = nullptr;
         utils::RefPtr<Registry> _registry;
 
     public:
@@ -22,11 +23,9 @@ namespace core
         Scene &current();
 
         template <typename TScene, typename... TArgs>
-        void switch_scene(TArgs &&...args)
+        void switch_scene(TArgs &&... args)
         {
-            _current->on_switch_out();
-            _current = utils::own<TScene>(*this, *_registry, std::forward<TArgs>(args)...);
-            _current->on_switch_in();
+            _next = utils::own<TScene>(*this, *_registry, std::forward<TArgs>(args)...);
         }
 
         void run();

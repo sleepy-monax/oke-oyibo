@@ -127,4 +127,9 @@ namespace core::glue
         ImGui::DestroyContext();
         CloseWindow();
     }
+
+    utils::Rectf screen()
+    {
+        return {0, 0, (float)GetScreenWidth(), (float)GetScreenHeight()};
+    }
 } // namespace core::glue

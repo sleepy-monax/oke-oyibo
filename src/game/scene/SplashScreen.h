@@ -2,8 +2,14 @@
 
 #include <raylib.h>
 
+#include "core/glue/Glue.h"
+
+#include "core/Director.h"
+#include "core/Graphics.h"
 #include "core/Scene.h"
 #include "core/Scheduler.h"
+
+#include "game/scene/MainMenu.h"
 
 namespace game
 {
@@ -12,13 +18,16 @@ namespace game
     {
     private:
         core::Scheduler _scheduler{};
+        core::Texture _logo;
 
     public:
         SplashScreen(core::Director &dir, core::Registry &reg) :
             core::Scene(dir, reg)
         {
-            _scheduler.schedule(3, []() {
+            _logo = reg.texture("logo");
 
+            _scheduler.schedule(3, [&]() {
+                dir.switch_scene<MainMenu>();
             });
         }
 
@@ -29,7 +38,9 @@ namespace game
 
         void render() override
         {
-            ClearBackground(BLACK);
+            ClearBackground(WHITE);
+
+            core::draw_texture(_logo, _logo.bound().centered_within(core::glue::screen()), WHITE);
         }
     };
 

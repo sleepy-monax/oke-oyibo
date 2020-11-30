@@ -1,6 +1,7 @@
 #pragma once
 
 #include "editor/Inspect.h"
+#include "utils/Vec.h"
 
 namespace base
 {
@@ -9,6 +10,11 @@ namespace base
         float x;
         float y;
         float z;
+
+        utils::Vec2f pos2d()
+        {
+            return {x, y};
+        }
     };
 
 } // namespace base

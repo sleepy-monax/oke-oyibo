@@ -2,6 +2,7 @@
 
 #include <raylib.h>
 
+#include "core/Graphics.h"
 #include "core/Registry.h"
 #include "core/System.h"
 #include "core/World.h"
@@ -25,9 +26,11 @@ namespace base
 
             camera.with_entities([&]() {
                 view.each([&](auto &position, auto &sprite) {
-                    auto tex = world.registry().texture(sprite.handle);
+                    auto tex = sprite.texture;
 
-                    DrawTextureEx(tex, {position.x - tex.width / 2.0f, position.y - tex.height}, 0.0, 1, WHITE);
+                    auto destination = tex.bound().moved(position.pos2d() - tex.bound().bottom_center());
+
+                    core::draw_texture(tex, destination, WHITE);
                 });
             });
         }

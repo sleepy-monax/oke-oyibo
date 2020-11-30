@@ -39,11 +39,11 @@ namespace game
             .with<base::Acceleration>()
             .with<base::Velocity>()
             .with<base::LightSource>(128.0f, WHITE)
-            .with<game::Health>(10,10)
+            .with<game::Health>(10, 10)
             .with<game::Hunger>(10.0f, 10.0f)
             .with<game::Thirst>(20.0f, 20.0f)
             .with<base::Player>(0)
-            .with<base::Sprite>(registry().register_texture("zombie"));
+            .with<base::Sprite>(registry().texture("zombie"));
 
         _editor = utils::own<editor::Editor>(world);
         _editor->open<editor::Entities>();

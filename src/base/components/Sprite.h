@@ -1,11 +1,13 @@
 #pragma once
 
-#include "core/Registry.h"
+#include "core/Texture.h"
+
+#include "editor/Inspect.h"
 
 namespace base
 {
     struct Sprite
     {
-        core::TextureHandle handle;
+        core::Texture texture;
     };
 } // namespace base

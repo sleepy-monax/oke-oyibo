@@ -25,5 +25,12 @@ namespace core
 
         _current->update(time);
         _current->render();
+
+        if (_next)
+        {
+            _current->on_switch_out();
+            _current = _next;
+            _current->on_switch_in();
+        }
     }
 } // namespace core

@@ -4,8 +4,7 @@
 #include "core/Director.h"
 
 #include "game/Registery.h"
-#include "game/scene/InGame.h"
-#include "game/scene/MainMenu.h"
+#include "game/scene/SplashScreen.h"
 
 int main()
 {
@@ -15,7 +14,7 @@ int main()
 
     core::Director director{registry};
 
-    director.switch_scene<game::MainMenu>();
+    director.switch_scene<game::SplashScreen>();
 
     while (!core::glue::should_exit())
     {

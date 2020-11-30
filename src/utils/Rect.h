@@ -62,6 +62,16 @@ namespace utils
             return position() + size();
         }
 
+        Vec2<TScalar> top_center() const
+        {
+            return position() + size().extract_x() / 2;
+        }
+
+        Vec2<TScalar> bottom_center() const
+        {
+            return position() + size().extract_y() + size().extract_x() / 2;
+        }
+
         TScalar top() const
         {
             return y();
