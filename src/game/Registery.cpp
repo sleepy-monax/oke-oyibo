@@ -5,6 +5,7 @@
 #include "base/components/LightSource.h"
 #include "base/components/Player.h"
 #include "base/components/Position.h"
+#include "base/components/Sprite.h"
 #include "base/components/Velocity.h"
 #include "game/components/Armor.h"
 #include "game/components/Flammable.h"
@@ -14,6 +15,7 @@
 
 #include "base/systems/Camera.h"
 #include "base/systems/DebugRender.h"
+#include "base/systems/EntityRenderer.h"
 #include "base/systems/Input.h"
 #include "base/systems/Light.h"
 #include "base/systems/Physic.h"
@@ -35,12 +37,14 @@ utils::RefPtr<core::Registry> game::make_registry()
     registry->register_system<game::HealthBar>("health-bar");
     registry->register_system<game::HungerSystem>("hunger");
     registry->register_system<game::ThirstSystem>("thirst");
+    registry->register_system<base::EntityRenderer>("entity");
 
     registry->register_component<base::Player>("player");
     registry->register_component<base::Position>("position");
     registry->register_component<base::Velocity>("velocity");
     registry->register_component<base::Acceleration>("acceleration");
     registry->register_component<base::LightSource>("light-source");
+    registry->register_component<base::Sprite>("sprite");
     registry->register_component<game::Health>("health");
     registry->register_component<game::Hunger>("hunger");
     registry->register_component<game::Thirst>("thirst");

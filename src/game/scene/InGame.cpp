@@ -10,6 +10,7 @@
 
 #include "base/components/LightSource.h"
 #include "base/components/Player.h"
+#include "base/components/Sprite.h"
 #include "game/components/Hunger.h"
 #include "game/components/Thirst.h"
 
@@ -41,7 +42,8 @@ namespace game
             .with<game::Health>(10)
             .with<game::Hunger>(10.0f, 10.0f)
             .with<game::Thirst>(20.0f, 20.0f)
-            .with<base::Player>(0);
+            .with<base::Player>(0)
+            .with<base::Sprite>(registry().register_texture("zombie"));
 
         _editor = utils::own<editor::Editor>(world);
         _editor->open<editor::Entities>();

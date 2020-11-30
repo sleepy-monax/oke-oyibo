@@ -109,6 +109,14 @@ namespace core
 
         TextureHandle register_texture(std::string name)
         {
+            for (size_t i = 0; i < _textures.count(); i++)
+            {
+                if (_textures[i].name == name)
+                {
+                    return i;
+                }
+            }
+
             auto path = "assets/" + name + ".png";
             auto tex = LoadTexture(path.c_str());
 

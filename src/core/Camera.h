@@ -49,7 +49,7 @@ namespace core
         }
 
         CameraState() :
-            _x(0), _y(0), _zoom(1)
+            _x(0), _y(0), _zoom(4)
         {
         }
 

@@ -23,7 +23,7 @@ namespace base
 
             camera.with_overlay([&]() {
                 view.each([](auto &position) {
-                    DrawCircle(position.x, position.y, 4, RED);
+                    DrawCircle(position.x, position.y, 1, RED);
                 });
             });
         }

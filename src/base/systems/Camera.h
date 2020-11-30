@@ -44,7 +44,7 @@ namespace base
                         auto &camera = world.players()[player.player_index].camera();
 
                         DrawCircleLines(camera.target().x(), camera.target().y(), 16, BLUE);
-                        DrawCircle(camera.current().x(), camera.current().y(), 4, ORANGE);
+                        DrawCircle(camera.current().x(), camera.current().y(), 1, ORANGE);
 
                         auto r = camera.bound_world();
                         DrawRectangleLinesEx({r.x(), r.y(), r.width(), r.height()}, 1, RED);
