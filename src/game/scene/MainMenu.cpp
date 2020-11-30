@@ -5,7 +5,7 @@
 #include "MainMenu.h"
 #include "imgui.h"
 #include "core/Director.h"
-#include "game/scene/InGame.h"
+#include "game/scene/CreateGame.h"
 
 namespace game
 {
@@ -32,7 +32,7 @@ namespace game
         ImGui::SetCursorPosX(25.);
         if (ImGui::Button("Create game", button_size))
         {
-            director().switch_scene<game::InGame>();
+            director().switch_scene<game::CreateGame>();
         }
         
         ImGui::SetCursorPosX(25.);
