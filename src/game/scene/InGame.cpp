@@ -70,6 +70,7 @@ namespace game
 
         _game = utils::own<game::Game>(world);
     }
+
     InGame::~InGame()
     {
     }

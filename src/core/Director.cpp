@@ -1,31 +1,28 @@
 //
 // Created by oslo on 11/23/20.
 //
-#include "core/Director.h"
 #include <raylib.h>
+
+#include "core/BlankScene.h"
+#include "core/Director.h"
 
 namespace core
 {
-    Director::Director() {}
-
-    Director::~Director()
+    Director::Director() :
+        _current{utils::own<BlankScene>()}
     {
-        delete _current;
     }
 
-    Scene *Director::getCurrent() const
+    Scene &Director::current()
     {
-        return _current;
+        return *_current;
     }
 
-    void Director::setCurrent(Scene *current)
+    void Director::switch_scene(utils::OwnPtr<Scene> scene)
     {
-        Director::_current = current;
-    }
-
-    void Director::switch_scene(Scene *scene)
-    {
-        setCurrent(scene);
+        _current->on_switch_out();
+        _current = scene;
+        _current->on_switch_in();
     }
 
     void Director::run()

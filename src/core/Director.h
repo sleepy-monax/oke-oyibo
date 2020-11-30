@@ -5,22 +5,22 @@
 
 #include "core/Scene.h"
 
+#include "utils/OwnPtr.h"
+
 namespace core
 {
     class Director
     {
-
     private:
-        Scene *_current;
+        utils::OwnPtr<Scene> _current;
 
     public:
         Director();
-        virtual ~Director();
 
-        Scene *getCurrent() const;
-        void setCurrent(Scene *current);
+        Scene &current();
 
-        void switch_scene(Scene *scene);
+        void switch_scene(utils::OwnPtr<Scene> scene);
+
         void run();
     };
 } // namespace core
