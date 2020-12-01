@@ -30,10 +30,10 @@ CXXFLAGS = \
 include library/*.mk
 include cfg/$(TARGET).mk
 
-$(BIN_DIRECTORY)/$(PROJECT): $(OBJECTS)
+$(BIN_DIRECTORY)/$(PROJECT): $(OBJECTS) $(LIBRARIES)
 	$(GUARD)
 	@echo [LD] $@
-	@$(CXX) $(LDFLAGS) -o $@ $^ $(LIBRARIES)
+	@$(CXX) -o $@ $^ $(LIBRARIES) $(LDFLAGS)
 
 $(OBJ_DIRECTORY)/%.o: %.cpp
 	$(GUARD)
