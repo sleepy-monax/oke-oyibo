@@ -11,7 +11,10 @@ namespace core
         _systems{}
     {
         registry->foreach_system([&](auto &key, auto &value) {
-            _systems[key] = value.create();
+            auto sys = value.create();
+            sys->on_load(*registry);
+            _systems[key] = sys;
+
             return utils::Iteration::CONTINUE;
         });
     }

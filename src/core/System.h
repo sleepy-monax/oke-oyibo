@@ -8,6 +8,7 @@
 namespace core
 {
     class World;
+    class Registry;
 } // namespace core
 
 namespace core
@@ -41,6 +42,8 @@ namespace core
         void do_update(World &, Time &);
 
         void do_render(World &, Camera &);
+
+        virtual void on_load(Registry &) {}
 
         virtual void update(World &, Time &) {}
 
