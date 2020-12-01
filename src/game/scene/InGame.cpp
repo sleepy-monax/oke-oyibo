@@ -15,6 +15,10 @@
 #include "game/components/Thirst.h"
 #include "game/components/Stamina.h"
 #include "game/Generator.h"
+#include "game/components/Pickable.h"
+#include "game/components/Inventory.h"
+#include "game/inventory/Stack.h"
+#include "game/inventory/Item.h"
 
 namespace game
 {
@@ -46,7 +50,16 @@ namespace game
             .with<game::Thirst>(20.0f, 20.0f)
             .with<base::Player>(0)
             .with<base::Sprite>(registry().texture("character"))
-            .with<game::Stamina>(20.0f, 20.0f);
+            .with<game::Stamina>(20.0f, 20.0f)
+            .with<game::Inventory>();
+
+
+        Stack stack(Item("Mon_Item", core::Texture()), 12);
+        world->create_entity()
+            .with<game::Pickable>(stack)
+            .with<base::Position>(60.0f,60.0f,0.0f)
+            .with<base::LightSource>(50.0f, WHITE)
+            .with<base::Sprite>(registry().texture("table"));
 
         _editor = utils::own<editor::Editor>(world);
         _editor->open<editor::Entities>();

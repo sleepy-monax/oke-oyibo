@@ -1,5 +1,7 @@
 #pragma once
 
+#include <cmath>
+
 #include "utils/Common.h"
 
 namespace utils
