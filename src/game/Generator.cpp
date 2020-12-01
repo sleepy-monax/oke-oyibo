@@ -49,6 +49,7 @@ namespace game
 
                 //generate enemy entity in the world
                 world.create_entity()
+                    .with<game::Enemy>()
                     .with<base::Position>(randomX, randomY, 0.0f)
                     .with<base::Acceleration>()
                     .with<base::Velocity>()
