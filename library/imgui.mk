@@ -10,7 +10,6 @@ SOURCES+= \
 	library/imgui/examples/imgui_impl_opengl3.cpp \
 	library/imgui/imgui.cpp \
 	library/imgui/imgui_draw.cpp \
-	library/imgui/imgui_widgets.cpp \
-	library/imgui/imgui_demo.cpp
+	library/imgui/imgui_widgets.cpp
 
 LDFLAGS+=
