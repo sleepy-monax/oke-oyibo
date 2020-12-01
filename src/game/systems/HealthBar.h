@@ -15,10 +15,12 @@ namespace game
     class HealthBar: public core::System
     {
     private:
+        core::Texture healthTexture;
 
     public:
         HealthBar();
 
+        void on_load(core::Registry &registry) override;
         void update(core::World &world, core::Time &time) override;
         void render(core::World &world, core::Camera &camera) override;
     };

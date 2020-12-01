@@ -14,6 +14,7 @@ namespace game
     {
     private:
         double _accumulator = 0;
+        core::Texture foodTexture;
 
     public:
         HungerSystem()
@@ -59,18 +60,27 @@ namespace game
             }
         }
 
+        void on_load(core::Registry &registry) override {
+            foodTexture = registry.texture("food");
+        }
+
         void render(core::World &world, core::Camera &camera)
         {
             auto view = world.entities().view<base::Position, Hunger>();
 
             camera.with_overlay([&]() {
-                view.each([](auto &position, auto &hunger) {
+                view.each([&](auto &position, auto &hunger) {
                     utils::Rectf bound = {-15, -20, 30, 2};
 
                     bound = bound.offset(position.pos2d());
                     bound = bound.take_left_percent(hunger.current_food / (float)hunger.max_food);
 
                     core::fill_rect(bound, ORANGE);
+
+                    utils::Rectf foodRect = {-18, -20, 2, 2};
+                    foodRect = foodRect.offset(position.pos2d());
+
+                    core::draw_texture(foodTexture, foodRect, WHITE);
                 });
             });
         }

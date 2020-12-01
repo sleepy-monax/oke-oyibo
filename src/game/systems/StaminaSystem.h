@@ -7,12 +7,16 @@
 #include "core/Time.h"
 #include "core/World.h"
 
+#include "core/Registry.h"
+#include "core/Scene.h"
+
 namespace game {
     class StaminaSystem : public core::System
     {
         private:
             double _accumulator = 0;
             double _accumAccel = 0;
+            core::Texture staminaTexture;
 
         public:
             StaminaSystem() 
@@ -91,20 +95,30 @@ namespace game {
                 }
             }
 
+            void on_load(core::Registry &registry) override {
+                staminaTexture = registry.texture("stamina");
+            }
+
             void render(core::World &world, core::Camera &camera)
             {
                 auto view = world.entities().view<base::Position, Stamina>();
 
                 camera.with_overlay([&]() {
-                    view.each([](auto &position, auto &stamina) {
+                    view.each([&](auto &position, auto &stamina) {
                         utils::Rectf bound = {-15, 5, 30, 2};
 
                         bound = bound.offset(position.pos2d());
                         bound = bound.take_left_percent(stamina.current_stamina / (float)stamina.max_stamina);
 
                         core::fill_rect(bound, YELLOW);
-                     });
+
+                        utils::Rectf staminaRect = {-18, 4, 2, 2};
+                        staminaRect = staminaRect.offset(position.pos2d());
+
+                        core::draw_texture(staminaTexture, staminaRect, WHITE);
+                    });
                 });
             }
+
     };
 }
