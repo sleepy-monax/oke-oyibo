@@ -14,6 +14,7 @@
 #include "game/components/Hunger.h"
 #include "game/components/Thirst.h"
 #include "game/components/Stamina.h"
+#include "game/Generator.h"
 
 namespace game
 {
@@ -44,7 +45,7 @@ namespace game
             .with<game::Hunger>(20.0f, 20.0f)
             .with<game::Thirst>(20.0f, 20.0f)
             .with<base::Player>(0)
-            .with<base::Sprite>(registry().texture("CharacterSprite"))
+            .with<base::Sprite>(registry().texture("character"))
             .with<game::Stamina>(20.0f, 20.0f);
 
         _editor = utils::own<editor::Editor>(world);
@@ -55,6 +56,9 @@ namespace game
         _editor->open<editor::Viewport>();
 
         _game = utils::own<game::Game>(world);
+
+        game::Generator gen;
+        gen.generate_enemy(*world, registry());
     }
 
     void InGame::on_switch_out()
