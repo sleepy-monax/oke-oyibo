@@ -3,6 +3,7 @@
 #include <game/components/Health.h>
 #include <game/components/Hunger.h>
 
+#include "core/Graphics.h"
 #include "core/System.h"
 #include "core/Time.h"
 #include "core/World.h"
@@ -71,8 +72,8 @@ namespace game
 
                     core::fill_rect(bound, ORANGE);
                 });
-        });
-    }
+            });
+        }
 
         friend void inspect<game::HungerSystem>(game::HungerSystem &hungerSystem);
     };
