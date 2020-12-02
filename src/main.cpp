@@ -16,6 +16,8 @@ int main()
 
     director.switch_scene<game::SplashScreen>();
 
+    SetExitKey(KEY_F4);
+
     while (!core::glue::should_exit())
     {
         core::glue::begin_frame();
