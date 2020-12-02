@@ -16,6 +16,7 @@
 #include "game/components/Stamina.h"
 #include "game/Generator.h"
 #include "game/components/Pickable.h"
+#include "game/components/Breakable.h"
 #include "game/components/Inventory.h"
 #include "game/inventory/Stack.h"
 #include "game/inventory/Item.h"
@@ -54,12 +55,19 @@ namespace game
             .with<game::Inventory>();
 
 
-        Stack stack(Item("Mon_Item", core::Texture()), 12);
+        Stack table(Item("table", core::Texture()), 12);
         world->create_entity()
-            .with<game::Pickable>(stack)
+            .with<game::Pickable>(table)
             .with<base::Position>(60.0f,60.0f,0.0f)
             .with<base::LightSource>(50.0f, WHITE)
             .with<base::Sprite>(registry().texture("table"));
+
+        Stack tree(Item("log", core::Texture()), 12);
+        world->create_entity()
+            .with<game::Breakable>(tree, 5)
+            .with<base::Position>(50.0f, 60.0f, 0.0f)
+            .with<base::LightSource>(50.0f, WHITE)
+            .with<base::Sprite>(registry().texture("tree"));
 
         _editor = utils::own<editor::Editor>(world);
         _editor->open<editor::Entities>();

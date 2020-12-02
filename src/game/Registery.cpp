@@ -15,6 +15,7 @@
 #include "game/components/Stamina.h"
 #include "game/components/Pickable.h"
 #include "game/components/Inventory.h"
+#include "game/components/Breakable.h"
 
 #include "base/systems/Camera.h"
 #include "base/systems/DebugRender.h"
@@ -29,6 +30,7 @@
 #include "game/systems/StaminaSystem.h"
 #include "game/systems/InventorySystem.h"
 #include "game/systems/EnemyMove.h"
+#include "game/systems/BreakableSystem.h"
 
 utils::RefPtr<core::Registry> game::make_registry()
 {
@@ -47,6 +49,7 @@ utils::RefPtr<core::Registry> game::make_registry()
     registry->register_system<game::StaminaSystem>("stamina");
     registry->register_system<game::InventorySystem>("inventory");
     registry->register_system<game::EnemyMove>("enemy");
+    registry->register_system<game::BreakableSystem>("breakable");
 
     registry->register_component<base::Player>("player");
     registry->register_component<base::Position>("position");
@@ -60,6 +63,7 @@ utils::RefPtr<core::Registry> game::make_registry()
     registry->register_component<game::Stamina>("stamina");
     registry->register_component<game::Pickable>("pickable");
     registry->register_component<game::Inventory>("inventory");
+    registry->register_component<game::Breakable>("breackable");
 
     return registry;
 }
