@@ -1,6 +1,6 @@
 #pragma once
 
-#include <entt.hpp>
+#include <entt/entity/registry.hpp>
 
 #include "core/Builder.h"
 #include "core/Player.h"

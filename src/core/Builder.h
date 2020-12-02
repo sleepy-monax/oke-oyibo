@@ -1,6 +1,6 @@
 #pragma once
 
-#include <entt.hpp>
+#include <entt/entity/registry.hpp>
 
 namespace core::entity
 {
@@ -17,7 +17,7 @@ namespace core::entity
         }
 
         template <typename TComponent, typename... TArgs>
-        Builder &with(TArgs &&...args)
+        Builder &with(TArgs &&... args)
         {
             _registry.emplace<TComponent>(_entity, std::forward<TArgs>(args)...);
             return *this;

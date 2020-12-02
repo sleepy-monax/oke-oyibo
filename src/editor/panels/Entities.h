@@ -1,5 +1,7 @@
 #pragma once
 
+#include <set>
+
 #include "editor/Editor.h"
 
 namespace editor
