@@ -85,7 +85,7 @@ namespace game
                 world.create_entity()
                     .with<game::Pickable>(stack)
                     .with<base::Position>(randomX,randomY,0.0f)
-                    .with<base::LightSource>(50.0f, WHITE)
+                    .with<base::LightSource>(30.0f, WHITE)
                     .with<base::Sprite>(reg.texture(food));
             }
         }
