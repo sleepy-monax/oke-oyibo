@@ -40,6 +40,11 @@ namespace utils
         Scalar x() const { return _x; }
         Scalar y() const { return _y; }
 
+        Scalar length()
+        {
+            return sqrt(_x * _x + _y * _y);
+        }
+
         Vec2 extract_x() const { return Vec2(_x, 0); }
         Vec2 extract_y() const { return Vec2(0, _y); }
 
@@ -135,6 +140,28 @@ namespace utils
             Scalar yy = MAX(min.y(), MIN(max.y(), y()));
 
             return Vec2(xx, yy);
+        }
+
+        Vec2 normalized()
+        {
+            Scalar magn = length();
+
+            if (magn != 0)
+            {
+                Scalar xx = _x / length();
+                Scalar yy = _y / length();
+
+                return {xx, yy};
+            }
+            else
+            {
+                return {0, 0};
+            }
+        }
+
+        Vec2 vector_to(Vec2 destination)
+        {
+            return (destination - *this).normalized();
         }
 
         Scalar component(Dimension dim)

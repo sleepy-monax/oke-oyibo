@@ -20,7 +20,10 @@ namespace base
 
                 auto destination = tex.bound().moved(position.pos2d() - tex.bound().bottom_center());
 
-                core::draw_texture(tex, destination, WHITE);
+                if (destination.colide_with(camera.bound_world()))
+                {
+                    core::draw_texture(tex, destination, WHITE);
+                }
             });
         });
     }
