@@ -1,11 +1,13 @@
 #pragma once
 
-#include <game/components/Health.h>
-#include <game/components/Thirst.h>
-
+#include "core/Registry.h"
+#include "core/Graphics.h"
 #include "core/System.h"
 #include "core/Time.h"
 #include "core/World.h"
+
+#include "game/components/Health.h"
+#include "game/components/Thirst.h"
 
 namespace game
 {
@@ -16,77 +18,17 @@ namespace game
         core::Texture waterTexture;
 
     public:
-        ThirstSystem()
-        {
-        }
+        ThirstSystem();
 
-        ~ThirstSystem() override
-        {
-        }
+        ~ThirstSystem();
 
-        void update(core::World &world, core::Time &time)
-        {
-            auto view = world.entities().view<game::Thirst, game::Health>();
+        void update(core::World &world, core::Time &time);
 
-            if (stackFrame(time))
-            {
-                view.each([&](game::Thirst &thirst, game::Health &health) {
-                    if ((thirst.current_thirst - 0.1) <= 0)
-                    {
-                        thirst.current_thirst = 0;
-                    }
-                    else
-                    {
-                        thirst.current_thirst -= 0.1;
-                    }
+        bool stackFrame(core::Time &time);
 
-                    if (thirst.current_thirst < (thirst.max_thirst / 4.0))
-                    {
-                        health.health -= 0.1;
-                    }
-                });
-            }
-        }
+        void on_load(core::Registry &registry) override ;
 
-        bool stackFrame(core::Time &time)
-        {
-            _accumulator += time.elapsed();
-
-            if (_accumulator >= 2)
-            {
-                _accumulator -= 2;
-                return true;
-            }
-            else
-            {
-                return false;
-            }
-        }
-
-        void on_load(core::Registry &registry) override {
-            waterTexture = registry.texture("water");
-        }
-
-        void render(core::World &world, core::Camera &camera)
-        {
-            auto view = world.entities().view<base::Position, Thirst>();
-
-            camera.with_overlay([&]() {
-                view.each([&](auto &position, auto &thirst) {
-                    utils::Rectf bound = {-15, -22, 30, 2};
-
-                    bound = bound.offset(position.pos2d());
-                    bound = bound.take_left_percent(thirst.current_thirst / (float)thirst.max_thirst);
-
-                    core::fill_rect(bound, BLUE);
-
-                    utils::Rectf waterRect = {-18, -22, 2, 2};
-                    waterRect = waterRect.offset(position.pos2d());
-
-                    core::draw_texture(waterTexture, waterRect, WHITE);
-                });
-            });
-        }
+        void render(core::World &world, core::Camera &camera);
 
         friend void inspect<game::ThirstSystem>(game::ThirstSystem &thirstSystem);
     };

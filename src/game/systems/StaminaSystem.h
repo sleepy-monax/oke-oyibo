@@ -42,7 +42,7 @@ namespace game {
                             if (stamina.current_stamina + 0.3f > stamina.max_stamina) {
                                 stamina.current_stamina = stamina.max_stamina;
                             } else {
-                                stamina.current_stamina += 0.5f;
+                                stamina.current_stamina += 0.3f;
                             }
                         }
                     });
