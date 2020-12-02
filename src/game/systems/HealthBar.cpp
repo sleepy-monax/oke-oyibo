@@ -37,17 +37,21 @@ namespace game
 
         camera.with_overlay([&]() {
             view.each([&](auto &position, auto &health) {
-                utils::Rectf bound = {-15, -24, 30, 2};
+                if (health.health != health.maxHealth)
+                {
+                    utils::Rectf bound = {-15, -24, 30, 2};
 
-                bound = bound.offset(position.pos2d());
-                bound = bound.take_left_percent(health.health / (float)health.maxHealth);
+                    bound = bound.offset(position.pos2d());
+                    bound = bound.take_left_percent(health.health / (float)health.maxHealth);
 
-                core::fill_rect(bound, RED);
+                    core::fill_rect(bound, RED);
 
-                utils::Rectf healthRect = {-18, -24, 2, 2};
-                healthRect = healthRect.offset(position.pos2d());
+                    utils::Rectf healthRect = {-18, -24, 2, 2};
+                    healthRect = healthRect.offset(position.pos2d());
 
-                core::draw_texture(healthTexture, healthRect, WHITE);
+                    core::draw_texture(healthTexture, healthRect, WHITE);
+                }
+                
             });
         });
     }

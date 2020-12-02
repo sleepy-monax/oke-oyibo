@@ -31,18 +31,18 @@ namespace game
             if (stackFrame(time))
             {
                 view.each([&](game::Thirst &thirst, game::Health &health) {
-                    if ((thirst.current_thirst - 0.3) <= 0)
+                    if ((thirst.current_thirst - 0.1) <= 0)
                     {
                         thirst.current_thirst = 0;
                     }
                     else
                     {
-                        thirst.current_thirst -= 0.3;
+                        thirst.current_thirst -= 0.1;
                     }
 
-                    if (thirst.current_thirst < (thirst.max_thirst / 3.0))
+                    if (thirst.current_thirst < (thirst.max_thirst / 4.0))
                     {
-                        health.health -= 0.5;
+                        health.health -= 0.1;
                     }
                 });
             }
