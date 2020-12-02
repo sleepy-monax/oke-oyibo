@@ -2,15 +2,19 @@
 
 #include <entt/entity/registry.hpp>
 
+#include "utils/HashMap.h"
+#include "utils/OwnPtr.h"
+#include "utils/RefPtr.h"
+#include "utils/Vector.h"
+
+#include "core/Blueprint.h"
 #include "core/Builder.h"
 #include "core/Player.h"
 #include "core/System.h"
 #include "core/Terrain.h"
 #include "core/Time.h"
-#include "utils/HashMap.h"
-#include "utils/OwnPtr.h"
-#include "utils/RefPtr.h"
-#include "utils/Vector.h"
+
+#include "base/components/Position.h"
 
 namespace core
 {
@@ -43,7 +47,19 @@ namespace core
 
         void add_player(core::Player &&);
 
-        entity::Builder create_entity();
+        Builder create_entity();
+
+        Builder create_entity(Blueprint &blueprint)
+        {
+            auto b = create_entity();
+            blueprint.create(b);
+            return b;
+        }
+
+        Builder create_entity(Blueprint &blueprint, utils::Vec2f position)
+        {
+            return create_entity(blueprint).with<base::Position>(position.x(), position.y(), 0.0f);
+        }
 
         void remove_entity(entt::entity entity)
         {

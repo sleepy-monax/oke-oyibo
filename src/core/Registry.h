@@ -7,6 +7,7 @@
 #include "utils/OwnPtr.h"
 #include "utils/RefCounter.h"
 
+#include "core/Blueprint.h"
 #include "core/System.h"
 #include "core/Texture.h"
 
@@ -56,6 +57,9 @@ namespace core
         utils::HashMap<entt::id_type, ComponentDescription> _components{};
         utils::Vector<TextureDescription> _textures;
         utils::Vector<FontDescription> _fonts;
+
+        static Blueprint EMPTY_BLUEPRINT;
+        utils::HashMap<std::string, Blueprint> _blueprints{};
 
     public:
         Registry() {}
@@ -139,6 +143,23 @@ namespace core
         const Font &font(FontHandle hnd)
         {
             return _fonts[hnd].font;
+        }
+
+        void register_blueprint(std::string name, Blueprint blueprint)
+        {
+            _blueprints[name] = blueprint;
+        }
+
+        Blueprint &blueprint(std::string name)
+        {
+            if (_blueprints.has_key(name))
+            {
+                return _blueprints[name];
+            }
+            else
+            {
+                return EMPTY_BLUEPRINT;
+            }
         }
     };
 } // namespace core

@@ -27,7 +27,7 @@ namespace utils
 
         Item *item_by_key(const TKey &key)
         {
-            return item(key, hash<TKey>(key));
+            return item_by_key(key, hash<TKey>(key));
         }
 
         Item *item_by_key(const TKey &key, uint32_t hash)
@@ -96,7 +96,7 @@ namespace utils
 
         bool has_key(TKey &key)
         {
-            return item(key) != nullptr;
+            return item_by_key(key) != nullptr;
         }
 
         bool has_value(TValue &value)

@@ -2,7 +2,7 @@
 
 #include <entt/entity/registry.hpp>
 
-namespace core::entity
+namespace core
 {
     class Builder
     {

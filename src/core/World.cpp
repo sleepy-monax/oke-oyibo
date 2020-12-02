@@ -24,9 +24,9 @@ namespace core
         _players.push_back(std::move(player));
     }
 
-    entity::Builder World::create_entity()
+    Builder World::create_entity()
     {
-        return entity::Builder{entities()};
+        return Builder{entities()};
     }
 
     void World::update(Time &time)

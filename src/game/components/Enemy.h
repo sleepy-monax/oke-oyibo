@@ -8,6 +8,6 @@ namespace game
 {
     struct Enemy
     {
-        
+        int _dummy;
     };
 } // namespace game

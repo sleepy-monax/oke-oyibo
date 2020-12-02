@@ -1,5 +1,7 @@
 #pragma once
 
+#include <string>
+
 #include "utils/Common.h"
 
 static inline uint32_t hash(const void *object, size_t size)
@@ -31,4 +33,10 @@ template <>
 inline uint32_t hash<uint32_t>(const uint32_t &value)
 {
     return hash(&value, sizeof(value));
+}
+
+template <>
+inline uint32_t hash<std::string>(const std::string &value)
+{
+    return hash(reinterpret_cast<const void *>(value.c_str()), value.length());
 }
