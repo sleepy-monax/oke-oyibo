@@ -19,6 +19,7 @@
 
 #include "game/components/Enemy.h"
 #include "game/components/Pickable.h"
+#include "game/systems/EnemyMove.h"
 
 namespace game
 {
@@ -52,6 +53,7 @@ namespace game
                 //generate enemy entity in the world
                 world.create_entity()
                     .with<game::Enemy>()
+                    .with<game::EnemyMove>()
                     .with<base::Position>(randomX, randomY, 0.0f)
                     .with<base::Acceleration>()
                     .with<base::Velocity>()

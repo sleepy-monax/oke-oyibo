@@ -28,6 +28,7 @@
 #include "game/systems/ThirstSystem.h"
 #include "game/systems/StaminaSystem.h"
 #include "game/systems/InventorySystem.h"
+#include "game/systems/EnemyMove.h"
 
 utils::RefPtr<core::Registry> game::make_registry()
 {
@@ -45,6 +46,7 @@ utils::RefPtr<core::Registry> game::make_registry()
     registry->register_system<base::EntityRenderer>("entity");
     registry->register_system<game::StaminaSystem>("stamina");
     registry->register_system<game::InventorySystem>("inventory");
+    registry->register_system<game::EnemyMove>("enemy");
 
     registry->register_component<base::Player>("player");
     registry->register_component<base::Position>("position");

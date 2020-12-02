@@ -35,8 +35,6 @@ namespace game
         float randomY;
         vector<string> enemy_sprites;
         vector<string> food_sprites;
-        utils::RefPtr<core::World> world;
-        base::Position position;
 
     public :
         Generator();
