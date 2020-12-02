@@ -4,14 +4,12 @@
 #include "base/components/Acceleration.h"
 
 #include "game/systems/ReviveSystem.h"
-#include "game/components/Inventory.h"
-#include "game/components/Stamina.h"
 
 #include <imgui.h>
 
 namespace game
 {
-    ReviveSystem::ReviveSystem()
+    ReviveSystem::ReviveSystem() 
     {
     }
 
@@ -42,20 +40,14 @@ namespace game
                     if (ImGui::Button("Retry without inventory", button_size))
                     {
                         inventory.clear();
-                        health.health = health.maxHealth;
-                        hunger.current_food = hunger.max_food;
-                        thirst.current_thirst = thirst.max_thirst;
-                        stamina.current_stamina = stamina.max_stamina;
+                        reset(health, hunger, thirst, stamina);
                     }
 
                     //Retry 
                     ImGui::SameLine();
                     if (ImGui::Button("Retry with inventory", button_size))
                     {
-                        health.health = health.maxHealth;
-                        hunger.current_food = hunger.max_food;
-                        thirst.current_thirst = thirst.max_thirst;
-                        stamina.current_stamina = stamina.max_stamina;
+                        reset(health, hunger, thirst, stamina);
                     }
 
                     ImGui::End();
@@ -63,5 +55,11 @@ namespace game
                 }
             });
         });
+    }
+    void ReviveSystem::reset(game::Health &health, game::Hunger &hunger, game::Thirst &thirst, game::Stamina &stamina) {
+        health.health = health.maxHealth;
+        hunger.current_food = hunger.max_food;
+        thirst.current_thirst = thirst.max_thirst;
+        stamina.current_stamina = stamina.max_stamina;
     }
 }

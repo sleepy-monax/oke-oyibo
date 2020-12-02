@@ -11,6 +11,8 @@
 #include "game/components/Health.h"
 #include "game/components/Hunger.h"
 #include "game/components/Thirst.h"
+#include "game/components/Inventory.h"
+#include "game/components/Stamina.h"
 
 namespace game
 {
@@ -21,5 +23,6 @@ namespace game
         ReviveSystem();
 
         void render(core::World &world, core::Camera &camera) override;
+        void reset(game::Health &health, game::Hunger &hunger, game::Thirst &thirst, game::Stamina &stamina);
     };
 }
