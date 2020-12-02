@@ -16,12 +16,16 @@ namespace game
         player.each([&](auto &inventory, auto &position) {
            auto pos_inventory = position.pos2d();
 
-            items.each([&](auto &pickable, auto &position) {
+            items.each([&](const auto entity, auto &pickable, auto &position) {
                 auto pos_item = position.pos2d();
 
                 if (pos_item.distance_to(pos_inventory) <= 2.)
                 {
-                    inventory.add(pickable.stack);
+                    pickable.stack = inventory.add(pickable.stack);
+                    if(pickable.stack.getQuantity() == 0 )
+                    {
+                        world.remove_entity(entity);
+                    }
                 }
                  
             });

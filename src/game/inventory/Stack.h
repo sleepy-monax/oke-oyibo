@@ -9,7 +9,7 @@ namespace game
     {
     private:
         Item item;
-        int quantity;
+        int _quantity = 0;
         static constexpr int MAX_QUANTITY = 64;
     public:
         Stack(Item item, int quantity);
@@ -18,7 +18,8 @@ namespace game
         Item getItem() const;
         int getQuantity() const;
         int getMax_quantity() const;
-        void add(int quantity);
+        int add(int quantity);
+        void set_quantity(int quantity);
     };
     
 } // namespace game
@@ -26,6 +27,6 @@ namespace game
 template<>
 inline void inspect<game::Stack>(game::Stack &stack)
 {
-    ImGui::InputInt("quantity", &stack.quantity);
+    ImGui::InputInt("quantity", &stack._quantity);
     ImGui::Text("name  : %s", stack.item.getName().c_str());
 }

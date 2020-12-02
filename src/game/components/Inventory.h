@@ -11,31 +11,24 @@ namespace game
         std::vector<game::Stack> inventory;
         static constexpr int MAX_SIZE = 64;
 
-        void add(game::Stack &stack) {
-            
-            if (inventory.size() >= MAX_SIZE)
-            {
-                return;
-            }
-            
+        game::Stack add(game::Stack stack) {
 
-            bool find = false;
             for (game::Stack &st : inventory)
             {
-                if (st.getItem().getName() == stack.getItem().getName())
+                if (st.getItem().getName()== stack.getItem().getName())
                 {
-                    st.add(stack.getQuantity());
-                    find = true;
+                    stack.set_quantity(st.add(stack.getQuantity()));
+                    
                 }
             }
 
-            if (!find)
+            if (stack.getQuantity() > 0 && inventory.size() < MAX_SIZE)
             {
                 inventory.push_back(stack);
+                stack.set_quantity(0);
             }
             
-            
-            
+            return stack;
         }
     };
 } // namespace game
