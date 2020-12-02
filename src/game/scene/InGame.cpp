@@ -72,6 +72,7 @@ namespace game
 
         game::Generator gen;
         gen.generate_enemy(*world, registry());
+        gen.generate_food(*world,registry());
     }
 
     void InGame::on_switch_out()

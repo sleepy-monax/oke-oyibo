@@ -3,6 +3,7 @@
 #include "base/components/Player.h"
 #include "base/components/Position.h"
 #include "base/components/Sprite.h"
+#include "base/components/LightSource.h"
 
 #include "core/Camera.h"
 #include "core/Time.h"
@@ -17,6 +18,7 @@
 #include "editor/panels/Viewport.h"
 
 #include "game/components/Enemy.h"
+#include "game/components/Pickable.h"
 
 namespace game
 {
@@ -57,8 +59,36 @@ namespace game
                     .with<base::Sprite>(reg.texture(enemy));
             }
         }
+    }
 
-        
+    //generate food sprite list
+    void Generator::create_food_sprite()
+    {
+        this->food_sprites.push_back("food");
+        this->food_sprites.push_back("water");
+    }
+
+    //generate food on the map
+    void Generator::generate_food(core::World &world, core::Registry &reg)
+    {
+        create_food_sprite();
+        for (int i = 0; i < 100; i++) 
+        {
+            for (string food : food_sprites)
+            {
+                //Set random positions
+                this->randomX = rand()% world.terrain().bound().width();
+                this->randomY = rand()% world.terrain().bound().height();
+
+                Stack stack(Item("Item " + food, core::Texture()), 12);
+                //generate item entity
+                world.create_entity()
+                    .with<game::Pickable>(stack)
+                    .with<base::Position>(randomX,randomY,0.0f)
+                    .with<base::LightSource>(50.0f, WHITE)
+                    .with<base::Sprite>(reg.texture(food));
+            }
+        }
     }
     
     //generate the world

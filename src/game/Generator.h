@@ -9,6 +9,9 @@
 #include "base/components/Position.h"
 #include "base/components/Sprite.h"
 
+#include "game/inventory/Item.h"
+#include "game/inventory/Stack.h"
+
 #include "core/Camera.h"
 #include "core/Time.h"
 #include "core/World.h"
@@ -31,6 +34,7 @@ namespace game
         float randomX;
         float randomY;
         vector<string> enemy_sprites;
+        vector<string> food_sprites;
         utils::RefPtr<core::World> world;
         base::Position position;
 
@@ -39,8 +43,10 @@ namespace game
         ~Generator();
 
         void create_enemy_sprite(); 
+        void create_food_sprite();
         void generate_world();
         void generate_enemy(core::World &world, core::Registry &reg);
+        void generate_food(core::World &world, core::Registry &reg);
 
     };
 } // namespace game
