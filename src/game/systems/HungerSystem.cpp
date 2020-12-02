@@ -38,6 +38,7 @@ namespace game
                     {
                         health.health -= 0.1;
                     }
+
                 });
             }
     }

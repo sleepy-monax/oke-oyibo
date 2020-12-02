@@ -31,6 +31,7 @@
 #include "game/systems/InventorySystem.h"
 #include "game/systems/EnemyMove.h"
 #include "game/systems/BreakableSystem.h"
+#include "game/systems/ReviveSystem.h"
 
 utils::RefPtr<core::Registry> game::make_registry()
 {
@@ -50,6 +51,7 @@ utils::RefPtr<core::Registry> game::make_registry()
     registry->register_system<game::InventorySystem>("inventory");
     registry->register_system<game::EnemyMove>("enemy");
     registry->register_system<game::BreakableSystem>("breakable");
+    registry->register_system<game::ReviveSystem>("revive");
 
     registry->register_component<base::Player>("player");
     registry->register_component<base::Position>("position");

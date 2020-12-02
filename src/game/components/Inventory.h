@@ -30,6 +30,10 @@ namespace game
             
             return stack;
         }
+
+        void clear() {
+            inventory.clear();
+        }
     };
 } // namespace game
 
