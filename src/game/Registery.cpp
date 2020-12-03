@@ -35,6 +35,7 @@
 #include "game/systems/ReviveSystem.h"
 #include "game/systems/StaminaSystem.h"
 #include "game/systems/ThirstSystem.h"
+#include "game/systems/RegenSystem.h"
 
 utils::RefPtr<core::Registry> game::make_registry()
 {
@@ -56,6 +57,7 @@ utils::RefPtr<core::Registry> game::make_registry()
     registry->register_system<game::ReviveSystem>("revive");
     registry->register_system<game::StaminaSystem>("stamina");
     registry->register_system<game::ThirstSystem>("thirst");
+    registry->register_system<game::RegenSystem>("regen");
 
     registry->register_component<base::Acceleration>("acceleration");
     registry->register_component<base::LightSource>("light-source");
