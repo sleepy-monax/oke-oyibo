@@ -20,6 +20,7 @@
 #include "game/components/Inventory.h"
 #include "game/inventory/Stack.h"
 #include "game/inventory/Item.h"
+#include "game/components/HoldItem.h"
 
 namespace game
 {
@@ -52,7 +53,8 @@ namespace game
             .with<base::Player>(0)
             .with<base::Sprite>(registry().texture("character"))
             .with<game::Stamina>(20.0f, 20.0f)
-            .with<game::Inventory>();
+            .with<game::Inventory>()
+            .with<game::HoldItem>();
 
 
         Stack table(Item("table", core::Texture()), 12);

@@ -18,6 +18,7 @@
 #include "game/components/Inventory.h"
 #include "game/components/Pickable.h"
 #include "game/components/Stamina.h"
+#include "game/components/HoldItem.h"
 
 #include "base/systems/Camera.h"
 #include "base/systems/DebugRender.h"
@@ -36,6 +37,7 @@
 #include "game/systems/StaminaSystem.h"
 #include "game/systems/ThirstSystem.h"
 #include "game/systems/RegenSystem.h"
+#include "game/systems/HoldItemSystem.h"
 
 utils::RefPtr<core::Registry> game::make_registry()
 {
@@ -58,6 +60,7 @@ utils::RefPtr<core::Registry> game::make_registry()
     registry->register_system<game::StaminaSystem>("stamina");
     registry->register_system<game::ThirstSystem>("thirst");
     registry->register_system<game::RegenSystem>("regen");
+    registry->register_system<game::HoldItemSystem>("hold-item");
 
     registry->register_component<base::Acceleration>("acceleration");
     registry->register_component<base::LightSource>("light-source");
@@ -74,6 +77,7 @@ utils::RefPtr<core::Registry> game::make_registry()
     registry->register_component<game::Pickable>("pickable");
     registry->register_component<game::Stamina>("stamina");
     registry->register_component<game::Thirst>("thirst");
+    registry->register_component<game::HoldItem>("hold-item");
 
     auto basic_entity = [](core::Builder &e) {
         e.with<base::Acceleration>();
