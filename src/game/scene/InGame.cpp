@@ -11,16 +11,17 @@
 #include "base/components/LightSource.h"
 #include "base/components/Player.h"
 #include "base/components/Sprite.h"
-#include "game/components/Hunger.h"
-#include "game/components/Thirst.h"
-#include "game/components/Stamina.h"
-#include "game/Generator.h"
-#include "game/components/Pickable.h"
 #include "game/components/Breakable.h"
-#include "game/components/Inventory.h"
-#include "game/inventory/Stack.h"
-#include "game/inventory/Item.h"
 #include "game/components/HoldItem.h"
+#include "game/components/Hunger.h"
+#include "game/components/Inventory.h"
+#include "game/components/Pickable.h"
+#include "game/components/Stamina.h"
+#include "game/components/Thirst.h"
+#include "game/inventory/Item.h"
+#include "game/inventory/Stack.h"
+
+#include "game/generator/Generator.h"
 
 namespace game
 {
@@ -36,7 +37,9 @@ namespace game
 
     void InGame::on_switch_in()
     {
-        auto world = utils::make<core::World>(registry(), 256, 256);
+        Generator gen{};
+
+        auto world = gen.generate(registry(), time(nullptr));
 
         world->add_player({"bob", utils::own<core::Keyboard>()});
         world->players()[0].camera().zoom_in();
@@ -56,11 +59,10 @@ namespace game
             .with<game::Inventory>()
             .with<game::HoldItem>();
 
-
         Stack table(Item("table", core::Texture()), 12);
         world->create_entity()
             .with<game::Pickable>(table)
-            .with<base::Position>(60.0f,60.0f,0.0f)
+            .with<base::Position>(60.0f, 60.0f, 0.0f)
             .with<base::LightSource>(50.0f, WHITE)
             .with<base::Sprite>(registry().texture("table"));
 
@@ -79,10 +81,6 @@ namespace game
         _editor->open<editor::Viewport>();
 
         _game = utils::own<game::Game>(world);
-
-        game::Generator gen;
-        gen.generate_enemy(*world, registry());
-        gen.generate_food(*world,registry());
     }
 
     void InGame::on_switch_out()

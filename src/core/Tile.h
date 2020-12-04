@@ -1,19 +1,15 @@
 #pragma once
 
+#include <core/Texture.h>
+#include <string>
+
 namespace core
 {
-    class Tile
+    struct Tile
     {
-    private:
-    public:
         static constexpr auto SIZE = 16;
 
-        Tile()
-        {
-        }
-
-        ~Tile()
-        {
-        }
+        Texture texture;
+        int flags;
     };
 } // namespace core

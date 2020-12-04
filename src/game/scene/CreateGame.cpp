@@ -6,7 +6,7 @@
 
 namespace game
 {
-     CreateGame::CreateGame(core::Director &dir, core::Registry &reg):
+    CreateGame::CreateGame(core::Director &dir, core::Registry &reg) :
         core::Scene(dir, reg) {}
 
     CreateGame::~CreateGame()
@@ -21,16 +21,15 @@ namespace game
     void CreateGame::render()
     {
         ImGui::Begin("Create game");
-        ImVec2 vector(720, 480), button_size(200,30);
+        ImVec2 vector(720, 480), button_size(200, 30);
         ImGui::SetWindowSize(vector);
-        
+
         //Back
         if (ImGui::Button("Back"))
         {
             director().switch_scene<game::MainMenu>();
         }
-        
-        
+
         //Name of world
         ImGui::Text("%20s", "Name of world : ");
         ImGui::SameLine();
@@ -38,12 +37,11 @@ namespace game
         ImGui::InputText("", buf, IM_ARRAYSIZE(buf));
 
         //Difficulty
-        ImGui::Text("%20s","Difficulty : ");
+        ImGui::Text("%20s", "Difficulty : ");
         ImGui::SameLine();
         static int animate = 1;
-        const char* difficulties[] = {"easy", "normal", "hard"};
+        const char *difficulties[] = {"easy", "normal", "hard"};
         ImGui::Combo(" ", &animate, difficulties, IM_ARRAYSIZE(difficulties));
-
 
         //Create game
         ImGui::SetCursorPosX(270.);

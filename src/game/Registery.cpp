@@ -14,11 +14,11 @@
 #include "game/components/Flammable.h"
 #include "game/components/Growable.h"
 #include "game/components/Health.h"
+#include "game/components/HoldItem.h"
 #include "game/components/Hunger.h"
 #include "game/components/Inventory.h"
 #include "game/components/Pickable.h"
 #include "game/components/Stamina.h"
-#include "game/components/HoldItem.h"
 
 #include "base/systems/Camera.h"
 #include "base/systems/DebugRender.h"
@@ -31,13 +31,13 @@
 #include "game/systems/BreakableSystem.h"
 #include "game/systems/EnemyMove.h"
 #include "game/systems/HealthBar.h"
+#include "game/systems/HoldItemSystem.h"
 #include "game/systems/HungerSystem.h"
 #include "game/systems/InventorySystem.h"
+#include "game/systems/RegenSystem.h"
 #include "game/systems/ReviveSystem.h"
 #include "game/systems/StaminaSystem.h"
 #include "game/systems/ThirstSystem.h"
-#include "game/systems/RegenSystem.h"
-#include "game/systems/HoldItemSystem.h"
 
 utils::RefPtr<core::Registry> game::make_registry()
 {
@@ -84,47 +84,123 @@ utils::RefPtr<core::Registry> game::make_registry()
         e.with<base::Velocity>();
     };
 
-    auto basic_enemy = [basic_entity](core::Builder &e) {
+    auto basic_enemy = [&, basic_entity](core::Builder &e, auto &texture) {
         basic_entity(e);
 
-        // e.with<game::Enemy>();
-        // e.with<game::EnemyMove>();
+        e.with<game::Enemy>();
+        e.with<game::EnemyMove>();
+        e.with<base::Sprite>(registry->texture(texture));
     };
 
-    registry->register_blueprint(
-        "zombie",
-        {[&, basic_enemy](core::Builder &e) {
-            basic_enemy(e);
-            e.with<base::Sprite>(registry->texture("zombie"));
-        }});
+    auto ZOMBIE = registry->register_blueprint("zombie", [&](auto &e) {
+        basic_enemy(e, "zombie");
+    });
 
-    registry->register_blueprint(
-        "skeleton",
-        {[&, basic_enemy](core::Builder &e) {
-            basic_enemy(e);
-            e.with<base::Sprite>(registry->texture("skeleton"));
-        }});
+    auto SKELETON = registry->register_blueprint("skeleton", [&](auto &e) {
+        basic_enemy(e, "skeleton");
+    });
 
-    registry->register_blueprint(
-        "slime",
-        {[&, basic_enemy](core::Builder &e) {
-            basic_enemy(e);
-            e.with<base::Sprite>(registry->texture("slime"));
-        }});
+    auto SLIME = registry->register_blueprint("slime", [&](auto &e) {
+        basic_enemy(e, "slime");
+    });
 
-    registry->register_blueprint(
-        "big-slime",
-        {[&, basic_enemy](core::Builder &e) {
-            basic_enemy(e);
-            e.with<base::Sprite>(registry->texture("big-slime"));
-        }});
+    auto BIG_SLIME = registry->register_blueprint("big-slime", [&](auto &e) {
+        basic_enemy(e, "big-slime");
+    });
 
-    registry->register_blueprint(
-        "wisp",
-        {[&, basic_enemy](core::Builder &e) {
-            basic_enemy(e);
-            e.with<base::Sprite>(registry->texture("wisp"));
-        }});
+    auto WISP = registry->register_blueprint("wisp", [&](auto &e) {
+        basic_enemy(e, "wisp");
+    });
+
+    registry->register_biome({
+        "taiga",
+        {registry->texture("grass-tile"), 0},
+        core::TEM{-0.5, 0, 0.5},
+    });
+
+    registry->register_biome({
+        "forest",
+        {registry->texture("grass-tile"), 0},
+        core::TEM{0, 0.5, 0.5},
+    });
+
+    registry->register_biome({
+        "jungle",
+        {registry->texture("grass-tile"), 0},
+        core::TEM{0.5, 0.5, 0.5},
+    });
+
+    registry->register_biome({
+        "tundra",
+        {registry->texture("snow-tile"), 0},
+        core::TEM{-0.5, 0, 0},
+    });
+
+    registry->register_biome({
+        "plain",
+        {registry->texture("grass-tile"), 0},
+        core::TEM{0, 0.01, 0},
+    });
+
+    registry->register_biome({
+        "desert",
+        {registry->texture("sand-tile"), 0},
+        core::TEM{0.5, 0, -0.5},
+    });
+
+    registry->register_biome({
+        "swamp",
+        {registry->texture("grass-tile"), 0},
+        core::TEM{0, 0.1, 1},
+    });
+
+    registry->register_biome({
+        "beach",
+        {registry->texture("sand-tile"), 0},
+        core::TEM{0, -0.1, 0},
+    });
+
+    registry->register_biome({
+        "stone_beach",
+        {registry->texture("stone-tile"), 0},
+        core::TEM{-0.5, -0.15, 0},
+    });
+
+    registry->register_biome({
+        "sea",
+        {registry->texture("water-tile"), 0},
+        core::TEM{0, -0.2, 0},
+    });
+
+    registry->register_biome({
+        "deep_sea",
+        {registry->texture("deep-water-tile"), 0},
+        core::TEM{0, -0.5, 0},
+    });
+
+    registry->register_biome({
+        "cold_sea",
+        {registry->texture("water-tile"), 0},
+        core::TEM{-0.5, -0.2, 0},
+    });
+
+    registry->register_biome({
+        "cold_deep_sea",
+        {registry->texture("deep-water-tile"), 0},
+        core::TEM{-0.5, -0.5, 0},
+    });
+
+    registry->register_biome({
+        "warm_sea",
+        {registry->texture("water-tile"), 0},
+        core::TEM{0.5, -0.2, -0.5},
+    });
+
+    registry->register_biome({
+        "warm_deep_sea",
+        {registry->texture("deep-water-tile"), 0},
+        core::TEM{0.5, -0.5, -0.5},
+    });
 
     return registry;
 }

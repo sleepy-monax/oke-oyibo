@@ -10,6 +10,7 @@
 #include "core/Blueprint.h"
 #include "core/System.h"
 #include "core/Texture.h"
+#include "core/world/Biome.h"
 
 #include "base/components/Component.h"
 
@@ -57,9 +58,10 @@ namespace core
         utils::HashMap<entt::id_type, ComponentDescription> _components{};
         utils::Vector<TextureDescription> _textures;
         utils::Vector<FontDescription> _fonts;
+        utils::Vector<Biome> _biomes;
 
         static Blueprint EMPTY_BLUEPRINT;
-        utils::HashMap<std::string, Blueprint> _blueprints{};
+        utils::HashMap<std::string, utils::RefPtr<Blueprint>> _blueprints{};
 
     public:
         Registry() {}
@@ -145,21 +147,50 @@ namespace core
             return _fonts[hnd].font;
         }
 
-        void register_blueprint(std::string name, Blueprint blueprint)
+        utils::RefPtr<Blueprint> register_blueprint(std::string name, utils::Callback<void(Builder &)> blueprint)
         {
-            _blueprints[name] = blueprint;
+            _blueprints[name] = utils::make<Blueprint>(blueprint);
+            return _blueprints[name];
         }
 
         Blueprint &blueprint(std::string name)
         {
             if (_blueprints.has_key(name))
             {
-                return _blueprints[name];
+                return *_blueprints[name];
             }
             else
             {
                 return EMPTY_BLUEPRINT;
             }
+        }
+
+        void register_biome(Biome biome)
+        {
+            _biomes.push_back(biome);
+        }
+
+        Biome &lookup_biome(TEM tem)
+        {
+            Biome *best_biome = nullptr;
+            double best_distance = 10000000;
+
+            for (size_t i = 0; i < _biomes.count(); i++)
+            {
+                Biome *biome = &_biomes[i];
+
+                double distance = biome->climat.difference(tem);
+
+                if (distance < best_distance)
+                {
+                    best_distance = distance;
+                    best_biome = biome;
+                }
+            }
+
+            assert(best_biome != nullptr);
+
+            return *best_biome;
         }
     };
 } // namespace core

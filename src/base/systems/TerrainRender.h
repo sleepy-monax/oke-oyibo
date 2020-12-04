@@ -2,6 +2,8 @@
 
 #include <raylib.h>
 
+#include "core/Graphics.h"
+#include "core/Registry.h"
 #include "core/System.h"
 #include "core/World.h"
 
@@ -30,12 +32,7 @@ namespace base
                          y < MIN(bound.bottom() / core::Tile::SIZE, terrain.height());
                          y++)
                     {
-                        DrawRectangleLines(
-                            x * core::Tile::SIZE,
-                            y * core::Tile::SIZE,
-                            core::Tile::SIZE,
-                            core::Tile::SIZE,
-                            GREEN);
+                        core::draw_texture(world.terrain().tile(x, y).texture, {(float)x * core::Tile::SIZE, (float)y * core::Tile::SIZE, (float)core::Tile::SIZE, (float)core::Tile::SIZE}, WHITE);
                     }
                 }
             });
