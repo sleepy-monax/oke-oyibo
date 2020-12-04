@@ -47,7 +47,7 @@ namespace game
 
                     core::TEM new_tem = {
                         tem.temperature(),
-                        (tem.elevation() + island(x, y) * 2) / 3,
+                        (tem.elevation() + island(x, y)) / 2,
                         tem.moisture(),
                     };
 

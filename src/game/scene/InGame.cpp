@@ -44,6 +44,7 @@ namespace game
         world->add_player({"bob", utils::own<core::Keyboard>()});
         world->players()[0].camera().zoom_in();
         world->players()[0].camera().speed(10);
+        world->players()[0].camera().jump_to(world->terrain().bound().center());
 
         auto world_center = world->terrain().bound().center();
 
@@ -94,6 +95,11 @@ namespace game
         if (IsKeyPressed(KEY_F3))
         {
             _debugging = !_debugging;
+        }
+
+        if (IsKeyPressed(KEY_R))
+        {
+            on_switch_in();
         }
 
         if (_debugging)
