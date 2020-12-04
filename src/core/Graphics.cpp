@@ -1,3 +1,5 @@
+#include <rlgl.h>
+
 #include "core/Graphics.h"
 
 namespace core
@@ -30,5 +32,23 @@ namespace core
     void draw_texture(Texture texture, utils::Rectf dest, Color color)
     {
         draw_texture(texture, texture.bound(), dest, color);
+    }
+
+    void draw_ellipse(utils::Vec2f vec, float radiusH, float radiusV, Color color)
+    {
+        if (rlCheckBufferLimit(3 * 36))
+        {
+            rlglDraw();
+        }
+
+        rlBegin(RL_TRIANGLES);
+        for (int i = 0; i < 360; i += 10)
+        {
+            rlColor4ub(color.r, color.g, color.b, color.a);
+            rlVertex2f(vec.x(), vec.y());
+            rlVertex2f(vec.x() + sinf(DEG2RAD * i) * radiusH, vec.y() + cosf(DEG2RAD * i) * radiusV);
+            rlVertex2f(vec.x() + sinf(DEG2RAD * (i + 10)) * radiusH, vec.y() + cosf(DEG2RAD * (i + 10)) * radiusV);
+        }
+        rlEnd();
     }
 } // namespace core

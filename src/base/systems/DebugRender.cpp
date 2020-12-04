@@ -12,8 +12,8 @@ namespace base
         auto view = world.entities().view<base::Position>();
 
         camera.with_overlay([&]() {
-            view.each([](auto &position) {
-                DrawCircle(position.x, position.y, 1, RED);
+            view.each([&](auto &position) {
+                DrawCircleV({position.x, position.y}, 1 / camera.zoom(), RED);
             });
         });
     }

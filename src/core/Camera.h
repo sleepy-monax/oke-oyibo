@@ -219,7 +219,7 @@ namespace core
             composite().use_and_do([&]() {
                 Rectangle rect{0, 0, (float)width(), (float)height()};
                 DrawTexturePro(terrain().underlying_texture(), rect, rect, (Vector2){0, 0}, 0.0f, WHITE);
-                DrawTexturePro(shadows().underlying_texture(), rect, rect, (Vector2){0, 0}, 0.0f, WHITE);
+                DrawTexturePro(shadows().underlying_texture(), rect, rect, (Vector2){0, 0}, 0.0f, Color{0, 0, 0, 100});
                 DrawTexturePro(entities().underlying_texture(), rect, rect, (Vector2){0, 0}, 0.0f, WHITE);
 
                 BeginBlendMode(BLEND_MULTIPLIED);

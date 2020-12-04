@@ -16,4 +16,6 @@ namespace core
     void draw_texture(Texture texture, utils::Rectf src, utils::Rectf dest, Color color);
 
     void draw_texture(Texture texture, utils::Rectf dest, Color color);
+
+    void draw_ellipse(utils::Vec2f vec, float radiusH, float radiusV, Color color);
 } // namespace core

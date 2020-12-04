@@ -1,6 +1,7 @@
 #include "game/Registery.h"
 
 #include "base/components/Acceleration.h"
+#include "base/components/CastShadow.h"
 #include "base/components/Colider.h"
 #include "base/components/LightSource.h"
 #include "base/components/Player.h"
@@ -26,6 +27,7 @@
 #include "base/systems/Input.h"
 #include "base/systems/Light.h"
 #include "base/systems/Physic.h"
+#include "base/systems/Shadow.h"
 #include "base/systems/TerrainRender.h"
 
 #include "game/systems/BreakableSystem.h"
@@ -48,6 +50,7 @@ utils::RefPtr<core::Registry> game::make_registry()
     registry->register_system<base::EntityRenderer>("entity");
     registry->register_system<base::Input>("input");
     registry->register_system<base::Light>("light");
+    registry->register_system<base::Shadow>("shadow");
     registry->register_system<base::Physic>("physic");
     registry->register_system<base::TerrainRender>("terrain");
 
@@ -114,6 +117,7 @@ utils::RefPtr<core::Registry> game::make_registry()
 
     auto TREE = registry->register_blueprint("tree", [&](core::Builder &e) {
         e.with<base::Sprite>(registry->texture("tree"));
+        e.with<base::CastShadow>(12, utils::Vec2f{});
     });
 
     auto GRASS = registry->register_blueprint("grass", [&](core::Builder &e) {

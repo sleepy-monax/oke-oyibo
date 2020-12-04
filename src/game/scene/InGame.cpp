@@ -8,6 +8,7 @@
 #include "editor/panels/Systems.h"
 #include "editor/panels/Viewport.h"
 
+#include "base/components/CastShadow.h"
 #include "base/components/LightSource.h"
 #include "base/components/Player.h"
 #include "base/components/Sprite.h"
@@ -60,6 +61,7 @@ namespace game
             .with<base::Sprite>(registry().texture("character"))
             .with<game::Stamina>(20.0f, 20.0f)
             .with<game::Inventory>()
+            .with<base::CastShadow>(4, utils::Vec2f{0.5, 0})
             .with<game::HoldItem>();
 
         Stack table(Item("table", core::Texture()), 12);
