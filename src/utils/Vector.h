@@ -1,5 +1,7 @@
 #pragma once
 
+#include <initializer_list>
+
 #include "utils/Iteration.h"
 #include "utils/Macros.h"
 
@@ -61,6 +63,14 @@ namespace utils
         Vector(size_t capacity)
         {
             ensure_capacity(capacity);
+        }
+
+        Vector(std::initializer_list<T> elements)
+        {
+            for (auto &&i : elements)
+            {
+                push_back(i);
+            }
         }
 
         Vector(const Vector &other)
@@ -242,6 +252,9 @@ namespace utils
             if (_count + 1 >= _capacity)
             {
                 size_t new_capacity = _capacity + _capacity / 4;
+
+                new_capacity = MAX(1, new_capacity);
+
                 T *new_storage = reinterpret_cast<T *>(calloc(new_capacity, sizeof(T)));
 
                 for (size_t i = 0; i < _count; i++)
@@ -290,7 +303,7 @@ namespace utils
 
             grow();
 
-            for (size_t j = _count; j > index; j--)
+            for (size_t j = _count; j > index + 1; j--)
             {
                 new (&_storage[j]) T(std::move(_storage[j - 1]));
             }

@@ -24,7 +24,7 @@ namespace utils
         RefPtr(AdoptTag, T &object) :
             _ptr(const_cast<T *>(&object)) {}
 
-        RefPtr(RefPtr &other) :
+        RefPtr(const RefPtr &other) :
             _ptr(other.naked()) { _ptr->ref(); }
         RefPtr(AdoptTag, RefPtr &other) :
             _ptr(other.give_ref()) {}
@@ -32,7 +32,7 @@ namespace utils
             _ptr(other.give_ref()) {}
 
         template <typename U>
-        RefPtr(RefPtr<U> &other) :
+        RefPtr(const RefPtr<U> &other) :
             _ptr(static_cast<T *>(other.naked())) { _ptr->ref(); }
 
         template <typename U>
@@ -170,7 +170,7 @@ namespace utils
             return ptr;
         }
 
-        T *naked()
+        T *naked() const
         {
             return _ptr;
         }

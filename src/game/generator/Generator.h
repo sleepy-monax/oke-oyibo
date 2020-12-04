@@ -7,6 +7,7 @@
 
 #include "utils/Macros.h"
 #include "utils/OwnPtr.h"
+#include "utils/Random.h"
 #include "utils/Vector.h"
 
 #include "core/world/Biome.h"
@@ -18,6 +19,7 @@ namespace game
     {
     private:
         core::Climat _climat{};
+        utils::Random _random;
 
     public:
         Generator()
@@ -27,8 +29,6 @@ namespace game
         void generate_biomes(core::Registry &reg, core::World &world)
         {
             auto island = [&](float x, float y) {
-                // ((((sin(x * PI) + sin(y * PI)) / 2) ^ 2) - 0.5) * 2;
-
                 double x_island = sin(x / world.terrain().width() * PI);
                 double y_island = sin(y / world.terrain().height() * PI);
 
@@ -51,8 +51,29 @@ namespace game
                         tem.moisture(),
                     };
 
-                    auto &biome = reg.lookup_biome(new_tem);
+                    core::Biome &biome = reg.lookup_biome(new_tem);
                     world.terrain().tile((int)x, (int)y) = biome.tile;
+
+                    if (biome.decorations.count() == 0)
+                    {
+                        continue;
+                    }
+
+                    double pick = biome.total_precedence();
+
+                    auto &deco = biome.pick_by_precedence(pick * _random.next_double());
+
+                    if (_random.next_double() > deco.frequency() * deco.noise().noise({x, y}))
+                    {
+                        continue;
+                    }
+
+                    world.create_entity(
+                        *deco.entity(),
+                        {
+                            x * core::Tile::SIZE + core::Tile::SIZE * (float)_random.next_double(),
+                            y * core::Tile::SIZE + core::Tile::SIZE * (float)_random.next_double(),
+                        });
                 }
             }
         }
@@ -60,6 +81,7 @@ namespace game
         utils::RefPtr<core::World> generate(core::Registry &reg, uint32_t seed)
         {
             _climat.seed(seed);
+            _random.seed(seed);
 
             auto world = utils::make<core::World>(reg, 256, 256);
 

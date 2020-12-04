@@ -32,13 +32,13 @@ namespace utils
             50, 45, 127, 4, 150, 254, 138, 236, 205, 93, 222, 114, 67, 29, 24, 72, 243,
             141, 128, 195, 78, 66, 215, 61, 156, 180};
 
-        uint8_t hash(int32_t i);
+        uint8_t hash(int32_t i) const;
 
-        double grad(int32_t hash, double x, double y);
+        double grad(int32_t hash, double x, double y) const;
 
-        int32_t fastfloor(float fp);
+        int32_t fastfloor(float fp) const;
 
-        double noise_pass(double x, double y, double scale);
+        double noise_pass(double x, double y, double scale) const;
 
     public:
         void seed(uint32_t seed)
@@ -68,9 +68,9 @@ namespace utils
         {
         }
 
-        double noise(Vec2f pos) { return noise(pos.x(), pos.y()); }
+        double noise(Vec2f pos) const { return noise(pos.x(), pos.y()); }
 
-        double noise(double x, double y);
+        double noise(double x, double y) const;
     };
 
 } // namespace utils

@@ -4,12 +4,12 @@
 
 namespace utils
 {
-    uint8_t Noise::hash(int32_t i)
+    uint8_t Noise::hash(int32_t i) const
     {
         return _perm[(uint8_t)(i)];
     }
 
-    double Noise::grad(int32_t hash, double x, double y)
+    double Noise::grad(int32_t hash, double x, double y) const
     {
         // Convert low 3 bits of hash code
         const int32_t h = hash & 0x3F;
@@ -22,13 +22,13 @@ namespace utils
         return ((h & 1) ? -u : u) + ((h & 2) ? -2.0f * v : 2.0f * v);
     }
 
-    inline int32_t Noise::fastfloor(float fp)
+    inline int32_t Noise::fastfloor(float fp) const
     {
         int32_t i = (int32_t)(fp);
         return (fp < i) ? (i - 1) : (i);
     }
 
-    double Noise::noise_pass(double x, double y, double scale)
+    double Noise::noise_pass(double x, double y, double scale) const
     {
         x *= scale;
         y *= scale;
@@ -110,7 +110,7 @@ namespace utils
         return 45.23065f * (n0 + n1 + n2);
     }
 
-    double Noise::noise(double x, double y)
+    double Noise::noise(double x, double y) const
     {
         if (_octaves == 1)
         {

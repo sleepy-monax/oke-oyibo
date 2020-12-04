@@ -45,8 +45,10 @@ namespace game
         world->players()[0].camera().zoom_in();
         world->players()[0].camera().speed(10);
 
+        auto world_center = world->terrain().bound().center();
+
         world->create_entity()
-            .with<base::Position>(64.0f, 64.0f, 0.0f)
+            .with<base::Position>(world_center.x(), world_center.y(), 0.0f)
             .with<base::Acceleration>()
             .with<base::Velocity>()
             .with<base::LightSource>(128.0f, WHITE)

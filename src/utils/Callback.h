@@ -1,6 +1,7 @@
 #pragma once
 
 #include "utils/Common.h"
+#include "utils/OwnPtr.h"
 #include "utils/Traits.h"
 
 namespace utils

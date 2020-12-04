@@ -112,94 +112,129 @@ utils::RefPtr<core::Registry> game::make_registry()
         basic_enemy(e, "wisp");
     });
 
+    auto TREE = registry->register_blueprint("tree", [&](core::Builder &e) {
+        e.with<base::Sprite>(registry->texture("tree"));
+    });
+
+    auto GRASS = registry->register_blueprint("grass", [&](core::Builder &e) {
+        e.with<base::Sprite>(registry->texture("grass"));
+    });
+
+    auto CACTUS = registry->register_blueprint("cactus", [&](core::Builder &e) {
+        e.with<base::Sprite>(registry->texture("cactus"));
+    });
+
     registry->register_biome({
         "taiga",
         {registry->texture("grass-tile"), 0},
         core::TEM{-0.5, 0, 0.5},
+        {
+
+        },
     });
 
     registry->register_biome({
         "forest",
-        {registry->texture("grass-tile"), 0},
+        {registry->texture("forest-grass-tile"), 0},
         core::TEM{0, 0.5, 0.5},
+        {
+            {1, TREE, 1, utils::Noise{0x404c09fa, 1, 2}},
+        },
     });
 
     registry->register_biome({
         "jungle",
-        {registry->texture("grass-tile"), 0},
+        {registry->texture("jungle-grass-tile"), 0},
         core::TEM{0.5, 0.5, 0.5},
+        {},
     });
 
     registry->register_biome({
         "tundra",
         {registry->texture("snow-tile"), 0},
         core::TEM{-0.5, 0, 0},
+        {},
     });
 
     registry->register_biome({
         "plain",
         {registry->texture("grass-tile"), 0},
         core::TEM{0, 0.01, 0},
+        {
+            {1, GRASS, 0.1, utils::Noise{0x404c09fa, 1, 2}},
+        },
     });
 
     registry->register_biome({
         "desert",
         {registry->texture("sand-tile"), 0},
         core::TEM{0.5, 0, -0.5},
+        {
+            {1, CACTUS, 0.1, utils::Noise{0x404c09fa, 1, 2}},
+        },
     });
 
     registry->register_biome({
         "swamp",
-        {registry->texture("grass-tile"), 0},
+        {registry->texture("swamp-grass-tile"), 0},
         core::TEM{0, 0.1, 1},
+        {},
     });
 
     registry->register_biome({
         "beach",
-        {registry->texture("sand-tile"), 0},
+        {registry->texture("beach-sand-tile"), 0},
         core::TEM{0, -0.1, 0},
+        {},
     });
 
     registry->register_biome({
         "stone_beach",
         {registry->texture("stone-tile"), 0},
         core::TEM{-0.5, -0.15, 0},
+        {},
     });
 
     registry->register_biome({
         "sea",
         {registry->texture("water-tile"), 0},
         core::TEM{0, -0.2, 0},
+        {},
     });
 
     registry->register_biome({
         "deep_sea",
         {registry->texture("deep-water-tile"), 0},
         core::TEM{0, -0.5, 0},
+        {},
     });
 
     registry->register_biome({
         "cold_sea",
         {registry->texture("water-tile"), 0},
         core::TEM{-0.5, -0.2, 0},
+        {},
     });
 
     registry->register_biome({
         "cold_deep_sea",
         {registry->texture("deep-water-tile"), 0},
         core::TEM{-0.5, -0.5, 0},
+        {},
     });
 
     registry->register_biome({
         "warm_sea",
         {registry->texture("water-tile"), 0},
         core::TEM{0.5, -0.2, -0.5},
+        {},
     });
 
     registry->register_biome({
         "warm_deep_sea",
         {registry->texture("deep-water-tile"), 0},
         core::TEM{0.5, -0.5, -0.5},
+        {},
     });
 
     return registry;
