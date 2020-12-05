@@ -9,7 +9,7 @@ namespace core
     class Climat
     {
     private:
-        utils::Noise _temperature{0xe7263ffb, 8, 1 / 256.};
+        utils::Noise _temperature{0xe7263ffb, 16, 1 / 256.};
         utils::Noise _elevation{0xfe9555c0, 32, 1 / 128.};
         utils::Noise _moisture{0x33d3de7b, 8, 1 / 256.};
 

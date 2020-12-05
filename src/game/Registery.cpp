@@ -23,7 +23,6 @@
 #include "game/components/Stamina.h"
 
 #include "base/systems/Camera.h"
-#include "base/systems/DebugRender.h"
 #include "base/systems/EntityRenderer.h"
 #include "base/systems/Input.h"
 #include "base/systems/Light.h"
@@ -48,7 +47,6 @@ utils::RefPtr<core::Registry> game::make_registry()
     utils::RefPtr<core::Registry> registry = utils::make<core::Registry>();
 
     registry->register_system<base::Camera>("camera");
-    registry->register_system<base::DebugRender>("debug");
     registry->register_system<base::EntityRenderer>("entity");
     registry->register_system<base::Input>("input");
     registry->register_system<base::Light>("light");
