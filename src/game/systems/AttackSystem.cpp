@@ -25,7 +25,7 @@ namespace game
                     auto player_pos = positionPlayer.pos2d();
 
                     if (enemy_pos.distance_to(player_pos) <= 5) {
-                        healthPlayer.health -= 1;
+                        healthPlayer.health -= 0.5;
                         if (IsKeyPressed(KEY_F))
                         {
                             if (healthEnemy.health - 2 < 0){
@@ -44,9 +44,9 @@ namespace game
     {
         _accumulator += time.elapsed();
 
-            if (_accumulator >= 1)
+            if (_accumulator >= 0.8)
             {
-                _accumulator -= 1;
+                _accumulator -= 0.8;
                 return true;
             }
             else
