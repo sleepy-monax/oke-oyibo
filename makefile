@@ -24,6 +24,7 @@ CXXFLAGS = \
 	-Werror \
 	-I. \
 	-Isrc/ \
+	-march=native \
 	$(INCLUDES) \
 	$(DEFINES)
 

@@ -84,37 +84,44 @@ utils::RefPtr<core::Registry> game::make_registry()
     registry->register_component<game::Thirst>("thirst");
     registry->register_component<game::HoldItem>("hold-item");
 
-    auto basic_entity = [](core::Builder &e) {
+    auto ZOMBIE = registry->register_blueprint("zombie", [&](core::Builder &e) {
         e.with<base::Acceleration>();
         e.with<base::Velocity>();
-    };
-
-    auto basic_enemy = [&, basic_entity](core::Builder &e, auto &texture) {
-        basic_entity(e);
-
         e.with<game::Enemy>();
         e.with<game::EnemyMove>();
-        e.with<base::Sprite>(registry->texture(texture));
-    };
-
-    auto ZOMBIE = registry->register_blueprint("zombie", [&](auto &e) {
-        basic_enemy(e, "zombie");
+        e.with<base::Sprite>(registry->texture("zombie"));
     });
 
-    auto SKELETON = registry->register_blueprint("skeleton", [&](auto &e) {
-        basic_enemy(e, "skeleton");
+    auto SKELETON = registry->register_blueprint("skeleton", [&](core::Builder &e) {
+        e.with<base::Acceleration>();
+        e.with<base::Velocity>();
+        e.with<game::Enemy>();
+        e.with<game::EnemyMove>();
+        e.with<base::Sprite>(registry->texture("skeleton"));
     });
 
-    auto SLIME = registry->register_blueprint("slime", [&](auto &e) {
-        basic_enemy(e, "slime");
+    auto SLIME = registry->register_blueprint("slime", [&](core::Builder &e) {
+        e.with<base::Acceleration>();
+        e.with<base::Velocity>();
+        e.with<game::Enemy>();
+        e.with<game::EnemyMove>();
+        e.with<base::Sprite>(registry->texture("slime"));
     });
 
-    auto BIG_SLIME = registry->register_blueprint("big-slime", [&](auto &e) {
-        basic_enemy(e, "big-slime");
+    auto BIG_SLIME = registry->register_blueprint("big-slime", [&](core::Builder &e) {
+        e.with<base::Acceleration>();
+        e.with<base::Velocity>();
+        e.with<game::Enemy>();
+        e.with<game::EnemyMove>();
+        e.with<base::Sprite>(registry->texture("big-slime"));
     });
 
-    auto WISP = registry->register_blueprint("wisp", [&](auto &e) {
-        basic_enemy(e, "wisp");
+    auto WISP = registry->register_blueprint("wisp", [&](core::Builder &e) {
+        e.with<base::Acceleration>();
+        e.with<base::Velocity>();
+        e.with<game::Enemy>();
+        e.with<game::EnemyMove>();
+        e.with<base::Sprite>(registry->texture("wisp"));
     });
 
     auto TREE = registry->register_blueprint("tree", [&](core::Builder &e) {
