@@ -116,7 +116,9 @@ utils::RefPtr<core::Registry> game::make_registry()
     });
 
     auto TREE = registry->register_blueprint("tree", [&](core::Builder &e) {
+        Stack tree(Item("log", core::Texture()), 12);
         e.with<base::Sprite>(registry->texture("tree"));
+        e.with<game::Breakable>(tree, 5);
         e.with<base::CastShadow>(12, utils::Vec2f{});
     });
 
@@ -133,7 +135,6 @@ utils::RefPtr<core::Registry> game::make_registry()
         {registry->texture("grass-tile"), 0},
         core::TEM{-0.5, 0, 0.5},
         {
-
         },
     });
 
