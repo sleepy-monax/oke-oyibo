@@ -94,6 +94,7 @@ utils::RefPtr<core::Registry> game::make_registry()
         e.with<game::Health>(7, 7);
         e.with<game::Attack>(1);
         e.with<base::Sprite>(registry->texture("zombie"));
+        e.with<base::CastShadow>(4, utils::Vec2f{0.5, 0});
     });
 
     auto SKELETON = registry->register_blueprint("skeleton", [&](core::Builder &e) {
@@ -104,6 +105,7 @@ utils::RefPtr<core::Registry> game::make_registry()
         e.with<game::Health>(6, 6);
         e.with<game::Attack>(1);
         e.with<base::Sprite>(registry->texture("skeleton"));
+        e.with<base::CastShadow>(4, utils::Vec2f{0.5, 0});
     });
 
     auto SLIME = registry->register_blueprint("slime", [&](core::Builder &e) {

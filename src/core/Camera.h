@@ -197,20 +197,24 @@ namespace core
 
         void clear()
         {
+            _composite.use_and_do([]() {
+                ClearBackground(BLANK);
+            });
+
             _terrain.use_and_do([]() {
-                ClearBackground(BLACK);
+                ClearBackground(BLANK);
             });
 
             _shadows.use_and_do([]() {
-                ClearBackground({});
+                ClearBackground(BLANK);
             });
 
             _entities.use_and_do([]() {
-                ClearBackground({});
+                ClearBackground(BLANK);
             });
 
             _overlay.use_and_do([]() {
-                ClearBackground({});
+                ClearBackground(BLANK);
             });
         }
 
@@ -219,7 +223,11 @@ namespace core
             composite().use_and_do([&]() {
                 Rectangle rect{0, 0, (float)width(), (float)height()};
                 DrawTexturePro(terrain().underlying_texture(), rect, rect, (Vector2){0, 0}, 0.0f, WHITE);
-                DrawTexturePro(shadows().underlying_texture(), rect, rect, (Vector2){0, 0}, 0.0f, Color{0, 0, 0, 100});
+
+                BeginBlendMode(BLEND_MULTIPLIED);
+                DrawTexturePro(shadows().underlying_texture(), rect, rect, (Vector2){0, 0}, 0.0f, WHITE);
+                EndBlendMode();
+
                 DrawTexturePro(entities().underlying_texture(), rect, rect, (Vector2){0, 0}, 0.0f, WHITE);
 
                 BeginBlendMode(BLEND_MULTIPLIED);

@@ -15,15 +15,11 @@ namespace base
         auto view = world.entities().view<Position, CastShadow>();
 
         camera.with_shadows([&]() {
-            ClearBackground(BLANK);
-
-            BeginBlendMode(BLEND_ADDITIVE);
+            ClearBackground(WHITE);
 
             view.each([](auto &position, auto &shadow) {
-                core::draw_ellipse(position.pos2d() + shadow.offset, shadow.size, shadow.size / 2.0f, BLACK);
+                core::draw_ellipse(position.pos2d() + shadow.offset, shadow.size, shadow.size / 2.0f, {200, 200, 200, 255});
             });
-
-            EndBlendMode();
         });
     }
 } // namespace base
