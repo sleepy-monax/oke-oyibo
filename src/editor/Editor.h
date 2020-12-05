@@ -2,9 +2,7 @@
 
 #include <raylib.h>
 
-#include "base/components/Acceleration.h"
 #include "base/components/Position.h"
-#include "base/components/Velocity.h"
 #include "core/Probe.h"
 #include "core/Time.h"
 #include "core/World.h"
@@ -30,7 +28,7 @@ namespace editor
         }
 
         template <typename TPanel, typename... TArgs>
-        TPanel &open(TArgs &&...args)
+        TPanel &open(TArgs &&... args)
         {
             auto ptr = utils::own<TPanel>(std::forward<TArgs>(args)...);
             auto &ref = *ptr;

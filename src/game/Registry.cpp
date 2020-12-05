@@ -1,13 +1,13 @@
-#include "game/Registery.h"
+#include "game/Registry.h"
 
-#include "base/components/Acceleration.h"
 #include "base/components/CastShadow.h"
 #include "base/components/Colider.h"
 #include "base/components/LightSource.h"
+#include "base/components/Momentum.h"
+#include "base/components/Move.h"
 #include "base/components/Player.h"
 #include "base/components/Position.h"
 #include "base/components/Sprite.h"
-#include "base/components/Velocity.h"
 
 #include "game/components/Armor.h"
 #include "game/components/Attack.h"
@@ -26,6 +26,7 @@
 #include "base/systems/EntityRenderer.h"
 #include "base/systems/Input.h"
 #include "base/systems/Light.h"
+#include "base/systems/Movement.h"
 #include "base/systems/Physic.h"
 #include "base/systems/Shadow.h"
 #include "base/systems/TerrainRender.h"
@@ -53,9 +54,10 @@ utils::RefPtr<core::Registry> game::make_registry()
     registry->register_system<base::Shadow>("shadow");
     registry->register_system<base::Physic>("physic");
     registry->register_system<base::TerrainRender>("terrain");
+    registry->register_system<base::Movement>("movement");
 
     registry->register_system<game::BreakableSystem>("breakable");
-    registry->register_system<game::EnemyMove>("enemy");
+    registry->register_system<game::EnemyMove>("enemy-move");
     registry->register_system<game::HealthBar>("health-bar");
     registry->register_system<game::HungerSystem>("hunger");
     registry->register_system<game::InventorySystem>("inventory");
@@ -66,12 +68,12 @@ utils::RefPtr<core::Registry> game::make_registry()
     registry->register_system<game::HoldItemSystem>("hold-item");
     registry->register_system<game::AttackSystem>("attack");
 
-    registry->register_component<base::Acceleration>("acceleration");
+    registry->register_component<base::Momentum>("momentum");
     registry->register_component<base::LightSource>("light-source");
     registry->register_component<base::Player>("player");
     registry->register_component<base::Position>("position");
     registry->register_component<base::Sprite>("sprite");
-    registry->register_component<base::Velocity>("velocity");
+    registry->register_component<base::Move>("move");
 
     registry->register_component<game::Enemy>("enemy");
     registry->register_component<game::Health>("health");
@@ -85,69 +87,73 @@ utils::RefPtr<core::Registry> game::make_registry()
     registry->register_component<game::Attack>("attack");
 
     auto ZOMBIE = registry->register_blueprint("zombie", [&](core::Builder &e) {
-        e.with<base::Acceleration>();
-        e.with<base::Velocity>();
-        e.with<game::Enemy>();
-        e.with<game::EnemyMove>();
-        e.with<game::Health>(7, 7);
-        e.with<game::Attack>(1);
+        e.with<base::Momentum>();
+        e.with<base::Move>(0.05);
         e.with<base::Sprite>(registry->texture("zombie"));
         e.with<base::CastShadow>(4, utils::Vec2f{0.5, 0});
+
+        e.with<game::Enemy>();
+        e.with<game::Health>(7, 7);
+        e.with<game::Attack>(1);
     });
 
     auto SKELETON = registry->register_blueprint("skeleton", [&](core::Builder &e) {
-        e.with<base::Acceleration>();
-        e.with<base::Velocity>();
-        e.with<game::Enemy>();
-        e.with<game::EnemyMove>();
-        e.with<game::Health>(6, 6);
-        e.with<game::Attack>(1);
+        e.with<base::Momentum>();
+        e.with<base::Move>(0.05);
         e.with<base::Sprite>(registry->texture("skeleton"));
         e.with<base::CastShadow>(4, utils::Vec2f{0.5, 0});
+
+        e.with<game::Enemy>();
+        e.with<game::Health>(6, 6);
+        e.with<game::Attack>(1);
     });
 
     auto SLIME = registry->register_blueprint("slime", [&](core::Builder &e) {
-        e.with<base::Acceleration>();
-        e.with<base::Velocity>();
+        e.with<base::Momentum>();
+        e.with<base::Move>();
+        e.with<base::Sprite>(registry->texture("slime"));
+        e.with<base::CastShadow>(8, utils::Vec2f{0, 0});
+
         e.with<game::Enemy>();
-        e.with<game::EnemyMove>();
         e.with<game::Health>(3, 3);
         e.with<game::Attack>(1);
-        e.with<base::Sprite>(registry->texture("slime"));
     });
 
     auto BIG_SLIME = registry->register_blueprint("big-slime", [&](core::Builder &e) {
-        e.with<base::Acceleration>();
-        e.with<base::Velocity>();
+        e.with<base::Momentum>();
+        e.with<base::Move>();
+        e.with<base::Sprite>(registry->texture("big-slime"));
+        e.with<base::CastShadow>(12, utils::Vec2f{0, 0});
+
         e.with<game::Enemy>();
-        e.with<game::EnemyMove>();
         e.with<game::Health>(5, 5);
         e.with<game::Attack>(1);
-        e.with<base::Sprite>(registry->texture("big-slime"));
     });
 
     auto WISP = registry->register_blueprint("wisp", [&](core::Builder &e) {
-        e.with<base::Acceleration>();
-        e.with<base::Velocity>();
+        e.with<base::Momentum>();
+        e.with<base::Move>();
+        e.with<base::Sprite>(registry->texture("wisp"));
+
         e.with<game::Enemy>();
-        e.with<game::EnemyMove>();
         e.with<game::Health>(2, 2);
         e.with<game::Attack>(1);
-        e.with<base::Sprite>(registry->texture("wisp"));
     });
 
     auto TREE = registry->register_blueprint("tree", [&](core::Builder &e) {
-        Stack tree(Item("log", registry->texture("log")), 12);
         e.with<base::Sprite>(registry->texture("tree"));
-        e.with<game::Breakable>(tree, 5);
         e.with<base::CastShadow>(12, utils::Vec2f{});
+
+        Stack tree(Item("log", registry->texture("log")), 12);
+        e.with<game::Breakable>(tree, 5);
     });
 
     auto PINE = registry->register_blueprint("pine", [&](core::Builder &e) {
-        Stack tree(Item("log", registry->texture("log")), 12);
         e.with<base::Sprite>(registry->texture("pine"));
-        e.with<game::Breakable>(tree, 5);
         e.with<base::CastShadow>(12, utils::Vec2f{});
+
+        Stack tree(Item("log", registry->texture("log")), 12);
+        e.with<game::Breakable>(tree, 5);
     });
 
     auto BUSH = registry->register_blueprint("bush", [&](core::Builder &e) {

@@ -1,5 +1,6 @@
 #include <raylib.h>
 
+#include "core/Graphics.h"
 #include "core/World.h"
 
 #include "base/components/LightSource.h"
@@ -18,7 +19,7 @@ namespace base
             BeginBlendMode(BLEND_ADDITIVE);
 
             view.each([](auto &position, auto &light_source) {
-                DrawCircle(position.x, position.y, light_source.radius, light_source.color);
+                core::draw_ellipse(position.pos2d(), light_source.radius, light_source.radius, light_source.color);
             });
 
             EndBlendMode();

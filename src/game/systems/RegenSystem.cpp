@@ -4,7 +4,6 @@ namespace game
 {
     RegenSystem::RegenSystem()
     {
-
     }
 
     void RegenSystem::update(core::World &world, core::Time &time)
@@ -14,16 +13,20 @@ namespace game
         if (stackFrame(time))
         {
             view.each([&](auto &health, auto &hunger, auto &thirst) {
-                if ((thirst.current_thirst > (thirst.max_thirst*0.8)) && (hunger.current_food > (hunger.max_food*0.8)))
+                if ((thirst.current_thirst > (thirst.max_thirst * 0.8)) && (hunger.current_food > (hunger.max_food * 0.8)))
                 {
-                    if (health.health != 0) {
-                        if (health.health + 1 > health.maxHealth) {
-                            health.health = health.maxHealth;
-                        } else {
-                            health.health += 1;
+                    if (health.current != 0)
+                    {
+                        if (health.current + 1 > health.maximum)
+                        {
+                            health.current = health.maximum;
+                        }
+                        else
+                        {
+                            health.current += 1;
                             thirst.current_thirst -= 0.3f;
                             hunger.current_food -= 0.3f;
-                        } 
+                        }
                     }
                 }
             });
@@ -34,14 +37,14 @@ namespace game
     {
         _accumulator += time.elapsed();
 
-            if (_accumulator >= 3)
-            {
-                _accumulator -= 3;
-                return true;
-            }
-            else
-            {
-                return false;
-            }
+        if (_accumulator >= 3)
+        {
+            _accumulator -= 3;
+            return true;
+        }
+        else
+        {
+            return false;
+        }
     }
-}
+} // namespace game

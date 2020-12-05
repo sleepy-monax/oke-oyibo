@@ -8,13 +8,14 @@ namespace game
 {
     struct Health
     {
-        int maxHealth;
-        int health;
+        int maximum;
+        int current;
     };
 } // namespace game
 
 template <>
 inline void inspect<game::Health>(game::Health &h)
 {
-    ImGui::DragInt("health##Health", &h.health, 100);
+    ImGui::DragInt("maximum##Health", &h.maximum, 1);
+    ImGui::DragInt("current##Health", &h.current, 1);
 }

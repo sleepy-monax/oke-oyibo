@@ -19,8 +19,8 @@ namespace core
         template <typename TComponent, typename... TArgs>
         Builder &with(TArgs &&... args)
         {
-            _registry.emplace<TComponent>(_entity, std::forward<TArgs>(args)...);
+            _registry.emplace_or_replace<TComponent>(_entity, std::forward<TArgs>(args)...);
             return *this;
         }
     };
-} // namespace core::entity
+} // namespace core

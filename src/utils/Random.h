@@ -19,6 +19,7 @@ namespace utils
 
         Random()
         {
+            seed(time(nullptr));
         }
 
         uint32_t next_u32()

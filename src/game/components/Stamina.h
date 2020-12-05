@@ -4,16 +4,16 @@
 
 namespace game
 {
-    struct Stamina {
-        float max_stamina;
-        float current_stamina;
+    struct Stamina
+    {
+        float maximum;
+        float current;
     };
-
 } // namespace game
 
 template <>
 inline void inspect<game::Stamina>(game::Stamina &stamina)
 {
-    ImGui::InputFloat("currentStamina##Stamina", &stamina.current_stamina);
-    ImGui::InputFloat("maxStamina##Stamina", &stamina.max_stamina);
+    ImGui::InputFloat("current##Stamina", &stamina.current);
+    ImGui::InputFloat("maximum##Stamina", &stamina.maximum);
 }

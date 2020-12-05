@@ -1,36 +1,35 @@
+#include <imgui.h>
+
 #include "core/Graphics.h"
 #include "core/Registry.h"
 
-#include "base/components/Acceleration.h"
+#include "base/components/Momentum.h"
 #include "base/components/Player.h"
 
 #include "game/components/Enemy.h"
 
 #include "game/systems/ReviveSystem.h"
 
-#include <imgui.h>
-
 namespace game
 {
-    ReviveSystem::ReviveSystem() 
-    {
-    }
-
     void ReviveSystem::render(core::World &world, core::Camera &camera)
     {
-        auto view = world.entities().view<base::Player, game::Health, game::Hunger, game::Thirst, base::Acceleration, game::Inventory, game::Stamina>();
+        auto view = world.entities().view<base::Player, game::Health, game::Hunger, game::Thirst, base::Momentum, game::Inventory, game::Stamina>();
         camera.with_overlay([&]() {
-            view.each([&](auto &, auto &health, auto &hunger, auto &thirst, auto &acceleration, auto &inventory, auto &stamina) {
-                if (health.health == 0) {
+            view.each([&](auto &, auto &health, auto &hunger, auto &thirst, auto &momentum, auto &inventory, auto &stamina) {
+                if (health.current == 0)
+                {
 
-                    acceleration.ax = 0.0f;
-                    acceleration.ay = 0.0f;
+                    momentum.ax = 0.0f;
+                    momentum.ay = 0.0f;
+                    momentum.vx = 0.0f;
+                    momentum.vy = 0.0f;
 
                     kill_enemy(world);
 
                     ImGui::Begin("Retry");
 
-                    ImVec2 vector(400, 180), button_size(170,30);
+                    ImVec2 vector(400, 180), button_size(170, 30);
                     ImGui::SetWindowSize(vector);
 
                     //You are dead
@@ -48,7 +47,7 @@ namespace game
                         reset(health, hunger, thirst, stamina);
                     }
 
-                    //Retry 
+                    //Retry
                     ImGui::SameLine();
                     if (ImGui::Button("Retry with inventory", button_size))
                     {
@@ -56,17 +55,17 @@ namespace game
                     }
 
                     ImGui::End();
-
                 }
             });
         });
     }
-    
-    void ReviveSystem::reset(game::Health &health, game::Hunger &hunger, game::Thirst &thirst, game::Stamina &stamina) {
-        health.health = health.maxHealth;
+
+    void ReviveSystem::reset(game::Health &health, game::Hunger &hunger, game::Thirst &thirst, game::Stamina &stamina)
+    {
+        health.current = health.maximum;
         hunger.current_food = hunger.max_food;
         thirst.current_thirst = thirst.max_thirst;
-        stamina.current_stamina = stamina.max_stamina;
+        stamina.current = stamina.maximum;
     }
 
     void ReviveSystem::kill_enemy(core::World &world)
@@ -74,18 +73,16 @@ namespace game
         auto enemy = world.entities().view<game::Enemy, base::Position>();
         auto player = world.entities().view<base::Player, base::Position>();
 
-        enemy.each([&](auto const &entity, auto &, auto &positionEnemy)
-        {
+        enemy.each([&](auto const &entity, auto &, auto &positionEnemy) {
             auto enemy_pos = positionEnemy.pos2d();
-            player.each([&](auto &, auto &positionPlayer)
-            {
+            player.each([&](auto &, auto &positionPlayer) {
                 auto player_pos = positionPlayer.pos2d();
 
-                if (enemy_pos.distance_to(player_pos) <= 100) 
+                if (enemy_pos.distance_to(player_pos) <= 100)
                 {
                     world.remove_entity(entity);
                 }
             });
         });
     }
-}
+} // namespace game

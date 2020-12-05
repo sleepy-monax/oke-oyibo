@@ -10,20 +10,21 @@
 
 #include "base/components/CastShadow.h"
 #include "base/components/LightSource.h"
+#include "base/components/Momentum.h"
 #include "base/components/Player.h"
 #include "base/components/Sprite.h"
+#include "game/components/Attack.h"
 #include "game/components/Breakable.h"
+#include "game/components/Enemy.h"
 #include "game/components/HoldItem.h"
 #include "game/components/Hunger.h"
 #include "game/components/Inventory.h"
 #include "game/components/Pickable.h"
+#include "game/components/Prey.h"
 #include "game/components/Stamina.h"
 #include "game/components/Thirst.h"
-#include "game/components/Enemy.h"
-#include "game/systems/EnemyMove.h"
 #include "game/inventory/Item.h"
 #include "game/inventory/Stack.h"
-#include "game/components/Attack.h"
 
 #include "game/generator/Generator.h"
 
@@ -52,7 +53,7 @@ namespace game
 
         create_player(*world);
 
-        game::Stack stack(game::Item("sword",registry().texture("sword")),1);
+        game::Stack stack(game::Item("sword", registry().texture("sword")), 1);
         world->create_entity()
             .with<game::Pickable>(stack)
             .with<base::Position>(2060.0f, 2060.0f, 0.0f);
@@ -67,12 +68,12 @@ namespace game
         _game = utils::own<game::Game>(world);
     }
 
-    void InGame::create_player(core::World &world){
+    void InGame::create_player(core::World &world)
+    {
         auto world_center = world.terrain().bound().center();
         world.create_entity()
             .with<base::Position>(world_center.x(), world_center.y(), 0.0f)
-            .with<base::Acceleration>()
-            .with<base::Velocity>()
+            .with<base::Momentum>()
             .with<base::LightSource>(128.0f, WHITE)
             .with<game::Health>(10, 10)
             .with<game::Hunger>(20.0f, 20.0f)
@@ -83,6 +84,7 @@ namespace game
             .with<game::Inventory>()
             .with<base::CastShadow>(4, utils::Vec2f{0.5, 0})
             .with<game::Attack>(2)
+            .with<game::Prey>()
             .with<game::HoldItem>();
     }
 

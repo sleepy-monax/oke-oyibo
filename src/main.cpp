@@ -3,7 +3,7 @@
 
 #include "core/Director.h"
 
-#include "game/Registery.h"
+#include "game/Registry.h"
 #include "game/scene/SplashScreen.h"
 
 int main()

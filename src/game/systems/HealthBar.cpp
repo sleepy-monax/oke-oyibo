@@ -13,20 +13,20 @@ namespace game
     {
         auto view = world.entities().view<Health>();
         view.each([](/*auto &damage,*/ auto &health) {
-            //health.health -= damage;
-            if (health.health <= 0)
+            //health.current -= damage;
+            if (health.current <= 0)
             {
-                health.health = 0;
+                health.current = 0;
             }
-            if (health.health >= health.maxHealth)
+            if (health.current >= health.maximum)
             {
-                health.health = health.maxHealth;
+                health.current = health.maximum;
             }
-            health.health = health.health;
+            health.current = health.current;
         });
     }
 
-    void HealthBar::on_load(core::Registry &registry) 
+    void HealthBar::on_load(core::Registry &registry)
     {
         healthTexture = registry.texture("health");
     }
@@ -37,12 +37,12 @@ namespace game
 
         camera.with_overlay([&]() {
             view.each([&](auto &position, auto &health) {
-                if (health.health != health.maxHealth)
+                if (health.current != health.maximum)
                 {
                     utils::Rectf bound = {-15, -24, 30, 2};
 
                     bound = bound.offset(position.pos2d());
-                    bound = bound.take_left_percent(health.health / (float)health.maxHealth);
+                    bound = bound.take_left_percent(health.current / (float)health.maximum);
 
                     core::fill_rect(bound, RED);
 
@@ -51,7 +51,6 @@ namespace game
 
                     core::draw_texture(healthTexture, healthRect, WHITE);
                 }
-                
             });
         });
     }

@@ -1,113 +1,65 @@
-#include "EnemyMove.h"
-
-#include <raylib.h>
 #include <cmath>
-
-#include "base/components/Position.h"
-#include "base/components/Acceleration.h"
-#include "base/components/Player.h" 
+#include <raylib.h>
 
 #include "core/World.h"
-#include "core/Tile.h"
+
+#include "base/components/Move.h"
+#include "base/components/Player.h"
+#include "base/components/Position.h"
 
 #include "game/components/Enemy.h"
+#include "game/components/Prey.h"
+
+#include "game/systems/EnemyMove.h"
 
 namespace game
 {
-    EnemyMove::EnemyMove(){
-
-    }
-
-    EnemyMove::~EnemyMove(){
-
-    }
-
 
     //enemy movements
-    void EnemyMove::update(core::World &world, core::Time &time){
-        enemy_random_travel(world, time, 0.1);
-        enemy_travel_to_player(world, time, 3, 0.1);
-    }
-
-
-    //The enemy moves on the map
-    void EnemyMove::enemy_random_travel(core::World &world, core::Time &time, double enemy_speed){
-        auto view_player = world.entities().view<base::Player, base::Position>();
-        auto view_enemy = world.entities().view<game::Enemy, base::Position, base::Acceleration>();
-
-        if(stackFrame(time)){
-            //Search all player instance
-            view_player.each([&](auto &, auto &){
-                //Search all enemy instance
-                view_enemy.each([&](auto &, auto &, auto &enemy_acceleration){
-
-                    //Random x-axis travel
-                    int random_x = rand()%11;
-                    int random_y = rand()%11;
-                    if(random_x <6){
-                        enemy_acceleration.ax += enemy_speed;
-                    
-                    }else if(random_x>=6){
-                        enemy_acceleration.ax -= enemy_speed;  
-                    }
-                    
-                    //Random y-axis travel
-                    if(random_y<6){
-                        enemy_acceleration.ay += enemy_speed;
-                    }else if(random_y>=6){
-                        enemy_acceleration.ay -= enemy_speed;
-                    }
-                });
-            });
-        }
-    }
-
-
-    //The enemy will focus the player if he enter near him
-    void EnemyMove::enemy_travel_to_player(core::World &world, core::Time &time, double enemy_frame_detection, double enemy_speed){
-        auto view_player = world.entities().view<base::Player, base::Position>();
-        auto view_enemy = world.entities().view<game::Enemy, base::Position, base::Acceleration>();
-
-        if(stackFrame(time)){
-            //Search all player instance
-            view_player.each([&](auto &, auto &player_position){
-                //Search all enemy instance
-                view_enemy.each([&](auto &, auto &enemy_position, auto &enemy_acceleration){
-
-                    //The enemy focuses the player and moves to him
-                    //Distance calculation between the enemy position and the player position
-                    if(sqrt(
-                        pow(player_position.x-enemy_position.x,2) 
-                        +pow(player_position.y-enemy_position.y,2)
-                        )
-                        <(core::Tile::SIZE*enemy_frame_detection)){
-                        
-                        //The enemy goes to the player 
-                        utils::Vec2f destination(player_position.x, player_position.y);
-                        auto acc = destination - enemy_position.pos2d();
-                        acc = acc.normalized();
-                        enemy_acceleration.ax = acc.x()*enemy_speed;
-                        enemy_acceleration.ay = acc.y()*enemy_speed;
-                    }
-                });
-            });
-        }
-    }
-
-
-    //Speed of each frame
-    bool EnemyMove::stackFrame(core::Time &time)
+    void EnemyMove::update(core::World &world, core::Time &)
     {
-        _accumulator += time.elapsed();
-        if (_accumulator >= 2)
-        {
-            _accumulator -= 0.1;
-            return true;
-        }
-        else
-        {
-            return false;
-        }
+        auto enemies = world.entities().view<game::Enemy, base::Position, base::Move>();
+
+        enemies.each([&](game::Enemy &enemy, base::Position &enemy_position, base::Move &move) {
+            auto preys = world.entities().view<game::Prey, base::Position>();
+
+            preys.each([&](entt::entity entity, game::Prey &, base::Position &prey_position) {
+                if (enemy.has_focus && enemy.target == entity)
+                {
+                    if (enemy_position.pos2d().distance_to(prey_position.pos2d()) > enemy.focus_distance * core::Tile::SIZE)
+                    {
+                        enemy.has_focus = false;
+                        move.moving = false;
+                    }
+                    else
+                    {
+                        move.destination = prey_position.pos2d();
+                        move.moving = true;
+                    }
+                }
+                else if (enemy_position.pos2d().distance_to(prey_position.pos2d()) < enemy.focus_distance * core::Tile::SIZE)
+                {
+                    enemy.target = entity;
+                    enemy.has_focus = true;
+                    move.destination = prey_position.pos2d();
+                    move.moving = true;
+                }
+            });
+
+            if (!enemy.has_focus && !move.moving)
+            {
+                auto max_distance = enemy.wandering_distance * core::Tile::SIZE;
+
+                auto multx = (_random.next_double() * 2) - 1;
+
+                auto multy = (_random.next_double() * 2) - 1;
+
+                auto offx = multx * max_distance;
+                auto offy = multy * max_distance;
+
+                move.destination = enemy_position.pos2d() + utils::Vec2f{(float)offx, (float)offy};
+                move.moving = true;
+            }
+        });
     }
 } // namespace game
-

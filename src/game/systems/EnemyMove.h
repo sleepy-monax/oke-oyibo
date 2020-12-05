@@ -1,20 +1,15 @@
 #pragma once
 
 #include "core/System.h"
+#include "utils/Random.h"
 
 namespace game
 {
-    class EnemyMove : public core::System{
-        private:
-            double _accumulator = 0;
+    class EnemyMove: public core::System
+    {
+        double _accumulator = 1;
+        utils::Random _random{};
 
-        public:
-            EnemyMove();
-            ~EnemyMove();
-
-            void update(core::World &world, core::Time &time);
-            bool stackFrame(core::Time &time);
-            void enemy_random_travel(core::World &world, core::Time &time, double enemy_speed);
-            void enemy_travel_to_player(core::World &world, core::Time &time, double enemy_frame_detection, double enemy_speed);
+        void update(core::World &world, core::Time &time) override;
     };
 } // namespace game

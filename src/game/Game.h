@@ -7,9 +7,7 @@
 #include "core/World.h"
 #include "core/glue/Glue.h"
 
-#include "base/components/Acceleration.h"
 #include "base/components/Position.h"
-#include "base/components/Velocity.h"
 
 namespace game
 {

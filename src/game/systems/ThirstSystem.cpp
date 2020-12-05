@@ -7,7 +7,7 @@ namespace game
 {
     ThirstSystem::ThirstSystem() {}
 
-    ThirstSystem::~ThirstSystem(){}
+    ThirstSystem::~ThirstSystem() {}
 
     void ThirstSystem::update(core::World &world, core::Time &time)
     {
@@ -16,8 +16,7 @@ namespace game
         if (stackFrame(time))
         {
             view.each([&](auto &thirst, auto &health, auto &stamina) {
-                
-                if (stamina.current_stamina <= stamina.max_stamina/5) 
+                if (stamina.current <= stamina.maximum / 5)
                 {
                     if (thirst.current_thirst - 0.4 <= 0)
                     {
@@ -27,9 +26,8 @@ namespace game
                     {
                         thirst.current_thirst -= 0.4;
                     }
-                    
                 }
-                else 
+                else
                 {
                     if ((thirst.current_thirst - 0.1) <= 0)
                     {
@@ -42,9 +40,8 @@ namespace game
                 }
                 if (thirst.current_thirst < (thirst.max_thirst / 4.0))
                 {
-                    health.health -= 0.2;
+                    health.current -= 0.2;
                 }
-                
             });
         }
     }
