@@ -2,6 +2,9 @@
 #include "core/Registry.h"
 
 #include "base/components/Acceleration.h"
+#include "base/components/Player.h"
+
+#include "game/components/Enemy.h"
 
 #include "game/systems/ReviveSystem.h"
 
@@ -22,6 +25,8 @@ namespace game
 
                     acceleration.ax = 0.0f;
                     acceleration.ay = 0.0f;
+
+                    kill_enemy(world);
 
                     ImGui::Begin("Retry");
 
@@ -56,10 +61,31 @@ namespace game
             });
         });
     }
+    
     void ReviveSystem::reset(game::Health &health, game::Hunger &hunger, game::Thirst &thirst, game::Stamina &stamina) {
         health.health = health.maxHealth;
         hunger.current_food = hunger.max_food;
         thirst.current_thirst = thirst.max_thirst;
         stamina.current_stamina = stamina.max_stamina;
+    }
+
+    void ReviveSystem::kill_enemy(core::World &world)
+    {
+        auto enemy = world.entities().view<game::Enemy, base::Position>();
+        auto player = world.entities().view<base::Player, base::Position>();
+
+        enemy.each([&](auto const &entity, auto &, auto &positionEnemy)
+        {
+            auto enemy_pos = positionEnemy.pos2d();
+            player.each([&](auto &, auto &positionPlayer)
+            {
+                auto player_pos = positionPlayer.pos2d();
+
+                if (enemy_pos.distance_to(player_pos) <= 100) 
+                {
+                    world.remove_entity(entity);
+                }
+            });
+        });
     }
 }

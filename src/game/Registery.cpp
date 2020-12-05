@@ -20,6 +20,7 @@
 #include "game/components/Inventory.h"
 #include "game/components/Pickable.h"
 #include "game/components/Stamina.h"
+#include "game/components/Attack.h"
 
 #include "base/systems/Camera.h"
 #include "base/systems/DebugRender.h"
@@ -83,6 +84,7 @@ utils::RefPtr<core::Registry> game::make_registry()
     registry->register_component<game::Stamina>("stamina");
     registry->register_component<game::Thirst>("thirst");
     registry->register_component<game::HoldItem>("hold-item");
+    registry->register_component<game::Attack>("attack");
 
     auto ZOMBIE = registry->register_blueprint("zombie", [&](core::Builder &e) {
         e.with<base::Acceleration>();
@@ -90,6 +92,7 @@ utils::RefPtr<core::Registry> game::make_registry()
         e.with<game::Enemy>();
         e.with<game::EnemyMove>();
         e.with<game::Health>(7, 7);
+        e.with<game::Attack>(1);
         e.with<base::Sprite>(registry->texture("zombie"));
     });
 
@@ -99,6 +102,7 @@ utils::RefPtr<core::Registry> game::make_registry()
         e.with<game::Enemy>();
         e.with<game::EnemyMove>();
         e.with<game::Health>(6, 6);
+        e.with<game::Attack>(1);
         e.with<base::Sprite>(registry->texture("skeleton"));
     });
 
@@ -108,6 +112,7 @@ utils::RefPtr<core::Registry> game::make_registry()
         e.with<game::Enemy>();
         e.with<game::EnemyMove>();
         e.with<game::Health>(3, 3);
+        e.with<game::Attack>(1);
         e.with<base::Sprite>(registry->texture("slime"));
     });
 
@@ -117,6 +122,7 @@ utils::RefPtr<core::Registry> game::make_registry()
         e.with<game::Enemy>();
         e.with<game::EnemyMove>();
         e.with<game::Health>(5, 5);
+        e.with<game::Attack>(1);
         e.with<base::Sprite>(registry->texture("big-slime"));
     });
 
@@ -126,6 +132,7 @@ utils::RefPtr<core::Registry> game::make_registry()
         e.with<game::Enemy>();
         e.with<game::EnemyMove>();
         e.with<game::Health>(2, 2);
+        e.with<game::Attack>(1);
         e.with<base::Sprite>(registry->texture("wisp"));
     });
 

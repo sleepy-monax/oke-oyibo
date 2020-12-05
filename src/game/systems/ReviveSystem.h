@@ -20,9 +20,10 @@ namespace game
     {
         private:
         public:
-        ReviveSystem();
+            ReviveSystem();
 
-        void render(core::World &world, core::Camera &camera) override;
-        void reset(game::Health &health, game::Hunger &hunger, game::Thirst &thirst, game::Stamina &stamina);
+            void render(core::World &world, core::Camera &camera) override;
+            void reset(game::Health &health, game::Hunger &hunger, game::Thirst &thirst, game::Stamina &stamina);
+            void kill_enemy(core::World &world);
     };
 }

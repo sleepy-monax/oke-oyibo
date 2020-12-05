@@ -23,6 +23,7 @@
 #include "game/systems/EnemyMove.h"
 #include "game/inventory/Item.h"
 #include "game/inventory/Stack.h"
+#include "game/components/Attack.h"
 
 #include "game/generator/Generator.h"
 
@@ -51,6 +52,11 @@ namespace game
 
         create_player(*world);
 
+        game::Stack stack(game::Item("sword",registry().texture("sword")),1);
+        world->create_entity()
+            .with<game::Pickable>(stack)
+            .with<base::Position>(2060.0f, 2060.0f, 0.0f);
+
         _editor = utils::own<editor::Editor>(world);
         _editor->open<editor::Entities>();
         _editor->open<editor::Inspector>();
@@ -76,6 +82,7 @@ namespace game
             .with<game::Stamina>(20.0f, 20.0f)
             .with<game::Inventory>()
             .with<base::CastShadow>(4, utils::Vec2f{0.5, 0})
+            .with<game::Attack>(2)
             .with<game::HoldItem>();
     }
 
