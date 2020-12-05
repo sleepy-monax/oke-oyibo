@@ -16,13 +16,15 @@ namespace game
             view.each([&](auto &health, auto &hunger, auto &thirst) {
                 if ((thirst.current_thirst > (thirst.max_thirst*0.8)) && (hunger.current_food > (hunger.max_food*0.8)))
                 {
-                    if (health.health + 1 > health.maxHealth) {
-                        health.health = health.maxHealth;
-                    } else {
-                        health.health += 1;
-                        thirst.current_thirst -= 0.3f;
-                        hunger.current_food -= 0.3f;
-                    } 
+                    if (health.health != 0) {
+                        if (health.health + 1 > health.maxHealth) {
+                            health.health = health.maxHealth;
+                        } else {
+                            health.health += 1;
+                            thirst.current_thirst -= 0.3f;
+                            hunger.current_food -= 0.3f;
+                        } 
+                    }
                 }
             });
         }
