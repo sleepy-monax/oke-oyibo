@@ -266,6 +266,13 @@ namespace core
 
         void animate(double dt)
         {
+            // Integrate in order to prevent funky movement on slow systems.
+            while (dt > 1 / 100.0)
+            {
+                _current = lerp(_current, _target, (1 / 100.0) * _speed);
+                dt -= 1 / 100.;
+            }
+
             _current = lerp(_current, _target, dt * _speed);
         }
     };
