@@ -89,6 +89,7 @@ utils::RefPtr<core::Registry> game::make_registry()
         e.with<base::Velocity>();
         e.with<game::Enemy>();
         e.with<game::EnemyMove>();
+        e.with<game::Health>(7, 7);
         e.with<base::Sprite>(registry->texture("zombie"));
     });
 
@@ -97,6 +98,7 @@ utils::RefPtr<core::Registry> game::make_registry()
         e.with<base::Velocity>();
         e.with<game::Enemy>();
         e.with<game::EnemyMove>();
+        e.with<game::Health>(6, 6);
         e.with<base::Sprite>(registry->texture("skeleton"));
     });
 
@@ -105,6 +107,7 @@ utils::RefPtr<core::Registry> game::make_registry()
         e.with<base::Velocity>();
         e.with<game::Enemy>();
         e.with<game::EnemyMove>();
+        e.with<game::Health>(3, 3);
         e.with<base::Sprite>(registry->texture("slime"));
     });
 
@@ -113,6 +116,7 @@ utils::RefPtr<core::Registry> game::make_registry()
         e.with<base::Velocity>();
         e.with<game::Enemy>();
         e.with<game::EnemyMove>();
+        e.with<game::Health>(5, 5);
         e.with<base::Sprite>(registry->texture("big-slime"));
     });
 
@@ -121,6 +125,7 @@ utils::RefPtr<core::Registry> game::make_registry()
         e.with<base::Velocity>();
         e.with<game::Enemy>();
         e.with<game::EnemyMove>();
+        e.with<game::Health>(2, 2);
         e.with<base::Sprite>(registry->texture("wisp"));
     });
 
@@ -144,7 +149,7 @@ utils::RefPtr<core::Registry> game::make_registry()
         {registry->texture("grass-tile"), 0},
         core::TEM{-0.5, 0, 0.5},
         {
-            {0.3, WISP, 0.3, utils::Noise{0x404c09fa, 1, 2}},
+            {0.2, WISP, 0.2, utils::Noise{0x404c09fa, 1, 2}},
         },
     });
 
@@ -155,7 +160,7 @@ utils::RefPtr<core::Registry> game::make_registry()
         {
             {1, TREE, 1, utils::Noise{0x404c09fa, 1, 2}},
             {1, GRASS, 1, utils::Noise{0x404c09fa, 1, 2}},
-            {0.4, ZOMBIE, 0.4, utils::Noise{0x404c09fa, 1, 2}},
+            {0.2, ZOMBIE, 0.2, utils::Noise{0x404c09fa, 1, 2}},
         },
     });
 
@@ -183,7 +188,7 @@ utils::RefPtr<core::Registry> game::make_registry()
         core::TEM{0, 0.01, 0},
         {
             {1, GRASS, 0.1, utils::Noise{0x404c09fa, 1, 2}},
-            {0.4, SKELETON, 0.4, utils::Noise{0x404c09fa, 1, 2}},
+            {0.2, SKELETON, 0.2, utils::Noise{0x404c09fa, 1, 2}},
         },
     });
 
@@ -203,7 +208,7 @@ utils::RefPtr<core::Registry> game::make_registry()
         {registry->texture("swamp-grass-tile"), 0},
         core::TEM{0, 0.1, 1},
         {
-            {0.4, WISP, 0.4, utils::Noise{0x404c09fa, 1, 2}},
+            {0.2, WISP, 0.2, utils::Noise{0x404c09fa, 1, 2}},
         },
     });
 
@@ -212,7 +217,7 @@ utils::RefPtr<core::Registry> game::make_registry()
         {registry->texture("beach-sand-tile"), 0},
         core::TEM{0, -0.1, 0},
         {
-            {0.3, SLIME, 0.3, utils::Noise{0x404c09fa, 1, 2}},
+            {0.1, SLIME, 0.1, utils::Noise{0x404c09fa, 1, 2}},
         },
     });
 
@@ -222,7 +227,7 @@ utils::RefPtr<core::Registry> game::make_registry()
         core::TEM{-0.5, -0.15, 0},
         {
             {0.1, SKELETON, 0.1, utils::Noise{0x404c09fa, 1, 2}},
-            {0.2, WISP, 0.2, utils::Noise{0x404c09fa, 1, 2}},
+            {0.1, WISP, 0.1, utils::Noise{0x404c09fa, 1, 2}},
         },
     });
 

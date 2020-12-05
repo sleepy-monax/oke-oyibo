@@ -80,14 +80,14 @@ namespace game
             .with<base::LightSource>(50.0f, WHITE)
             .with<base::Sprite>(registry().texture("tree"));
 
-        world->create_entity()
+        /*world->create_entity()
             .with<game::Enemy>()
             .with<game::EnemyMove>()
             .with<base::Position>(2070.0f, 2048.0f, 0.0f)
             .with<base::Sprite>(registry().texture("zombie"))
             .with<base::Acceleration>()
             .with<game::Health>(10, 10)
-            .with<base::Velocity>();
+            .with<base::Velocity>();*/
 
         _editor = utils::own<editor::Editor>(world);
         _editor->open<editor::Entities>();
