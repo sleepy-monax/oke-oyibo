@@ -101,7 +101,7 @@ namespace game
         _accumulator += time.elapsed();
         if (_accumulator >= 2)
         {
-            _accumulator -= 0.05;
+            _accumulator -= 0.1;
             return true;
         }
         else

@@ -24,7 +24,7 @@ namespace game
                 {
                     auto player_pos = positionPlayer.pos2d();
 
-                    if (enemy_pos.distance_to(player_pos) <= 2) {
+                    if (enemy_pos.distance_to(player_pos) <= 5) {
                         healthPlayer.health -= 1;
                         if (IsKeyPressed(KEY_F))
                         {

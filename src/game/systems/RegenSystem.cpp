@@ -20,7 +20,9 @@ namespace game
                         health.health = health.maxHealth;
                     } else {
                         health.health += 1;
-                    }
+                        thirst.current_thirst -= 0.3f;
+                        hunger.current_food -= 0.3f;
+                    } 
                 }
             });
         }
