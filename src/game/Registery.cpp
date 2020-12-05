@@ -144,6 +144,7 @@ utils::RefPtr<core::Registry> game::make_registry()
         {registry->texture("grass-tile"), 0},
         core::TEM{-0.5, 0, 0.5},
         {
+            {1, WISP, 1, utils::Noise{0x404c09fa, 1, 2}},
         },
     });
 
@@ -154,6 +155,7 @@ utils::RefPtr<core::Registry> game::make_registry()
         {
             {1, TREE, 1, utils::Noise{0x404c09fa, 1, 2}},
             {1, GRASS, 1, utils::Noise{0x404c09fa, 1, 2}},
+            {1, ZOMBIE, 1, utils::Noise{0x404c09fa, 1, 2}},
         },
     });
 
@@ -161,14 +163,18 @@ utils::RefPtr<core::Registry> game::make_registry()
         "jungle",
         {registry->texture("jungle-grass-tile"), 0},
         core::TEM{0.5, 0.5, 0.5},
-        {},
+        {
+            {1, SLIME, 1, utils::Noise{0x404c09fa, 1, 2}},
+        },
     });
 
     registry->register_biome({
         "tundra",
         {registry->texture("snow-tile"), 0},
         core::TEM{-0.5, 0, 0},
-        {},
+        {
+            {1, BIG_SLIME, 1, utils::Noise{0x404c09fa, 1, 2}},
+        },
     });
 
     registry->register_biome({
@@ -177,6 +183,7 @@ utils::RefPtr<core::Registry> game::make_registry()
         core::TEM{0, 0.01, 0},
         {
             {1, GRASS, 0.1, utils::Noise{0x404c09fa, 1, 2}},
+            {1, SKELETON, 1, utils::Noise{0x404c09fa, 1, 2}},
         },
     });
 
@@ -186,6 +193,8 @@ utils::RefPtr<core::Registry> game::make_registry()
         core::TEM{0.5, 0, -0.5},
         {
             {1, CACTUS, 0.1, utils::Noise{0x404c09fa, 1, 2}},
+            {1, ZOMBIE, 1, utils::Noise{0x404c09fa, 1, 2}},
+            {1, SKELETON, 1, utils::Noise{0x404c09fa, 1, 2}},
         },
     });
 
@@ -193,21 +202,28 @@ utils::RefPtr<core::Registry> game::make_registry()
         "swamp",
         {registry->texture("swamp-grass-tile"), 0},
         core::TEM{0, 0.1, 1},
-        {},
+        {
+            {1, WISP, 1, utils::Noise{0x404c09fa, 1, 2}},
+        },
     });
 
     registry->register_biome({
         "beach",
         {registry->texture("beach-sand-tile"), 0},
         core::TEM{0, -0.1, 0},
-        {},
+        {
+            {1, SLIME, 1, utils::Noise{0x404c09fa, 1, 2}},
+        },
     });
 
     registry->register_biome({
         "stone_beach",
         {registry->texture("stone-tile"), 0},
         core::TEM{-0.5, -0.15, 0},
-        {},
+        {
+            {1, SKELETON, 1, utils::Noise{0x404c09fa, 1, 2}},
+            {1, WISP, 1, utils::Noise{0x404c09fa, 1, 2}},
+        },
     });
 
     registry->register_biome({
