@@ -10,6 +10,7 @@
 #include "base/components/Velocity.h"
 
 #include "game/components/Armor.h"
+#include "game/components/Attack.h"
 #include "game/components/Breakable.h"
 #include "game/components/Enemy.h"
 #include "game/components/Flammable.h"
@@ -20,7 +21,6 @@
 #include "game/components/Inventory.h"
 #include "game/components/Pickable.h"
 #include "game/components/Stamina.h"
-#include "game/components/Attack.h"
 
 #include "base/systems/Camera.h"
 #include "base/systems/DebugRender.h"
@@ -31,6 +31,7 @@
 #include "base/systems/Shadow.h"
 #include "base/systems/TerrainRender.h"
 
+#include "game/systems/AttackSystem.h"
 #include "game/systems/BreakableSystem.h"
 #include "game/systems/EnemyMove.h"
 #include "game/systems/HealthBar.h"
@@ -41,7 +42,6 @@
 #include "game/systems/ReviveSystem.h"
 #include "game/systems/StaminaSystem.h"
 #include "game/systems/ThirstSystem.h"
-#include "game/systems/AttackSystem.h"
 
 utils::RefPtr<core::Registry> game::make_registry()
 {
@@ -145,10 +145,29 @@ utils::RefPtr<core::Registry> game::make_registry()
         e.with<base::CastShadow>(12, utils::Vec2f{});
     });
 
+    auto PINE = registry->register_blueprint("pine", [&](core::Builder &e) {
+        Stack tree(Item("log", registry->texture("log")), 12);
+        e.with<base::Sprite>(registry->texture("pine"));
+        e.with<game::Breakable>(tree, 5);
+        e.with<base::CastShadow>(12, utils::Vec2f{});
+    });
+
+    auto BUSH = registry->register_blueprint("bush", [&](core::Builder &e) {
+        e.with<base::Sprite>(registry->texture("bush"));
+    });
+
     auto GRASS = registry->register_blueprint("grass", [&](core::Builder &e) {
         Stack food(Item("food", registry->texture("food")), 1);
         e.with<game::Breakable>(food, 1);
         e.with<base::Sprite>(registry->texture("grass"));
+    });
+
+    auto FLOWER = registry->register_blueprint("flower", [&](core::Builder &e) {
+        e.with<base::Sprite>(registry->texture("flower"));
+    });
+
+    auto ROCK = registry->register_blueprint("rock", [&](core::Builder &e) {
+        e.with<base::Sprite>(registry->texture("rock"));
     });
 
     auto CACTUS = registry->register_blueprint("cactus", [&](core::Builder &e) {
@@ -160,7 +179,7 @@ utils::RefPtr<core::Registry> game::make_registry()
         {registry->texture("grass-tile"), 0},
         core::TEM{-0.5, 0, 0.5},
         {
-            {0.2, WISP, 0.2, utils::Noise{0x404c09fa, 1, 2}},
+            {1, WISP, 0.01, utils::Noise{0x404c09fa, 1, 2}},
         },
     });
 
@@ -169,9 +188,9 @@ utils::RefPtr<core::Registry> game::make_registry()
         {registry->texture("forest-grass-tile"), 0},
         core::TEM{0, 0.5, 0.5},
         {
-            {1, TREE, 1, utils::Noise{0x404c09fa, 1, 2}},
+            {1, TREE, 1, utils::Noise{0x404c09fa, 1, 0.1}},
             {1, GRASS, 1, utils::Noise{0x404c09fa, 1, 2}},
-            {0.2, ZOMBIE, 0.2, utils::Noise{0x404c09fa, 1, 2}},
+            {1, ZOMBIE, 0.1, utils::Noise{0x404c09fa, 1, 2}},
         },
     });
 
@@ -180,7 +199,7 @@ utils::RefPtr<core::Registry> game::make_registry()
         {registry->texture("jungle-grass-tile"), 0},
         core::TEM{0.5, 0.5, 0.5},
         {
-            {0.3, SLIME, 0.3, utils::Noise{0x404c09fa, 1, 2}},
+            {1, SLIME, 0.03, utils::Noise{0x404c09fa, 1, 2}},
         },
     });
 
@@ -189,7 +208,8 @@ utils::RefPtr<core::Registry> game::make_registry()
         {registry->texture("snow-tile"), 0},
         core::TEM{-0.5, 0, 0},
         {
-            {0.2, BIG_SLIME, 0.2, utils::Noise{0x404c09fa, 1, 2}},
+            {1, PINE, 1, utils::Noise{0x404c09fa, 1, 0.1}},
+            {1, BIG_SLIME, 0.01, utils::Noise{0x404c09fa, 1, 2}},
         },
     });
 
@@ -198,7 +218,10 @@ utils::RefPtr<core::Registry> game::make_registry()
         {registry->texture("grass-tile"), 0},
         core::TEM{0, 0.01, 0},
         {
-            {1, GRASS, 0.1, utils::Noise{0x404c09fa, 1, 2}},
+            {1, GRASS, 1, utils::Noise{0x404c09fa, 1, 2}},
+            {1, FLOWER, 0.25, utils::Noise{0x404c09fa, 1, 0.025}},
+            {0.5, BUSH, 0.25, utils::Noise{0x404c09fa, 1, 0.025}},
+            {1, ROCK, 0.1, utils::Noise{0x404c09fa, 1, 1}},
             {0.2, SKELETON, 0.2, utils::Noise{0x404c09fa, 1, 2}},
         },
     });
@@ -209,6 +232,7 @@ utils::RefPtr<core::Registry> game::make_registry()
         core::TEM{0.5, 0, -0.5},
         {
             {1, CACTUS, 0.1, utils::Noise{0x404c09fa, 1, 2}},
+            {1, ROCK, 0.1, utils::Noise{0x404c09fa, 1, 1}},
             {0.2, ZOMBIE, 0.2, utils::Noise{0x404c09fa, 1, 2}},
             {0.2, SKELETON, 0.2, utils::Noise{0x404c09fa, 1, 2}},
         },
@@ -219,7 +243,7 @@ utils::RefPtr<core::Registry> game::make_registry()
         {registry->texture("swamp-grass-tile"), 0},
         core::TEM{0, 0.1, 1},
         {
-            {0.2, WISP, 0.2, utils::Noise{0x404c09fa, 1, 2}},
+            {1, WISP, 0.01, utils::Noise{0x404c09fa, 1, 2}},
         },
     });
 
@@ -228,7 +252,7 @@ utils::RefPtr<core::Registry> game::make_registry()
         {registry->texture("beach-sand-tile"), 0},
         core::TEM{0, -0.1, 0},
         {
-            {0.1, SLIME, 0.1, utils::Noise{0x404c09fa, 1, 2}},
+            {1, SLIME, 0.01, utils::Noise{0x404c09fa, 1, 2}},
         },
     });
 
@@ -237,8 +261,9 @@ utils::RefPtr<core::Registry> game::make_registry()
         {registry->texture("stone-tile"), 0},
         core::TEM{-0.5, -0.15, 0},
         {
-            {0.1, SKELETON, 0.1, utils::Noise{0x404c09fa, 1, 2}},
-            {0.1, WISP, 0.1, utils::Noise{0x404c09fa, 1, 2}},
+            {1, SKELETON, 0.01, utils::Noise{0x404c09fa, 1, 2}},
+            {1, WISP, 0.01, utils::Noise{0x404c09fa, 1, 2}},
+            {1, ROCK, 0.5, utils::Noise{0x404c09fa, 1, 1}},
         },
     });
 
