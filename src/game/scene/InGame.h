@@ -29,6 +29,8 @@ namespace game
         void render() override;
         void on_switch_in() override;
         void on_switch_out() override;
+
+        void create_player(core::World &world);
     };
 
 } // namespace game

@@ -130,13 +130,15 @@ utils::RefPtr<core::Registry> game::make_registry()
     });
 
     auto TREE = registry->register_blueprint("tree", [&](core::Builder &e) {
-        Stack tree(Item("log", core::Texture()), 12);
+        Stack tree(Item("log", registry->texture("log")), 12);
         e.with<base::Sprite>(registry->texture("tree"));
         e.with<game::Breakable>(tree, 5);
         e.with<base::CastShadow>(12, utils::Vec2f{});
     });
 
     auto GRASS = registry->register_blueprint("grass", [&](core::Builder &e) {
+        Stack food(Item("food", registry->texture("food")), 1);
+        e.with<game::Breakable>(food, 1);
         e.with<base::Sprite>(registry->texture("grass"));
     });
 

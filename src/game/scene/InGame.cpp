@@ -49,9 +49,21 @@ namespace game
         world->players()[0].camera().speed(10);
         world->players()[0].camera().jump_to(world->terrain().bound().center());
 
-        auto world_center = world->terrain().bound().center();
+        create_player(*world);
 
-        world->create_entity()
+        _editor = utils::own<editor::Editor>(world);
+        _editor->open<editor::Entities>();
+        _editor->open<editor::Inspector>();
+        _editor->open<editor::Profiler>();
+        _editor->open<editor::Systems>();
+        _editor->open<editor::Viewport>();
+
+        _game = utils::own<game::Game>(world);
+    }
+
+    void InGame::create_player(core::World &world){
+        auto world_center = world.terrain().bound().center();
+        world.create_entity()
             .with<base::Position>(world_center.x(), world_center.y(), 0.0f)
             .with<base::Acceleration>()
             .with<base::Velocity>()
@@ -65,38 +77,6 @@ namespace game
             .with<game::Inventory>()
             .with<base::CastShadow>(4, utils::Vec2f{0.5, 0})
             .with<game::HoldItem>();
-
-        Stack table(Item("table", core::Texture()), 12);
-        world->create_entity()
-            .with<game::Pickable>(table)
-            .with<base::Position>(60.0f, 60.0f, 0.0f)
-            .with<base::LightSource>(50.0f, WHITE)
-            .with<base::Sprite>(registry().texture("table"));
-
-        Stack tree(Item("log", core::Texture()), 12);
-        world->create_entity()
-            .with<game::Breakable>(tree, 5)
-            .with<base::Position>(50.0f, 60.0f, 0.0f)
-            .with<base::LightSource>(50.0f, WHITE)
-            .with<base::Sprite>(registry().texture("tree"));
-
-        /*world->create_entity()
-            .with<game::Enemy>()
-            .with<game::EnemyMove>()
-            .with<base::Position>(2070.0f, 2048.0f, 0.0f)
-            .with<base::Sprite>(registry().texture("zombie"))
-            .with<base::Acceleration>()
-            .with<game::Health>(10, 10)
-            .with<base::Velocity>();*/
-
-        _editor = utils::own<editor::Editor>(world);
-        _editor->open<editor::Entities>();
-        _editor->open<editor::Inspector>();
-        _editor->open<editor::Profiler>();
-        _editor->open<editor::Systems>();
-        _editor->open<editor::Viewport>();
-
-        _game = utils::own<game::Game>(world);
     }
 
     void InGame::on_switch_out()

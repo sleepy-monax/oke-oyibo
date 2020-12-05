@@ -16,4 +16,8 @@ namespace game
         return name;
     }
 
+    core::Texture Item::get_texture() {
+        return texture;
+    }
+
 } // namespace game

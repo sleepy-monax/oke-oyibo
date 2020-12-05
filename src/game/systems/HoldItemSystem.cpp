@@ -4,6 +4,10 @@
 #include "game/components/HoldItem.h"
 #include "game/components/Inventory.h"
 
+#include "core/Graphics.h"
+#include "core/Registry.h"
+#include "core/Scene.h"
+
 namespace game
 {
     HoldItemSystem::HoldItemSystem()
@@ -36,6 +40,31 @@ namespace game
                     }
                 }
             }
+        });
+    }
+
+    void HoldItemSystem::render(core::World &world, core::Camera &camera)
+    {
+        auto player = world.entities().view<game::Inventory, game::HoldItem, base::Position>();
+
+        camera.with_entities([&]() {
+            player.each([&](auto &inv, auto &hold, auto &position) {
+                utils::Rectf bound = {3, -10, 6, 6};
+
+                bound = bound.offset(position.pos2d());
+
+                if (inv.inventory.size() > 0)
+                {
+                    texture = inv.inventory[hold.index].getItem().get_texture();
+                }
+                else
+                {
+                    texture = world.registry().texture("empty");
+                }
+
+                core::draw_texture(texture, bound, WHITE);
+
+            });
         });
     }
 

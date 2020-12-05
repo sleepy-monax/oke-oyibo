@@ -18,6 +18,8 @@ namespace game
         ~Item();
 
         string getName();
+
+        core::Texture get_texture();
     };
-    
+
 } // namespace game
