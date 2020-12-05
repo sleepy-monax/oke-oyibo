@@ -146,6 +146,7 @@ utils::RefPtr<core::Registry> game::make_registry()
         core::TEM{0, 0.5, 0.5},
         {
             {1, TREE, 1, utils::Noise{0x404c09fa, 1, 2}},
+            {1, GRASS, 1, utils::Noise{0x404c09fa, 1, 2}},
         },
     });
 

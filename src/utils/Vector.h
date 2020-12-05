@@ -57,6 +57,12 @@ namespace utils
 
         T *raw_storage() { return _storage; }
 
+        T& at(size_t index)
+        {
+            assert(index < _count);
+            return _storage[index];
+        }
+
         Vector() :
             Vector(16) {}
 
@@ -67,6 +73,7 @@ namespace utils
 
         Vector(std::initializer_list<T> elements)
         {
+            ensure_capacity(elements.size());
             for (auto &&i : elements)
             {
                 push_back(i);
@@ -253,7 +260,7 @@ namespace utils
             {
                 size_t new_capacity = _capacity + _capacity / 4;
 
-                new_capacity = MAX(1, new_capacity);
+                new_capacity = MAX(16, new_capacity);
 
                 T *new_storage = reinterpret_cast<T *>(calloc(new_capacity, sizeof(T)));
 
@@ -303,9 +310,10 @@ namespace utils
 
             grow();
 
-            for (size_t j = _count; j > index + 1; j--)
+            for (size_t j = _count - 1; j > index ; j--)
             {
-                new (&_storage[j]) T(std::move(_storage[j - 1]));
+                new (&_storage[j]) T(std::move(at(j - 1)));
+                at(j - 1).~T();
             }
 
             new (&_storage[index]) T(std::move(value));
