@@ -86,6 +86,26 @@ utils::RefPtr<core::Registry> game::make_registry()
     registry->register_component<game::HoldItem>("hold-item");
     registry->register_component<game::Attack>("attack");
 
+    auto HEDGEHOG = registry->register_blueprint("hedgehog", [&](core::Builder &e) {
+        e.with<base::Momentum>();
+        e.with<base::Move>(0.05);
+        e.with<base::Sprite>(registry->texture("hedgehog"));
+        e.with<base::CastShadow>(4, utils::Vec2f{-1, 0});
+
+        e.with<game::Health>(7, 7);
+        e.with<game::Attack>(1);
+    });
+
+    auto BUNNY = registry->register_blueprint("bunny", [&](core::Builder &e) {
+        e.with<base::Momentum>();
+        e.with<base::Move>(0.05);
+        e.with<base::Sprite>(registry->texture("bunny"));
+        e.with<base::CastShadow>(4, utils::Vec2f{-1, 0});
+
+        e.with<game::Health>(7, 7);
+        e.with<game::Attack>(1);
+    });
+
     auto ZOMBIE = registry->register_blueprint("zombie", [&](core::Builder &e) {
         e.with<base::Momentum>();
         e.with<base::Move>(0.05);
@@ -156,6 +176,14 @@ utils::RefPtr<core::Registry> game::make_registry()
         e.with<game::Breakable>(tree, 5);
     });
 
+    auto PALM = registry->register_blueprint("palm", [&](core::Builder &e) {
+        e.with<base::Sprite>(registry->texture("palm"));
+        e.with<base::CastShadow>(16, utils::Vec2f{});
+
+        Stack tree(Item("log", registry->texture("log")), 12);
+        e.with<game::Breakable>(tree, 5);
+    });
+
     auto BUSH = registry->register_blueprint("bush", [&](core::Builder &e) {
         e.with<base::Sprite>(registry->texture("bush"));
     });
@@ -181,26 +209,33 @@ utils::RefPtr<core::Registry> game::make_registry()
     registry->register_biome({
         "taiga",
         {registry->texture("grass-tile"), 0},
-        core::TEM{-0.5, 0, 0.5},
+        core::TEM{-0.25, 0.5, 0.25},
         {
             {1, WISP, 0.01, utils::Noise{0x404c09fa, 1, 2}},
+            {1, PINE, 1, utils::Noise{0x404c09fa, 1, 0.1}},
+            {1, ROCK, 0.1, utils::Noise{0x404c09fa, 1, 1}},
+            {1, GRASS, 1, utils::Noise{0x404c09fa, 1, 2}},
+            {1, FLOWER, 0.25, utils::Noise{0x404c09fa, 1, 0.025}},
+            {0.5, BUSH, 0.25, utils::Noise{0x404c09fa, 1, 0.025}},
+            {1, BUNNY, 0.01, utils::Noise{0x404c09fa, 1, 2}},
         },
     });
 
     registry->register_biome({
         "forest",
-        {registry->texture("forest-grass-tile"), 0},
-        core::TEM{0, 0.5, 0.5},
+        {registry->texture("grass-tile"), 0},
+        core::TEM{0, 0.25, 0.5},
         {
             {1, TREE, 1, utils::Noise{0x404c09fa, 1, 0.1}},
             {1, GRASS, 1, utils::Noise{0x404c09fa, 1, 2}},
             {1, ZOMBIE, 0.1, utils::Noise{0x404c09fa, 1, 2}},
+            {0.1, HEDGEHOG, 1, utils::Noise{0x404c09fa, 1, 2}},
         },
     });
 
     registry->register_biome({
         "jungle",
-        {registry->texture("jungle-grass-tile"), 0},
+        {registry->texture("grass-tile"), 0},
         core::TEM{0.5, 0.5, 0.5},
         {
             {1, SLIME, 0.03, utils::Noise{0x404c09fa, 1, 2}},
@@ -214,6 +249,7 @@ utils::RefPtr<core::Registry> game::make_registry()
         {
             {1, PINE, 1, utils::Noise{0x404c09fa, 1, 0.1}},
             {1, BIG_SLIME, 0.01, utils::Noise{0x404c09fa, 1, 2}},
+            {1, BUNNY, 0.01, utils::Noise{0x404c09fa, 1, 2}},
         },
     });
 
@@ -227,6 +263,7 @@ utils::RefPtr<core::Registry> game::make_registry()
             {0.5, BUSH, 0.25, utils::Noise{0x404c09fa, 1, 0.025}},
             {1, ROCK, 0.1, utils::Noise{0x404c09fa, 1, 1}},
             {0.2, SKELETON, 0.2, utils::Noise{0x404c09fa, 1, 2}},
+            {1, BUNNY, 0.05, utils::Noise{0x404c09fa, 1, 2}},
         },
     });
 
@@ -245,7 +282,7 @@ utils::RefPtr<core::Registry> game::make_registry()
     registry->register_biome({
         "swamp",
         {registry->texture("swamp-grass-tile"), 0},
-        core::TEM{0, 0.1, 1},
+        core::TEM{0.25, 0.1, 1},
         {
             {1, WISP, 0.01, utils::Noise{0x404c09fa, 1, 2}},
         },
@@ -257,6 +294,7 @@ utils::RefPtr<core::Registry> game::make_registry()
         core::TEM{0, -0.1, 0},
         {
             {1, SLIME, 0.01, utils::Noise{0x404c09fa, 1, 2}},
+            {1, PALM, 0.5, utils::Noise{0x404c09fa, 1, 0.1}},
         },
     });
 

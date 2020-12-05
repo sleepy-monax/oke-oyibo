@@ -61,6 +61,9 @@ namespace base
         view.each([&](auto &momentum, auto &position) {
             position.x += momentum.vx * dt;
             position.y += momentum.vy * dt;
+
+            position.x = MAX(0, MIN(world.terrain().bound().width(), position.x));
+            position.y = MAX(0, MIN(world.terrain().bound().height(), position.y));
         });
     }
 

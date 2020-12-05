@@ -11,7 +11,7 @@ namespace core
     private:
         utils::Noise _temperature{0xe7263ffb, 16, 1 / 256.};
         utils::Noise _elevation{0xfe9555c0, 32, 1 / 128.};
-        utils::Noise _moisture{0x33d3de7b, 8, 1 / 256.};
+        utils::Noise _moisture{0x33d3de7b, 12, 1 / 256.};
 
     public:
         void seed(uint32_t seed)
