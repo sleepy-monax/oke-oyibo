@@ -5,11 +5,6 @@
 
 namespace game
 {
-    InventorySystem::InventorySystem()
-    {
-    }
-    InventorySystem::~InventorySystem() {}
-
     void InventorySystem::update(core::World &world, core::Time &)
     {
         auto player = world.entities().view<game::Inventory, base::Position>();
@@ -24,7 +19,7 @@ namespace game
                 if (pos_item.distance_to(pos_inventory) <= core::Tile::SIZE / 4)
                 {
                     pickable.stack = inventory.add(pickable.stack);
-                    if (pickable.stack.getQuantity() == 0)
+                    if (pickable.stack.quantity() == 0)
                     {
                         world.remove_entity(entity);
                     }

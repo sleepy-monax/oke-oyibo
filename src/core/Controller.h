@@ -17,6 +17,8 @@ namespace core
         ACTION_MAIN,
         ACTION_SECONDARY,
 
+        OPEN_MENU,
+
         ZOOM_IN,
         ZOOM_OUT,
     };

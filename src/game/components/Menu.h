@@ -1,15 +1,13 @@
 #pragma once
 
-#include "utils/Vector.h"
-
-#include "game/menu/MenuLevel.h"
+#include "utils/Common.h"
 
 namespace game
 {
     struct Menu
     {
-        utils::Vector<MenuLevel> levels;
-        size_t selected_option;
+        bool visible;
+        size_t selected;
     };
 
 } // namespace game

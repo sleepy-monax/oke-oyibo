@@ -40,6 +40,9 @@ namespace core
             case Control::ZOOM_OUT:
                 return IsKeyDown(KEY_PAGE_DOWN);
 
+            case Control::OPEN_MENU:
+                return IsKeyDown(KEY_E);
+
             default:
                 return false;
             }
@@ -72,6 +75,9 @@ namespace core
 
             case Control::ZOOM_OUT:
                 return IsKeyPressed(KEY_PAGE_DOWN);
+
+            case Control::OPEN_MENU:
+                return IsKeyDown(KEY_E);
 
             default:
                 return false;

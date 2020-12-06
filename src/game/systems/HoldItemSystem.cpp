@@ -56,8 +56,8 @@ namespace game
                 {
                     if (hold.index < inv.inventory.count())
                     {
-                        auto texture = inv.inventory[hold.index].getItem().texture();
-                        auto num = inv.inventory[hold.index].getQuantity();
+                        auto texture = inv.inventory[hold.index].item().texture();
+                        auto num = inv.inventory[hold.index].quantity();
 
                         Vector2 pos(position().x() + 4, position().y() - 5);
                         core::draw_texture(texture, bound, WHITE);

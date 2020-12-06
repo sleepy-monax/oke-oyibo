@@ -32,6 +32,7 @@
 *.app
 
 .vscode/
+.idea/
 imgui.ini
 bin/
 obj/

@@ -18,7 +18,7 @@ namespace game
             {
                 if (hold.index < inv.inventory.count())
                 {
-                    auto item = inv.inventory[hold.index].getItem();
+                    auto item = inv.inventory[hold.index].item();
 
                     if (item.flags() & Item::FOOD)
                     {
@@ -31,7 +31,7 @@ namespace game
                             hunger.current_food = hunger.max_food;
                         }
 
-                        inv.remove(inv.inventory[hold.index].getItem(), 1);
+                        inv.remove(inv.inventory[hold.index].item(), 1);
                     }
                 }
             }

@@ -18,16 +18,16 @@ namespace game
 
             for (size_t i = 0; i < inventory.count(); i++)
             {
-                if (inventory[i].getItem().name() == stack.getItem().name())
+                if (inventory[i].item().name() == stack.item().name())
                 {
-                    stack.set_quantity(inventory[i].add(stack.getQuantity()));
+                    stack.quantity(inventory[i].add(stack.quantity()));
                 }
             }
 
-            if (stack.getQuantity() > 0 && inventory.count() < MAX_SIZE)
+            if (stack.quantity() > 0 && inventory.count() < MAX_SIZE)
             {
                 inventory.push_back(stack);
-                stack.set_quantity(0);
+                stack.quantity(0);
             }
 
             return stack;
@@ -37,11 +37,11 @@ namespace game
         {
             for (size_t i = 0; i < inventory.count(); i++)
             {
-                if (inventory[i].getItem().name() == stack.getItem().name())
+                if (inventory[i].item().name() == stack.item().name())
                 {
-                    auto quantityRemoved = inventory[i].remove(stack.getQuantity());
-                    stack.set_quantity(stack.getQuantity() - quantityRemoved);
-                    if (inventory[i].getQuantity() == 0)
+                    auto quantityRemoved = inventory[i].remove(stack.quantity());
+                    stack.quantity(stack.quantity() - quantityRemoved);
+                    if (inventory[i].quantity() == 0)
                     {
                         inventory.remove_index(i);
                     }

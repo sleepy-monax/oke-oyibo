@@ -19,6 +19,7 @@
 #include "game/components/HoldItem.h"
 #include "game/components/Hunger.h"
 #include "game/components/Inventory.h"
+#include "game/components/Menu.h"
 #include "game/components/Pickable.h"
 #include "game/components/Prey.h"
 #include "game/components/Stamina.h"
@@ -41,6 +42,7 @@
 #include "game/systems/HoldItemSystem.h"
 #include "game/systems/HungerSystem.h"
 #include "game/systems/InventorySystem.h"
+#include "game/systems/MenuSystem.h"
 #include "game/systems/RegenSystem.h"
 #include "game/systems/StaminaSystem.h"
 #include "game/systems/ThirstSystem.h"
@@ -70,6 +72,7 @@ utils::RefPtr<core::Registry> game::make_registry()
     registry->register_system<game::AttackSystem>("attack");
     registry->register_system<game::EatSystem>("eat");
     registry->register_system<game::DrinkSystem>("drink");
+    registry->register_system<game::MenuSystem>("menu");
 
     registry->register_component<base::Momentum>("momentum");
     registry->register_component<base::LightSource>("light-source");
@@ -127,6 +130,7 @@ utils::RefPtr<core::Registry> game::make_registry()
         e.with<base::Colider>(-2.0f, -2.0f, 4.0f, 4.0f);
         e.with<game::Stamina>(20.0f, 20.0f);
         e.with<game::Thirst>(20.0f, 20.0f);
+        e.with<game::Menu>();
     });
 
     auto HEDGEHOG = registry->register_blueprint("hedgehog", [&](core::Builder &e) {

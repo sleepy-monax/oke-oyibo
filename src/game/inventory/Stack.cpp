@@ -3,21 +3,21 @@
 namespace game
 {
     Stack::Stack(Item item, int quantity) :
-        item(item), _quantity(quantity) {}
+        _item(item), _quantity(quantity) {}
 
     Stack::~Stack() {}
 
-    Item Stack::getItem() const
+    Item Stack::item() const
     {
-        return item;
+        return _item;
     }
 
-    int Stack::getQuantity() const
+    int Stack::quantity() const
     {
         return _quantity;
     }
 
-    void Stack::set_quantity(int quantity)
+    void Stack::quantity(int quantity)
     {
         _quantity = quantity;
     }

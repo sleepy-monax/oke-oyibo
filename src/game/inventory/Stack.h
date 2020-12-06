@@ -8,7 +8,7 @@ namespace game
     class Stack
     {
     private:
-        Item item;
+        Item _item;
         int _quantity = 0;
 
     public:
@@ -18,11 +18,11 @@ namespace game
 
         ~Stack();
 
-        Item getItem() const;
+        Item item() const;
 
-        int getQuantity() const;
+        int quantity() const;
 
-        void set_quantity(int quantity);
+        void quantity(int quantity);
 
         int add(int quantity);
 
@@ -37,5 +37,5 @@ template <>
 inline void inspect<game::Stack>(game::Stack &stack)
 {
     ImGui::InputInt("quantity", &stack._quantity);
-    ImGui::Text("name  : %s", stack.item.name().c_str());
+    ImGui::Text("name  : %s", stack._item.name().c_str());
 }
