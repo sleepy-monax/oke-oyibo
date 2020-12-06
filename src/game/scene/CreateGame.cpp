@@ -99,9 +99,9 @@ namespace game
     {
         _accumulator += time.elapsed();
 
-        if (_accumulator >= 15)
+        if (_accumulator >= 3)
         {
-            _accumulator -= 15;
+            _accumulator -= 3;
             return true;
         }
         else
