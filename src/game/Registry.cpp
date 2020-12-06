@@ -23,6 +23,7 @@
 #include "game/components/Pickable.h"
 #include "game/components/Prey.h"
 #include "game/components/Stamina.h"
+#include "game/components/Animal.h"
 
 #include "base/systems/Camera.h"
 #include "base/systems/EntityRenderer.h"
@@ -46,6 +47,7 @@
 #include "game/systems/RegenSystem.h"
 #include "game/systems/StaminaSystem.h"
 #include "game/systems/ThirstSystem.h"
+#include "game/systems/AnimalMove.h"
 
 utils::RefPtr<core::Registry> game::make_registry()
 {
@@ -73,6 +75,7 @@ utils::RefPtr<core::Registry> game::make_registry()
     registry->register_system<game::EatSystem>("eat");
     registry->register_system<game::DrinkSystem>("drink");
     registry->register_system<game::MenuSystem>("menu");
+    registry->register_system<game::AnimalMove>("animal");
 
     registry->register_component<base::Momentum>("momentum");
     registry->register_component<base::LightSource>("light-source");
@@ -91,6 +94,7 @@ utils::RefPtr<core::Registry> game::make_registry()
     registry->register_component<game::Thirst>("thirst");
     registry->register_component<game::HoldItem>("hold-item");
     registry->register_component<game::Attack>("attack");
+    registry->register_component<game::Animal>("animal");
 
     Item ITEM_LOG{"log", registry->texture("log")};
     Item ITEM_BURGER{"burger", registry->texture("food"), Item::FOOD};
@@ -139,9 +143,9 @@ utils::RefPtr<core::Registry> game::make_registry()
         e.with<base::Sprite>(registry->texture("hedgehog"));
         e.with<base::CastShadow>(4, utils::Vec2f{-1, 0});
         e.with<base::Colider>(-2.0f, -2.0f, 4.0f, 4.0f);
+        e.with<game::Animal>();
 
         e.with<game::Health>(7, 7);
-        e.with<game::Attack>(1);
     });
 
     auto BUNNY = registry->register_blueprint("bunny", [&](core::Builder &e) {
@@ -150,9 +154,9 @@ utils::RefPtr<core::Registry> game::make_registry()
         e.with<base::Sprite>(registry->texture("bunny"));
         e.with<base::CastShadow>(4, utils::Vec2f{-1, 0});
         e.with<base::Colider>(-2.0f, -2.0f, 4.0f, 4.0f);
+        e.with<game::Animal>();
 
         e.with<game::Health>(7, 7);
-        e.with<game::Attack>(1);
     });
 
     auto SHEEP = registry->register_blueprint("sheep", [&](core::Builder &e) {
@@ -160,10 +164,10 @@ utils::RefPtr<core::Registry> game::make_registry()
         e.with<base::Move>(0.05);
         e.with<base::Sprite>(registry->texture("sheep"));
         e.with<base::CastShadow>(4, utils::Vec2f{-1, 0});
+        e.with<game::Animal>();
         e.with<base::Colider>(-2.0f, -2.0f, 4.0f, 4.0f);
 
         e.with<game::Health>(7, 7);
-        e.with<game::Attack>(1);
     });
 
     auto ZOMBIE = registry->register_blueprint("zombie", [&](core::Builder &e) {
@@ -220,6 +224,16 @@ utils::RefPtr<core::Registry> game::make_registry()
         e.with<game::Enemy>();
         e.with<game::Health>(2, 2);
         e.with<game::Attack>(1);
+    });
+
+    auto SHARK = registry->register_blueprint("shark", [&](core::Builder &e) {
+        e.with<base::Momentum>();
+        e.with<base::Move>(0.03);
+        e.with<base::Sprite>(registry->texture("shark"));
+
+        e.with<game::Enemy>(true);
+        e.with<game::Health>(20, 20);
+        e.with<game::Attack>(5);
     });
 
     auto TREE = registry->register_blueprint("tree", [&](core::Builder &e) {
@@ -404,14 +418,18 @@ utils::RefPtr<core::Registry> game::make_registry()
         "sea",
         WATER_TILE,
         core::TEM{0, -0.2, 0},
-        {},
+        {
+            {1, SHARK, 0.05, utils::Noise{0x404c09fa, 1, 2}},
+        },
     });
 
     registry->register_biome({
         "deep_sea",
         DEEP_WATER_TILE,
         core::TEM{0, -0.5, 0},
-        {},
+        {
+            {1, SHARK, 0.05, utils::Noise{0x404c09fa, 1, 2}},
+        },
     });
 
     registry->register_biome({
@@ -432,14 +450,18 @@ utils::RefPtr<core::Registry> game::make_registry()
         "warm_sea",
         WATER_TILE,
         core::TEM{0.5, -0.2, -0.5},
-        {},
+        {
+            {1, SHARK, 0.05, utils::Noise{0x404c09fa, 1, 2}},
+        },
     });
 
     registry->register_biome({
         "warm_deep_sea",
         DEEP_WATER_TILE,
         core::TEM{0.5, -0.5, -0.5},
-        {},
+        {
+            {1, SHARK, 0.05, utils::Noise{0x404c09fa, 1, 2}},
+        },
     });
 
     return registry;

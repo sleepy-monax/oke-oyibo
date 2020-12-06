@@ -100,8 +100,8 @@ namespace base
             position.x += momentum.vx * dt;
             position.y += momentum.vy * dt;
 
-            position.x = MAX(0, MIN(world.terrain().bound().width(), position.x));
-            position.y = MAX(0, MIN(world.terrain().bound().height(), position.y));
+            position.x = MAX(core::Tile::SIZE, MIN(world.terrain().bound().width() - core::Tile::SIZE, position.x));
+            position.y = MAX(core::Tile::SIZE, MIN(world.terrain().bound().height() - core::Tile::SIZE, position.y));
         });
     }
 

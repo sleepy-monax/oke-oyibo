@@ -54,7 +54,7 @@ namespace game
                     core::Biome &biome = reg.lookup_biome(new_tem);
                     world.terrain().tile((int)x, (int)y) = biome.tile;
 
-                    if (biome.decorations.count() == 0)
+                    if (biome.decorations.count() == 0 || x == 0 || y == 0 || x == world.terrain().width() - 1 || y == world.terrain().height() - 1)
                     {
                         continue;
                     }
