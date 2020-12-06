@@ -9,7 +9,7 @@
 #include "core/Scene.h"
 #include "core/Scheduler.h"
 
-#include "game/scene/MainMenu.h"
+#include "game/scene/CreateGame.h"
 
 namespace game
 {
@@ -27,7 +27,7 @@ namespace game
             _logo = reg.texture("logo");
 
             _scheduler.schedule(3, [&]() {
-                dir.switch_scene<MainMenu>();
+                dir.switch_scene<CreateGame>();
             });
         }
 
