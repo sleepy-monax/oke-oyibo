@@ -23,14 +23,14 @@ namespace core
         CameraState zoomed_in()
         {
             CameraState copy = *this;
-            copy._zoom *= 2;
+            copy._zoom = MIN(_zoom * 2, 16);
             return copy;
         }
 
         CameraState zoomed_out()
         {
             CameraState copy = *this;
-            copy._zoom /= 2;
+            copy._zoom = MAX(_zoom / 2, 1);
             return copy;
         }
 
