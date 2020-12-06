@@ -1,18 +1,17 @@
 #include <imgui.h>
 
 #include "CreateGame.h"
-#include "game/scene/InGame.h"
 #include "core/Graphics.h"
+#include "game/scene/InGame.h"
 
-#include "game/generator/Generator.h"
 #include "core/Camera.h"
+#include "game/generator/Generator.h"
 
 namespace game
 {
     CreateGame::CreateGame(core::Director &dir, core::Registry &reg) :
-        core::Scene(dir, reg) 
+        core::Scene(dir, reg)
     {
-        
     }
 
     CreateGame::~CreateGame()
@@ -23,15 +22,20 @@ namespace game
     {
         Scene::update(time);
         _camera.resize_to_fit_the_screen();
+
         _camera.animate(time.elapsed());
         _camera.speed(0.07f);
-        if (stackFrame(time)) {
-            int randomX = rand()%(int)_world->terrain().bound().width();
-            int randomY = rand()%(int)_world->terrain().bound().height();
 
-            _camera.move_to({(float) randomX, (float) randomY});
+        if (stackFrame(time))
+        {
+            int randomX = rand() % ((int)_world->terrain().bound().width() - (int)_camera.bound_world().width());
+            int randomY = rand() % ((int)_world->terrain().bound().height() - (int)_camera.bound_world().height());
+
+            _camera.move_to({(float)randomX + (_camera.bound_world().width() / 2),
+                             (float)randomY + (_camera.bound_world().height() / 2)});
         }
-        
+
+        _world->update(time);
     }
 
     void CreateGame::render()
@@ -78,7 +82,6 @@ namespace game
         ImGui::Text("%62s", "Try not to be killed");
         ImGui::Text("%67s", "Make a boat to escape the island");
         ImGui::Text("%58s", "Good luck !");
-        
 
         ImGui::End();
     }

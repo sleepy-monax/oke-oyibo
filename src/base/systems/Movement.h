@@ -8,6 +8,6 @@ namespace base
     {
         void update(core::World &, core::Time &) override;
 
-        void render(core::World &, core::Camera &) override;
+        // void render(core::World &, core::Camera &) override;
     };
 } // namespace base

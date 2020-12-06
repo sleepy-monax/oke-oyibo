@@ -34,19 +34,19 @@ namespace base
         });
     }
 
-    void Movement::render(core::World &world, core::Camera &camera)
-    {
-        auto view = world.entities().view<base::Position, base::Move>();
-
-        camera.with_overlay([&]() {
-            view.each([](base::Position &position, base::Move &move) {
-                if (!move.moving)
-                {
-                    return;
-                }
-
-                DrawLineV({position.x, position.y}, {move.destination.x(), move.destination.y()}, RED);
-            });
-        });
-    }
+    // void Movement::render(core::World &world, core::Camera &camera)
+    // {
+    //     auto view = world.entities().view<base::Position, base::Move>();
+    //
+    //     camera.with_overlay([&]() {
+    //         view.each([](base::Position &position, base::Move &move) {
+    //             if (!move.moving)
+    //             {
+    //                 return;
+    //             }
+    //
+    //             DrawLineV({position.x, position.y}, {move.destination.x(), move.destination.y()}, RED);
+    //         });
+    //     });
+    // }
 } // namespace base

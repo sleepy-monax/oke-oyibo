@@ -14,7 +14,7 @@ namespace base
         auto view = world.entities().view<Position, LightSource>();
 
         camera.with_light([&]() {
-            ClearBackground(GRAY);
+            ClearBackground(WHITE); // FIXME: day night cycle.
 
             BeginBlendMode(BLEND_ADDITIVE);
 
