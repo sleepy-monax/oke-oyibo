@@ -48,9 +48,6 @@ namespace core
         Font font;
     };
 
-    using TextureHandle = int;
-    using FontHandle = int;
-
     class Registry: public utils::RefCounted<Registry>
     {
     private:
@@ -130,18 +127,20 @@ namespace core
             return _textures[_textures.count() - 1].texture;
         }
 
-        FontHandle register_font(std::string name)
+        Font font(std::string name)
         {
+            for (size_t i = 0; i < _fonts.count(); i++)
+            {
+                if (_fonts[i].name == name)
+                {
+                    return _fonts[i].font;
+                }
+            }
+
             auto path = "assets/" + name + ".ttf";
             auto ttf = LoadFont(path.c_str());
-
             _fonts.push_back({name, ttf});
-            return _fonts.count() - 1;
-        }
-
-        const Font &font(FontHandle hnd)
-        {
-            return _fonts[hnd].font;
+            return ttf;
         }
 
         utils::RefPtr<Blueprint> register_blueprint(std::string name, utils::Callback<void(Builder &)> blueprint)
