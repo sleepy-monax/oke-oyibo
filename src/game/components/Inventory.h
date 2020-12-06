@@ -31,7 +31,7 @@ namespace game
             return stack;
         }
 
-        game::Stack remove(game::Stack stack) {
+        game::Stack remove(game::Stack &stack) {
             if (stack.getQuantity() > 0) {
                 stack.set_quantity(stack.getQuantity()-1);
             }

@@ -19,7 +19,7 @@ namespace game
             breakable.each([&](auto const &entity, auto &item, auto &position) {
                 auto pos_breakable = position();
 
-                if (pos_inventory.distance_to(pos_breakable) <= 6.)
+                if (pos_inventory.distance_to(pos_breakable) <= 8.)
                 {
                     if (IsKeyPressed(KEY_E))
                     {

@@ -27,7 +27,7 @@ namespace game
                         {
                             hunger.current_food = hunger.max_food;
                         }
-                        //inv.remove(inv.inventory[hold.index].getItem().stack);
+                        inv.remove(inv.inventory[hold.index]);
                     }
                 }
             }
