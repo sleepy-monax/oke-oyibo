@@ -7,7 +7,8 @@ namespace game
     struct Menu
     {
         bool visible;
-        size_t selected;
+        int selected;
+        bool clicked;
     };
 
 } // namespace game

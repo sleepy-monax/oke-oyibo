@@ -34,11 +34,14 @@ namespace game
                     ITEM_SIZE,
                 };
 
+                menu.selected = MAX(0, menu.selected);
+                menu.selected = MIN(menu.selected, static_cast<int>(crafts.count()) - 1);
+
                 bound = bound.offset(position() - bound.center() - utils::Vec2f{0, 8});
 
                 if (menu.visible)
                 {
-                    for (size_t i = 0; i < crafts.count(); i++)
+                    for (int i = 0; i < static_cast<int>(crafts.count()); i++)
                     {
                         auto &craft = crafts[i];
                         auto column = bound.column(crafts.count(), i, ITEM_GAP);
@@ -54,6 +57,8 @@ namespace game
                         DrawTextEx(_font, std::to_string(craft.result.quantity()).c_str(), pos, 4.f, 1.f, WHITE);
                     }
                 }
+
+                menu.clicked = false;
             });
         });
     }

@@ -68,6 +68,11 @@ namespace base
                 menu.selected -= 1;
             }
 
+            if (controller.pressed(core::Control::MENU_ACTION))
+            {
+                menu.clicked = true;
+            }
+
             if (controller.pressed(core::Control::ZOOM_IN))
             {
                 world.players()[player.player_index].camera().zoom_in();
