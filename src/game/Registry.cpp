@@ -43,6 +43,7 @@
 #include "game/systems/RegenSystem.h"
 #include "game/systems/StaminaSystem.h"
 #include "game/systems/ThirstSystem.h"
+#include "game/systems/DrinkSystem.h"
 
 utils::RefPtr<core::Registry> game::make_registry()
 {
@@ -68,6 +69,7 @@ utils::RefPtr<core::Registry> game::make_registry()
     registry->register_system<game::HoldItemSystem>("hold-item");
     registry->register_system<game::AttackSystem>("attack");
     registry->register_system<game::EatSystem>("eat");
+    registry->register_system<game::DrinkSystem>("drink");
 
     registry->register_component<base::Momentum>("momentum");
     registry->register_component<base::LightSource>("light-source");
@@ -252,9 +254,18 @@ utils::RefPtr<core::Registry> game::make_registry()
         e.with<base::Colider>(-2.0f, -2.0f, 4.0f, 4.0f);
     });
 
+    core::Tile WATER_TILE{registry->texture("water-tile"), core::Tile::LIQUID};
+    core::Tile GRASS_TILE{registry->texture("grass-tile"), core::Tile::SOLID};
+    core::Tile SNOW_TILE{registry->texture("snow-tile"), core::Tile::SOLID};
+    core::Tile SAND_TILE{registry->texture("sand-tile"), core::Tile::SOLID};
+    core::Tile SWAMP_GRASS_TILE{registry->texture("swamp-grass-tile"), core::Tile::SOLID};
+    core::Tile BEACH_SAND_TILE{registry->texture("beach-sand-tile"), core::Tile::SOLID};
+    core::Tile STONE_TILE{registry->texture("stone-tile"), core::Tile::SOLID};
+    core::Tile DEEP_WATER_TILE{registry->texture("deep-water-tile"), core::Tile::LIQUID};
+
     registry->register_biome({
         "taiga",
-        {registry->texture("grass-tile"), 0},
+        GRASS_TILE,
         core::TEM{-0.25, 0.5, 0.25},
         {
             {1, WISP, 0.01, utils::Noise{0x404c09fa, 1, 2}},
@@ -270,7 +281,7 @@ utils::RefPtr<core::Registry> game::make_registry()
 
     registry->register_biome({
         "forest",
-        {registry->texture("grass-tile"), 0},
+        GRASS_TILE,
         core::TEM{0, 0.25, 0.5},
         {
             {1, TREE, 1, utils::Noise{0x404c09fa, 1, 0.1}},
@@ -283,7 +294,7 @@ utils::RefPtr<core::Registry> game::make_registry()
 
     registry->register_biome({
         "jungle",
-        {registry->texture("grass-tile"), 0},
+        GRASS_TILE,
         core::TEM{0.5, 0.5, 0.5},
         {
             {1, SLIME, 0.03, utils::Noise{0x404c09fa, 1, 2}},
@@ -292,7 +303,7 @@ utils::RefPtr<core::Registry> game::make_registry()
 
     registry->register_biome({
         "tundra",
-        {registry->texture("snow-tile"), 0},
+        SNOW_TILE,
         core::TEM{-0.5, 0, 0},
         {
             {1, PINE, 1, utils::Noise{0x404c09fa, 1, 0.1}},
@@ -304,7 +315,7 @@ utils::RefPtr<core::Registry> game::make_registry()
 
     registry->register_biome({
         "plain",
-        {registry->texture("grass-tile"), 0},
+        GRASS_TILE,
         core::TEM{0, 0.01, 0},
         {
             {1, GRASS, 1, utils::Noise{0x404c09fa, 1, 2}},
@@ -319,7 +330,7 @@ utils::RefPtr<core::Registry> game::make_registry()
 
     registry->register_biome({
         "desert",
-        {registry->texture("sand-tile"), 0},
+        SAND_TILE,
         core::TEM{0.5, 0, -0.5},
         {
             {1, CACTUS, 0.1, utils::Noise{0x404c09fa, 1, 2}},
@@ -331,7 +342,7 @@ utils::RefPtr<core::Registry> game::make_registry()
 
     registry->register_biome({
         "swamp",
-        {registry->texture("swamp-grass-tile"), 0},
+        SWAMP_GRASS_TILE,
         core::TEM{0.25, 0.1, 1},
         {
             {1, WISP, 0.01, utils::Noise{0x404c09fa, 1, 2}},
@@ -340,7 +351,7 @@ utils::RefPtr<core::Registry> game::make_registry()
 
     registry->register_biome({
         "beach",
-        {registry->texture("beach-sand-tile"), 0},
+        BEACH_SAND_TILE,
         core::TEM{0, -0.1, 0},
         {
             {1, SLIME, 0.01, utils::Noise{0x404c09fa, 1, 2}},
@@ -350,7 +361,7 @@ utils::RefPtr<core::Registry> game::make_registry()
 
     registry->register_biome({
         "stone_beach",
-        {registry->texture("stone-tile"), 0},
+        STONE_TILE,
         core::TEM{-0.5, -0.15, 0},
         {
             {1, SKELETON, 0.01, utils::Noise{0x404c09fa, 1, 2}},
@@ -361,42 +372,42 @@ utils::RefPtr<core::Registry> game::make_registry()
 
     registry->register_biome({
         "sea",
-        {registry->texture("water-tile"), 0},
+        WATER_TILE,
         core::TEM{0, -0.2, 0},
         {},
     });
 
     registry->register_biome({
         "deep_sea",
-        {registry->texture("deep-water-tile"), 0},
+        DEEP_WATER_TILE,
         core::TEM{0, -0.5, 0},
         {},
     });
 
     registry->register_biome({
         "cold_sea",
-        {registry->texture("water-tile"), 0},
+        WATER_TILE,
         core::TEM{-0.5, -0.2, 0},
         {},
     });
 
     registry->register_biome({
         "cold_deep_sea",
-        {registry->texture("deep-water-tile"), 0},
+        DEEP_WATER_TILE,
         core::TEM{-0.5, -0.5, 0},
         {},
     });
 
     registry->register_biome({
         "warm_sea",
-        {registry->texture("water-tile"), 0},
+        WATER_TILE,
         core::TEM{0.5, -0.2, -0.5},
         {},
     });
 
     registry->register_biome({
         "warm_deep_sea",
-        {registry->texture("deep-water-tile"), 0},
+        DEEP_WATER_TILE,
         core::TEM{0.5, -0.5, -0.5},
         {},
     });
