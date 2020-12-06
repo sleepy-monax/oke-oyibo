@@ -10,6 +10,8 @@ namespace game
     {
     private:
         core::Texture texture;
+        int num;
+        Font font;
 
     public:
         HoldItemSystem();
@@ -17,6 +19,7 @@ namespace game
 
         void update(core::World &world, core::Time &time);
         void render(core::World &world, core::Camera &camera);
+        void on_load(core::Registry &registry);
     };
 
 } // namespace game
