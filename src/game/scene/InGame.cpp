@@ -53,7 +53,7 @@ namespace game
         world->players()[0].camera().speed(10);
         world->players()[0].camera().jump_to(world->terrain().bound().center());
 
-        create_player(*world);
+        world->create_entity(registry().blueprint("player"), world->terrain().bound().center());
 
         game::Stack stack(game::Item("sword", registry().texture("sword")), 1);
         world->create_entity()
@@ -69,28 +69,6 @@ namespace game
         _editor->open<editor::Viewport>();
 
         _game = utils::own<game::Game>(world);
-    }
-
-    void InGame::create_player(core::World &world)
-    {
-        auto world_center = world.terrain().bound().center();
-        world.create_entity()
-            .with<base::CastShadow>(4, utils::Vec2f{0.5, 0})
-            .with<base::LightSource>(128.0f, WHITE)
-            .with<base::Momentum>()
-            .with<base::Player>(0)
-            .with<base::Position>(world_center.x(), world_center.y(), 0.0f)
-            .with<base::Sprite>(registry().texture("character"))
-            .with<game::Attack>(2)
-            .with<game::Health>(10, 10)
-            .with<game::HoldItem>()
-            .with<game::Hunger>(20.0f, 20.0f)
-            .with<game::Inventory>()
-            .with<base::Move>()
-            .with<game::Prey>()
-            .with<base::Colider>(-2.0f, -2.0f, 4.0f, 4.0f)
-            .with<game::Stamina>(20.0f, 20.0f)
-            .with<game::Thirst>(20.0f, 20.0f);
     }
 
     void InGame::on_switch_out()

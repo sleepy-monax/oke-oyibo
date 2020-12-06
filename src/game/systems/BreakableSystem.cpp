@@ -13,7 +13,7 @@ namespace game
         auto player = world.entities().view<game::Inventory, base::Position>();
         auto breakable = world.entities().view<game::Breakable, base::Position>();
 
-        player.each([&](auto &inventory, auto &position) {
+        player.each([&](auto &, auto &position) {
             auto pos_inventory = position();
 
             breakable.each([&](auto const &entity, auto &item, auto &position) {
@@ -26,8 +26,8 @@ namespace game
                         item.durability--;
                         if (item.durability == 0)
                         {
+                            world.create_item(item.stack, position());
                             world.remove_entity(entity);
-                            inventory.add(item.stack);
                         }
                     }
                 }

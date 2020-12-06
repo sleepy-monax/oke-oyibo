@@ -20,6 +20,7 @@
 #include "game/components/Hunger.h"
 #include "game/components/Inventory.h"
 #include "game/components/Pickable.h"
+#include "game/components/Prey.h"
 #include "game/components/Stamina.h"
 
 #include "base/systems/Camera.h"
@@ -39,7 +40,6 @@
 #include "game/systems/HungerSystem.h"
 #include "game/systems/InventorySystem.h"
 #include "game/systems/RegenSystem.h"
-#include "game/systems/ReviveSystem.h"
 #include "game/systems/StaminaSystem.h"
 #include "game/systems/ThirstSystem.h"
 #include "game/systems/EatSystem.h"
@@ -62,7 +62,6 @@ utils::RefPtr<core::Registry> game::make_registry()
     registry->register_system<game::HealthBar>("health-bar");
     registry->register_system<game::HungerSystem>("hunger");
     registry->register_system<game::InventorySystem>("inventory");
-    registry->register_system<game::ReviveSystem>("revive");
     registry->register_system<game::StaminaSystem>("stamina");
     registry->register_system<game::ThirstSystem>("thirst");
     registry->register_system<game::RegenSystem>("regen");
@@ -87,6 +86,24 @@ utils::RefPtr<core::Registry> game::make_registry()
     registry->register_component<game::Thirst>("thirst");
     registry->register_component<game::HoldItem>("hold-item");
     registry->register_component<game::Attack>("attack");
+
+    auto PLAYER = registry->register_blueprint("player", [&](core::Builder &e) {
+        e.with<base::CastShadow>(4, utils::Vec2f{0.5, 0});
+        e.with<base::LightSource>(128.0f, WHITE);
+        e.with<base::Momentum>();
+        e.with<base::Player>(0);
+        e.with<base::Sprite>(registry->texture("character"));
+        e.with<game::Attack>(2);
+        e.with<game::Health>(10, 10);
+        e.with<game::HoldItem>();
+        e.with<game::Hunger>(20.0f, 20.0f);
+        e.with<game::Inventory>();
+        e.with<base::Move>();
+        e.with<game::Prey>();
+        e.with<base::Colider>(-2.0f, -2.0f, 4.0f, 4.0f);
+        e.with<game::Stamina>(20.0f, 20.0f);
+        e.with<game::Thirst>(20.0f, 20.0f);
+    });
 
     auto HEDGEHOG = registry->register_blueprint("hedgehog", [&](core::Builder &e) {
         e.with<base::Momentum>();

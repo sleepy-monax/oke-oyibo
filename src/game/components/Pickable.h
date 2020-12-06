@@ -1,7 +1,7 @@
 #pragma once
 
-#include "game/inventory/Stack.h"
 #include "editor/Inspect.h"
+#include "game/inventory/Stack.h"
 
 namespace game
 {
@@ -10,6 +10,7 @@ namespace game
         game::Stack stack;
     };
 } // namespace game
+
 template <>
 inline void inspect<game::Pickable>(game::Pickable &pick)
 {

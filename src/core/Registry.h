@@ -57,7 +57,6 @@ namespace core
         utils::Vector<FontDescription> _fonts;
         utils::Vector<Biome> _biomes;
 
-        static Blueprint EMPTY_BLUEPRINT;
         utils::HashMap<std::string, utils::RefPtr<Blueprint>> _blueprints{};
 
     public:
@@ -157,6 +156,8 @@ namespace core
             }
             else
             {
+                assert(false);
+                static Blueprint EMPTY_BLUEPRINT;
                 return EMPTY_BLUEPRINT;
             }
         }

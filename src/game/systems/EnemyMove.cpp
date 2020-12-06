@@ -29,15 +29,14 @@ namespace game
 
                 if (enemy.has_focus && enemy.target == entity)
                 {
-                    if (distance > enemy.focus_distance * core::Tile::SIZE)
+                    if (!world.entities().valid(entity) && distance > enemy.focus_distance * core::Tile::SIZE)
                     {
                         enemy.has_focus = false;
-                        move.moving = false;
+                        move.stop();
                     }
                     else
                     {
-                        move.destination = prey_position();
-                        move.moving = true;
+                        move.move_to(prey_position());
 
                         if (distance < core::Tile::SIZE)
                         {
@@ -49,8 +48,8 @@ namespace game
                 {
                     enemy.target = entity;
                     enemy.has_focus = true;
-                    move.destination = prey_position();
-                    move.moving = true;
+
+                    move.move_to(prey_position());
                 }
             });
 
@@ -65,8 +64,7 @@ namespace game
                 auto offx = multx * max_distance;
                 auto offy = multy * max_distance;
 
-                move.destination = enemy_position() + utils::Vec2f{(float)offx, (float)offy};
-                move.moving = true;
+                move.move_to(enemy_position() + utils::Vec2f{(float)offx, (float)offy});
             }
         });
     }

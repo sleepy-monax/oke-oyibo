@@ -14,6 +14,10 @@
 #include "core/Terrain.h"
 #include "core/Time.h"
 
+#include "base/components/Sprite.h"
+#include "game/components/Pickable.h"
+#include "game/inventory/Stack.h"
+
 #include "base/components/Position.h"
 
 namespace core
@@ -59,6 +63,14 @@ namespace core
         Builder create_entity(Blueprint &blueprint, utils::Vec2f position)
         {
             return create_entity(blueprint).with<base::Position>(position.x(), position.y(), 0.0f);
+        }
+
+        Builder create_item(game::Stack stack, utils::Vec2f position)
+        {
+            return create_entity()
+                .with<base::Position>(position.x(), position.y(), 0.0f)
+                .with<game::Pickable>(stack)
+                .with<base::Sprite>(stack.getItem().get_texture());
         }
 
         void remove_entity(entt::entity entity)

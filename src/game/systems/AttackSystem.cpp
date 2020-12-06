@@ -31,19 +31,19 @@ namespace game
                         return;
                     }
 
-                    if (world.entities().has<base::Player>(victim))
-                    {
-                        auto &player = world.entities().get<base::Player>(victim);
-                        auto &camera = world.players()[player.player_index].camera();
-
-                        camera.trauma(0.1);
-                    }
-
                     if (attacker_position().distance_to(victim_position()) <= attacker_attack.range * core::Tile::SIZE)
                     {
                         attacker_attack.cooldown = 0.8;
                         victim_sprite.flash = 0.1;
                         victim_health.current -= damages;
+
+                        if (world.entities().has<base::Player>(victim))
+                        {
+                            auto &player = world.entities().get<base::Player>(victim);
+                            auto &camera = world.players()[player.player_index].camera();
+
+                            camera.trauma(0.1);
+                        }
                     }
                 });
             }

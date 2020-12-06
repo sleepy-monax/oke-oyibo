@@ -2,11 +2,13 @@
 
 #include <raylib.h>
 
-#include "base/components/Player.h"
-#include "base/components/Position.h"
+#include "utils/Random.h"
 
 #include "core/System.h"
 #include "core/World.h"
+
+#include "base/components/Player.h"
+#include "base/components/Position.h"
 
 #include "game/components/Health.h"
 
@@ -16,6 +18,7 @@ namespace game
     {
     private:
         core::Texture healthTexture;
+        utils::Random _random{};
 
     public:
         HealthBar();

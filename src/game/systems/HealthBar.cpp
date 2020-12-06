@@ -1,5 +1,7 @@
+#include "base/components/Player.h"
 #include "core/Graphics.h"
 #include "core/Registry.h"
+#include "game/components/Inventory.h"
 
 #include "game/systems/HealthBar.h"
 
@@ -11,10 +13,32 @@ namespace game
 
     void HealthBar::update(core::World &world, core::Time &)
     {
-        auto view = world.entities().view<Health>();
-        view.each([&](entt::entity entity, auto &health) {
+        auto view = world.entities().view<Health, base::Position>();
+        view.each([&](entt::entity entity, auto &health, auto &position) {
             if (health.current <= 0)
             {
+                if (world.entities().has<Inventory>(entity))
+                {
+                    auto &inv = world.entities().get<Inventory>(entity);
+                    for (game::Stack &st : inv.inventory)
+                    {
+                        world.create_item(
+                            st,
+                            position() +
+                                utils::Vec2f{
+                                    (float)_random.next_double_minus_one_to_one() * core::Tile::SIZE,
+                                    (float)_random.next_double_minus_one_to_one() * core::Tile::SIZE,
+                                });
+                    }
+                }
+
+                if (world.entities().has<base::Player>(entity))
+                {
+                    world.create_entity(
+                        world.registry().blueprint("player"),
+                        world.terrain().bound().center());
+                }
+
                 world.remove_entity(entity);
             }
 
