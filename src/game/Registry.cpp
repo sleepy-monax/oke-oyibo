@@ -108,7 +108,7 @@ utils::RefPtr<core::Registry> game::make_registry()
 
     auto ZOMBIE = registry->register_blueprint("zombie", [&](core::Builder &e) {
         e.with<base::Momentum>();
-        e.with<base::Move>(0.05);
+        e.with<base::Move>(0.03);
         e.with<base::Sprite>(registry->texture("zombie"));
         e.with<base::CastShadow>(4, utils::Vec2f{0.5, 0});
 
@@ -119,7 +119,7 @@ utils::RefPtr<core::Registry> game::make_registry()
 
     auto SKELETON = registry->register_blueprint("skeleton", [&](core::Builder &e) {
         e.with<base::Momentum>();
-        e.with<base::Move>(0.05);
+        e.with<base::Move>(0.03);
         e.with<base::Sprite>(registry->texture("skeleton"));
         e.with<base::CastShadow>(4, utils::Vec2f{0.5, 0});
 
@@ -130,7 +130,7 @@ utils::RefPtr<core::Registry> game::make_registry()
 
     auto SLIME = registry->register_blueprint("slime", [&](core::Builder &e) {
         e.with<base::Momentum>();
-        e.with<base::Move>();
+        e.with<base::Move>(0.05);
         e.with<base::Sprite>(registry->texture("slime"));
         e.with<base::CastShadow>(8, utils::Vec2f{0, 0});
 
@@ -141,7 +141,7 @@ utils::RefPtr<core::Registry> game::make_registry()
 
     auto BIG_SLIME = registry->register_blueprint("big-slime", [&](core::Builder &e) {
         e.with<base::Momentum>();
-        e.with<base::Move>();
+        e.with<base::Move>(0.03);
         e.with<base::Sprite>(registry->texture("big-slime"));
         e.with<base::CastShadow>(12, utils::Vec2f{0, 0});
 
@@ -152,7 +152,7 @@ utils::RefPtr<core::Registry> game::make_registry()
 
     auto WISP = registry->register_blueprint("wisp", [&](core::Builder &e) {
         e.with<base::Momentum>();
-        e.with<base::Move>();
+        e.with<base::Move>(0.03);
         e.with<base::Sprite>(registry->texture("wisp"));
 
         e.with<game::Enemy>();
