@@ -13,7 +13,7 @@ namespace game
         core::Texture background_image;
         core::Camera _camera;
         utils::RefPtr<core::World> _world;
-        double _accumulator = 3;
+        double _accumulator = 4;
 
     public:
         CreateGame(core::Director &dir, core::Registry &reg);

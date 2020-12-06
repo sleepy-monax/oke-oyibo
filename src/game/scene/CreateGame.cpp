@@ -24,6 +24,7 @@ namespace game
         Scene::update(time);
         _camera.resize_to_fit_the_screen();
         _camera.animate(time.elapsed());
+        _camera.speed(0.07f);
         if (stackFrame(time)) {
             int randomX = rand()%(int)_world->terrain().bound().width();
             int randomY = rand()%(int)_world->terrain().bound().height();
@@ -99,9 +100,9 @@ namespace game
     {
         _accumulator += time.elapsed();
 
-        if (_accumulator >= 3)
+        if (_accumulator >= 4)
         {
-            _accumulator -= 3;
+            _accumulator -= 4;
             return true;
         }
         else
