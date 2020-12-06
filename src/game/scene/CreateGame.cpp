@@ -50,11 +50,13 @@ namespace game
             director().switch_scene<game::InGame>();
         }
 
-        ImGui::Text("%62s", "Press E to collect ");
-        ImGui::Text("%61s", "Press F to attack ");
-        ImGui::Text("%65s", "Try not to be killed and");
-        ImGui::Text("%68s", "make a boat to escape the island");
-        ImGui::Text("%58s", "Good luck !");
+        ImGui::Text("%65s", "Press E to break and collect items");
+        ImGui::Text("%73s", "Press F to attack enemies (better with a sword :p)");
+        ImGui::Text("%60s", "Go to water to drink");
+        ImGui::Text("%68s", "Press A to eat some food if you find some");
+        ImGui::Text("%65s", "Try not to be killed");
+        ImGui::Text("%67s", "Make a boat to escape the island");
+        ImGui::Text("%60s", "Good luck !");
         
 
         ImGui::End();
