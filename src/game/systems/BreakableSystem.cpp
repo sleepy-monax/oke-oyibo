@@ -1,5 +1,7 @@
 #include "BreakableSystem.h"
 
+#include "base/components/Player.h"
+
 #include "base/components/Position.h"
 #include "game/components/Inventory.h"
 
@@ -10,10 +12,10 @@ namespace game
 
     void BreakableSystem::update(core::World &world, core::Time &)
     {
-        auto player = world.entities().view<game::Inventory, base::Position>();
+        auto player = world.entities().view<game::Inventory, base::Position, base::Player>();
         auto breakable = world.entities().view<game::Breakable, base::Position>();
 
-        player.each([&](auto &, auto &position) {
+        player.each([&](auto &, auto &position, auto &pl) {
             auto pos_inventory = position();
 
             breakable.each([&](auto const &entity, auto &item, auto &position) {
@@ -24,6 +26,9 @@ namespace game
                     if (IsKeyPressed(KEY_E))
                     {
                         item.durability--;
+                        auto &camera = world.players()[pl.player_index].camera();
+
+                        camera.trauma(0.01);
                         if (item.durability == 0)
                         {
                             world.create_item(item.stack, position());
