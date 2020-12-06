@@ -210,8 +210,8 @@ utils::RefPtr<core::Registry> game::make_registry()
     });
 
     auto ROCK = registry->register_blueprint("rock", [&](core::Builder &e) {
-        Stack item(Item("rock", registry->texture("rock")), 5);
-        e.with<game::Breakable>(item, 1);
+        Stack item(Item("rock", registry->texture("rock")), 1);
+        e.with<game::Breakable>(item, 5);
         e.with<base::Sprite>(registry->texture("rock"));
     });
 

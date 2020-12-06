@@ -16,7 +16,7 @@ namespace game
         if (stackFrame(time))
         {
             view.each([&](game::Stamina &stamina, base::Momentum &momentum) {
-                if (momentum.ax == 0.05f || momentum.ay == 0.05f || momentum.ax == -0.05f || momentum.ay == -0.05f)
+                if (momentum.ax == 0.1f || momentum.ay == 0.1f || momentum.ax == -0.1f || momentum.ay == -0.1f)
                 {
                     if (stamina.current - 0.8f <= 0)
                     {
