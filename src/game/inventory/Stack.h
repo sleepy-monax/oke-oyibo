@@ -10,24 +10,32 @@ namespace game
     private:
         Item item;
         int _quantity = 0;
-        static constexpr int MAX_QUANTITY = 64;
+
     public:
+        static constexpr auto MAX_QUANTITY = 64;
+
         Stack(Item item, int quantity);
+
         ~Stack();
-        friend void inspect<game::Stack>(game::Stack &stack);
+
         Item getItem() const;
+
         int getQuantity() const;
-        int getMax_quantity() const;
-        int add(int quantity);
-        int remove (int quantity);
+
         void set_quantity(int quantity);
+
+        int add(int quantity);
+
+        int remove(int quantity);
+
+        friend void inspect<game::Stack>(game::Stack &stack);
     };
-    
+
 } // namespace game
 
-template<>
+template <>
 inline void inspect<game::Stack>(game::Stack &stack)
 {
     ImGui::InputInt("quantity", &stack._quantity);
-    ImGui::Text("name  : %s", stack.item.getName().c_str());
+    ImGui::Text("name  : %s", stack.item.name().c_str());
 }

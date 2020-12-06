@@ -21,13 +21,16 @@ namespace utils
 
         RefPtr(T &object) :
             _ptr(&object) { _ptr->ref(); }
+
         RefPtr(AdoptTag, T &object) :
             _ptr(const_cast<T *>(&object)) {}
 
         RefPtr(const RefPtr &other) :
             _ptr(other.naked()) { _ptr->ref(); }
+
         RefPtr(AdoptTag, RefPtr &other) :
             _ptr(other.give_ref()) {}
+
         RefPtr(RefPtr &&other) :
             _ptr(other.give_ref()) {}
 
@@ -183,7 +186,7 @@ namespace utils
     }
 
     template <typename Type, typename... Args>
-    inline RefPtr<Type> make(Args &&...args)
+    inline RefPtr<Type> make(Args &&... args)
     {
         return RefPtr<Type>(adopt(*new Type(std::forward<Args>(args)...)));
     }

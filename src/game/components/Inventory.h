@@ -16,9 +16,9 @@ namespace game
         game::Stack add(game::Stack stack)
         {
 
-            for (size_t i=0; i < inventory.count() ; i++)
+            for (size_t i = 0; i < inventory.count(); i++)
             {
-                if (inventory[i].getItem().getName() == stack.getItem().getName())
+                if (inventory[i].getItem().name() == stack.getItem().name())
                 {
                     stack.set_quantity(inventory[i].add(stack.getQuantity()));
                 }
@@ -35,13 +35,14 @@ namespace game
 
         game::Stack remove(game::Stack &stack)
         {
-            for (size_t i=0; i<inventory.count();i++)
+            for (size_t i = 0; i < inventory.count(); i++)
             {
-                if (inventory[i].getItem().getName() == stack.getItem().getName())
+                if (inventory[i].getItem().name() == stack.getItem().name())
                 {
                     auto quantityRemoved = inventory[i].remove(stack.getQuantity());
-                    stack.set_quantity(stack.getQuantity()-quantityRemoved);
-                    if (inventory[i].getQuantity() == 0) {
+                    stack.set_quantity(stack.getQuantity() - quantityRemoved);
+                    if (inventory[i].getQuantity() == 0)
+                    {
                         inventory.remove_index(i);
                     }
                 }
@@ -66,7 +67,7 @@ namespace game
 template <>
 inline void inspect<game::Inventory>(game::Inventory &inv)
 {
-    for (size_t i=0; i< inv.inventory.count();i++)
+    for (size_t i = 0; i < inv.inventory.count(); i++)
     {
         ImGui::PushID(&inv.inventory[i]);
         inspect(inv.inventory[i]);

@@ -8,26 +8,6 @@
 #include "editor/panels/Systems.h"
 #include "editor/panels/Viewport.h"
 
-#include "base/components/CastShadow.h"
-#include "base/components/Colider.h"
-#include "base/components/LightSource.h"
-#include "base/components/Momentum.h"
-#include "base/components/Move.h"
-#include "base/components/Player.h"
-#include "base/components/Sprite.h"
-#include "game/components/Attack.h"
-#include "game/components/Breakable.h"
-#include "game/components/Enemy.h"
-#include "game/components/HoldItem.h"
-#include "game/components/Hunger.h"
-#include "game/components/Inventory.h"
-#include "game/components/Pickable.h"
-#include "game/components/Prey.h"
-#include "game/components/Stamina.h"
-#include "game/components/Thirst.h"
-#include "game/inventory/Item.h"
-#include "game/inventory/Stack.h"
-
 #include "game/generator/Generator.h"
 
 namespace game
@@ -54,12 +34,6 @@ namespace game
         world->players()[0].camera().jump_to(world->terrain().bound().center());
 
         world->create_entity(registry().blueprint("player"), world->terrain().bound().center());
-
-        auto center = world->terrain().bound().center();
-
-        game::Stack stack(game::Item("sword", registry().texture("sword")), 1);
-
-        world->create_item(stack, {center.x() + 12, center.y() + 24});
 
         _editor = utils::own<editor::Editor>(world);
         _editor->open<editor::Entities>();

@@ -21,7 +21,7 @@ namespace game
             items.each([&](const auto entity, auto &pickable, auto &position) {
                 auto pos_item = position();
 
-                if (pos_item.distance_to(pos_inventory) <= 2.)
+                if (pos_item.distance_to(pos_inventory) <= core::Tile::SIZE / 4)
                 {
                     pickable.stack = inventory.add(pickable.stack);
                     if (pickable.stack.getQuantity() == 0)

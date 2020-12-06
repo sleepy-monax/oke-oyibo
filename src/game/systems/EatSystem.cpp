@@ -16,9 +16,12 @@ namespace game
         player.each([&](auto &, auto &hunger, auto &inv, auto &hold) {
             if (IsKeyPressed(KEY_C))
             {
-                if (hold.index < inv.inventory.count()) {
-                    string holdItem = inv.inventory[hold.index].getItem().getName();
-                    if (holdItem.compare("food") == 0) {
+                if (hold.index < inv.inventory.count())
+                {
+                    auto item = inv.inventory[hold.index].getItem();
+
+                    if (item.flags() & Item::FOOD)
+                    {
                         if (hunger.current_food + 2 <= hunger.max_food)
                         {
                             hunger.current_food += 2;
@@ -27,10 +30,11 @@ namespace game
                         {
                             hunger.current_food = hunger.max_food;
                         }
+
                         inv.remove(inv.inventory[hold.index].getItem(), 1);
                     }
                 }
             }
         });
     }
-}
+} // namespace game

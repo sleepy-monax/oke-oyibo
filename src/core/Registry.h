@@ -12,6 +12,9 @@
 #include "core/Texture.h"
 #include "core/world/Biome.h"
 
+#include "game/inventory/Craft.h"
+#include "game/inventory/Item.h"
+
 #include "base/components/Component.h"
 
 namespace core
@@ -56,6 +59,7 @@ namespace core
         utils::Vector<TextureDescription> _textures;
         utils::Vector<FontDescription> _fonts;
         utils::Vector<Biome> _biomes;
+        utils::Vector<game::Craft> _crafts;
 
         utils::HashMap<std::string, utils::RefPtr<Blueprint>> _blueprints{};
 
@@ -188,6 +192,16 @@ namespace core
             assert(best_biome != nullptr);
 
             return *best_biome;
+        }
+
+        void register_craft(game::Craft craft)
+        {
+            _crafts.push_back(craft);
+        }
+
+        const utils::Vector<game::Craft> &crafts()
+        {
+            return _crafts;
         }
     };
 } // namespace core

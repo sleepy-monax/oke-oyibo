@@ -89,6 +89,28 @@ utils::RefPtr<core::Registry> game::make_registry()
     registry->register_component<game::HoldItem>("hold-item");
     registry->register_component<game::Attack>("attack");
 
+    Item ITEM_LOG{"log", registry->texture("log")};
+    Item ITEM_BURGER{"burger", registry->texture("food"), Item::FOOD};
+    Item ITEM_STICK{"stick", registry->texture("stick")};
+    Item ITEM_ROCK{"rock", registry->texture("rock")};
+    Item ITEM_FLOWER{"flower", registry->texture("flower")};
+    Item ITEM_SWORD{"sword", registry->texture("sword")};
+
+    registry->register_craft({
+        .result = {ITEM_STICK, 4},
+        .ingredients = {
+            {ITEM_LOG, 1},
+        },
+    });
+
+    registry->register_craft({
+        {ITEM_SWORD, 1},
+        {
+            {ITEM_STICK, 1},
+            {ITEM_ROCK, 2},
+        },
+    });
+
     auto PLAYER = registry->register_blueprint("player", [&](core::Builder &e) {
         e.with<base::CastShadow>(4, utils::Vec2f{0.5, 0});
         e.with<base::LightSource>(128.0f, WHITE);
@@ -201,7 +223,7 @@ utils::RefPtr<core::Registry> game::make_registry()
         e.with<base::CastShadow>(12, utils::Vec2f{});
         e.with<base::Colider>(-2.0f, -2.0f, 4.0f, 4.0f);
 
-        Stack item(Item("log", registry->texture("log")), 4);
+        Stack item(ITEM_LOG, 4);
         e.with<game::Breakable>(item, 5);
     });
 
@@ -210,7 +232,7 @@ utils::RefPtr<core::Registry> game::make_registry()
         e.with<base::CastShadow>(12, utils::Vec2f{});
         e.with<base::Colider>(-2.0f, -2.0f, 4.0f, 4.0f);
 
-        Stack item(Item("log", registry->texture("log")), 4);
+        Stack item(ITEM_LOG, 4);
         e.with<game::Breakable>(item, 5);
     });
 
@@ -219,44 +241,40 @@ utils::RefPtr<core::Registry> game::make_registry()
         e.with<base::CastShadow>(16, utils::Vec2f{});
         e.with<base::Colider>(-2.0f, -2.0f, 4.0f, 4.0f);
 
-        Stack item(Item("log", registry->texture("log")), 4);
+        Stack item(ITEM_LOG, 4);
         e.with<game::Breakable>(item, 5);
     });
 
     auto BUSH = registry->register_blueprint("bush", [&](core::Builder &e) {
-        Stack item(Item("stick", registry->texture("stick")), 1);
+        Stack item(ITEM_STICK, 1);
         e.with<game::Breakable>(item, 1);
         e.with<base::Sprite>(registry->texture("bush"));
     });
 
     auto GRASS = registry->register_blueprint("grass", [&](core::Builder &e) {
-        Stack item(Item("food", registry->texture("food")), 1);
+        Stack item(ITEM_BURGER, 1);
         e.with<game::Breakable>(item, 1);
         e.with<base::Sprite>(registry->texture("grass"));
     });
 
     auto FLOWER = registry->register_blueprint("flower", [&](core::Builder &e) {
-        Stack item(Item("flower", registry->texture("flower")), 1);
+        Stack item(ITEM_FLOWER, 1);
         e.with<game::Breakable>(item, 1);
         e.with<base::Sprite>(registry->texture("flower"));
     });
 
     auto ROCK = registry->register_blueprint("rock", [&](core::Builder &e) {
-        Stack item(Item("rock", registry->texture("rock")), 1);
+        Stack item{ITEM_ROCK, 1};
         e.with<game::Breakable>(item, 5);
         e.with<base::Sprite>(registry->texture("rock"));
     });
 
     auto CACTUS = registry->register_blueprint("cactus", [&](core::Builder &e) {
-        Stack item(Item("cactus", registry->texture("cactus")), 1);
-        e.with<game::Breakable>(item, 1);
         e.with<base::Sprite>(registry->texture("cactus"));
         e.with<base::Colider>(-2.0f, -2.0f, 4.0f, 4.0f);
     });
 
     auto DEAD_BUSH = registry->register_blueprint("dead-bush", [&](core::Builder &e) {
-        Stack item(Item("dead-bush", registry->texture("dead-bush")), 1);
-        e.with<game::Breakable>(item, 1);
         e.with<base::Sprite>(registry->texture("dead-bush"));
         e.with<base::CastShadow>(4, utils::Vec2f{0, 0});
     });

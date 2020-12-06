@@ -29,11 +29,10 @@ namespace game
         player.each([&](auto &inventory, auto &hold, auto &) {
             if (IsKeyPressed(KEY_SPACE))
             {
-                if (inventory.inventory.count()) {
+                if (inventory.inventory.count())
+                {
                     hold.index = (hold.index + 1) % inventory.inventory.count();
-
                 }
-                
             }
         });
     }
@@ -55,13 +54,14 @@ namespace game
 
                 if (inv.inventory.count() > 0)
                 {
-                    if (hold.index < inv.inventory.count()) {
-                        auto texture = inv.inventory[hold.index].getItem().get_texture();
+                    if (hold.index < inv.inventory.count())
+                    {
+                        auto texture = inv.inventory[hold.index].getItem().texture();
                         auto num = inv.inventory[hold.index].getQuantity();
 
                         Vector2 pos(position().x() + 4, position().y() - 5);
                         core::draw_texture(texture, bound, WHITE);
-                        DrawTextEx(font, std::to_string(num).c_str(), pos, 5.f, 1.f, WHITE);               
+                        DrawTextEx(font, std::to_string(num).c_str(), pos, 5.f, 1.f, WHITE);
                     }
                 }
             });
