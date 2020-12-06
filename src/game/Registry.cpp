@@ -42,6 +42,7 @@
 #include "game/systems/ReviveSystem.h"
 #include "game/systems/StaminaSystem.h"
 #include "game/systems/ThirstSystem.h"
+#include "game/systems/EatSystem.h"
 
 utils::RefPtr<core::Registry> game::make_registry()
 {
@@ -67,6 +68,7 @@ utils::RefPtr<core::Registry> game::make_registry()
     registry->register_system<game::RegenSystem>("regen");
     registry->register_system<game::HoldItemSystem>("hold-item");
     registry->register_system<game::AttackSystem>("attack");
+    registry->register_system<game::EatSystem>("eat");
 
     registry->register_component<base::Momentum>("momentum");
     registry->register_component<base::LightSource>("light-source");
