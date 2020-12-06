@@ -9,6 +9,7 @@
 #include "base/components/Position.h"
 #include "base/components/Sprite.h"
 
+#include "game/components/Animal.h"
 #include "game/components/Armor.h"
 #include "game/components/Attack.h"
 #include "game/components/Breakable.h"
@@ -23,7 +24,6 @@
 #include "game/components/Pickable.h"
 #include "game/components/Prey.h"
 #include "game/components/Stamina.h"
-#include "game/components/Animal.h"
 
 #include "base/systems/Camera.h"
 #include "base/systems/EntityRenderer.h"
@@ -34,6 +34,7 @@
 #include "base/systems/Shadow.h"
 #include "base/systems/TerrainRender.h"
 
+#include "game/systems/AnimalMove.h"
 #include "game/systems/AttackSystem.h"
 #include "game/systems/BreakableSystem.h"
 #include "game/systems/DrinkSystem.h"
@@ -47,7 +48,6 @@
 #include "game/systems/RegenSystem.h"
 #include "game/systems/StaminaSystem.h"
 #include "game/systems/ThirstSystem.h"
-#include "game/systems/AnimalMove.h"
 
 utils::RefPtr<core::Registry> game::make_registry()
 {
@@ -301,7 +301,7 @@ utils::RefPtr<core::Registry> game::make_registry()
     core::Tile GRASS_TILE{registry->texture("grass-tile"), core::Tile::SOLID};
     core::Tile SNOW_TILE{registry->texture("snow-tile"), core::Tile::SOLID};
     core::Tile SAND_TILE{registry->texture("sand-tile"), core::Tile::SOLID};
-    core::Tile SWAMP_GRASS_TILE{registry->texture("swamp-grass-tile"), core::Tile::SOLID};
+    // core::Tile SWAMP_GRASS_TILE{registry->texture("swamp-grass-tile"), core::Tile::SOLID};
     core::Tile BEACH_SAND_TILE{registry->texture("beach-sand-tile"), core::Tile::SOLID};
     core::Tile STONE_TILE{registry->texture("stone-tile"), core::Tile::SOLID};
     core::Tile DEEP_WATER_TILE{registry->texture("deep-water-tile"), core::Tile::LIQUID};
@@ -335,14 +335,15 @@ utils::RefPtr<core::Registry> game::make_registry()
         },
     });
 
-    registry->register_biome({
-        "jungle",
-        GRASS_TILE,
-        core::TEM{0.5, 0.5, 0.5},
-        {
-            {1, SLIME, 0.03, utils::Noise{0x404c09fa, 1, 2}},
-        },
-    });
+    // FIXME: Jungle biome
+    // registry->register_biome({
+    //     "jungle",
+    //     GRASS_TILE,
+    //     core::TEM{0.5, 0.5, 0.5},
+    //     {
+    //         {1, SLIME, 0.03, utils::Noise{0x404c09fa, 1, 2}},
+    //     },
+    // });
 
     registry->register_biome({
         "tundra",
@@ -384,14 +385,15 @@ utils::RefPtr<core::Registry> game::make_registry()
         },
     });
 
-    registry->register_biome({
-        "swamp",
-        SWAMP_GRASS_TILE,
-        core::TEM{0.25, 0.1, 1},
-        {
-            {1, WISP, 0.01, utils::Noise{0x404c09fa, 1, 2}},
-        },
-    });
+    // FIXME: swamp biome;
+    // registry->register_biome({
+    //     "swamp",
+    //     SWAMP_GRASS_TILE,
+    //     core::TEM{0.25, 0.1, 1},
+    //     {
+    //         {1, WISP, 0.01, utils::Noise{0x404c09fa, 1, 2}},
+    //     },
+    // });
 
     registry->register_biome({
         "beach",

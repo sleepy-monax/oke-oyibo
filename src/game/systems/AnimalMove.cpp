@@ -1,8 +1,8 @@
 #include "AnimalMove.h"
 
-#include "game/components/Animal.h"
-#include "base/components/Position.h"
 #include "base/components/Move.h"
+#include "base/components/Position.h"
+#include "game/components/Animal.h"
 
 namespace game
 {
@@ -22,7 +22,21 @@ namespace game
                 auto offx = multx * max_distance;
                 auto offy = multy * max_distance;
 
-                move.move_to(enemy_position() + utils::Vec2f{(float)offx, (float)offy});
+                auto pos = enemy_position() + utils::Vec2f{(float)offx, (float)offy};
+
+                // Prevent entities escaping their natural environement.
+                auto tx = pos.x() / core::Tile::SIZE;
+                auto ty = pos.y() / core::Tile::SIZE;
+
+                if (world.terrain().bound().contains(pos))
+                {
+                    auto tile = world.terrain().tile(tx, ty);
+
+                    if (tile.flags & core::Tile::LIQUID)
+                        return;
+                }
+
+                move.move_to(pos);
             }
         });
     }

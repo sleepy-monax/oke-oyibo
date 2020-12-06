@@ -51,4 +51,16 @@ namespace ImGui
 
         return ImGui::IsItemHovered();
     }
+
+    static inline void TextCenter(std::string text)
+    {
+        ImGui::Text(" ");
+
+        float font_size = ImGui::GetFontSize() * text.size() / 2;
+        ImGui::SameLine(
+            ImGui::GetWindowSize().x / 2 -
+            font_size + (font_size / 2));
+
+        ImGui::Text(text.c_str());
+    }
 } // namespace ImGui

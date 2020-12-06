@@ -13,13 +13,19 @@ namespace base
     {
         auto view = world.entities().view<base::Position, base::Momentum, base::Move>();
 
-        view.each([](base::Position &position, base::Momentum &momentum, base::Move &move) {
+        view.each([&](base::Position &position, base::Momentum &momentum, base::Move &move) {
             if (!move.moving)
             {
                 return;
             }
 
             if (position().distance_to(move.destination) < core::Tile::SIZE / 2)
+            {
+                move.moving = false;
+                return;
+            }
+
+            if (!world.terrain().bound().contains(move.destination))
             {
                 move.moving = false;
                 return;

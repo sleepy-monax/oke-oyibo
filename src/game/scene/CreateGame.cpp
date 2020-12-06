@@ -5,6 +5,7 @@
 #include "game/scene/InGame.h"
 
 #include "core/Camera.h"
+#include "core/glue/ImGuiExtension.h"
 #include "game/generator/Generator.h"
 
 namespace game
@@ -68,20 +69,22 @@ namespace game
         ImGui::Combo(" ", &animate, difficulties, IM_ARRAYSIZE(difficulties));
 
         //Create a game
+
+        ImGui::Text(" ");
+        ImGui::TextCenter("Press E to break and collect items");
+        ImGui::TextCenter("Press F to attack enemies (better with a sword :p)");
+        ImGui::TextCenter("Go to water to drink");
+        ImGui::TextCenter("Press A to eat some food if you find some");
+        ImGui::TextCenter("Try not to be killed");
+        ImGui::TextCenter("Make a boat to escape the island");
+        ImGui::TextCenter("Good luck !");
+        ImGui::Text(" ");
+
         ImGui::SetCursorPosX(270.);
         if (ImGui::Button("Create game", button_size))
         {
             director().switch_scene<game::InGame>();
         }
-
-        ImGui::Text(" ");
-        ImGui::Text("%67s", "Press E to break and collect items");
-        ImGui::Text("%78s", "Press F to attack enemies (better with a sword :p)");
-        ImGui::Text("%60s", "Go to water to drink");
-        ImGui::Text("%73s", "Press A to eat some food if you find some");
-        ImGui::Text("%62s", "Try not to be killed");
-        ImGui::Text("%67s", "Make a boat to escape the island");
-        ImGui::Text("%58s", "Good luck !");
 
         ImGui::End();
     }
@@ -92,6 +95,7 @@ namespace game
         Generator gen{};
 
         _world = gen.generate(registry(), time(nullptr));
+        _camera.jump_to(_world->terrain().bound().center());
     }
 
     void CreateGame::on_switch_out()

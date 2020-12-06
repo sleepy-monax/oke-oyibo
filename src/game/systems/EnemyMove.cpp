@@ -52,17 +52,30 @@ namespace game
 
                     move.move_to(prey_position());
                 }
-                if (enemy.isWaterCreature && enemy.target == entity && enemy.has_focus)
+
+                if (enemy.target == entity && enemy.has_focus)
                 {
                     auto tx = prey_position.x / core::Tile::SIZE;
                     auto ty = prey_position.y / core::Tile::SIZE;
 
                     auto prey_tile = world.terrain().tile(tx, ty);
 
-                    if (!(prey_tile.flags & core::Tile::LIQUID))
+                    if (enemy.isWaterCreature)
                     {
-                        enemy.has_focus = false;
-                        move.stop();
+
+                        if (!(prey_tile.flags & core::Tile::LIQUID))
+                        {
+                            enemy.has_focus = false;
+                            move.stop();
+                        }
+                    }
+                    else
+                    {
+                        if (prey_tile.flags & core::Tile::LIQUID)
+                        {
+                            enemy.has_focus = false;
+                            move.stop();
+                        }
                     }
                 }
             });
@@ -79,28 +92,31 @@ namespace game
                 auto offy = multy * max_distance;
 
                 auto pos = enemy_position() + utils::Vec2f{(float)offx, (float)offy};
-                
-                if (enemy.isWaterCreature)
-                {
-                    auto tx = pos.x() / core::Tile::SIZE;
-                    auto ty = pos.y() / core::Tile::SIZE;
 
-                    if (world.terrain().bound().contains(pos))
+                // Prevent entities escaping their natural environement.
+                auto tx = pos.x() / core::Tile::SIZE;
+                auto ty = pos.y() / core::Tile::SIZE;
+
+                if (world.terrain().bound().contains(pos))
+                {
+                    auto tile = world.terrain().tile(tx, ty);
+
+                    if (enemy.isWaterCreature)
                     {
-                        auto tile = world.terrain().tile(tx, ty);
                         if (!(tile.flags & core::Tile::LIQUID))
-                        {
                             return;
-                        }
                     }
-                    
-                    
+                    else
+                    {
+                        if (tile.flags & core::Tile::LIQUID)
+                            return;
+                    }
                 }
+
                 if (!move.moving)
                 {
                     move.move_to(pos);
                 }
-                
             }
         });
     }
