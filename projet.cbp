@@ -58,6 +58,166 @@
 			<Add option="-Wall" />
 			<Add option="-fexceptions" />
 		</Compiler>
+		<Unit filename="src/base/components/CastShadow.h" />
+		<Unit filename="src/base/components/Colider.h" />
+		<Unit filename="src/base/components/Component.h" />
+		<Unit filename="src/base/components/LightSource.h" />
+		<Unit filename="src/base/components/Momentum.h" />
+		<Unit filename="src/base/components/Move.h" />
+		<Unit filename="src/base/components/Player.h" />
+		<Unit filename="src/base/components/Position.h" />
+		<Unit filename="src/base/components/Sprite.h" />
+		
+		<Unit filename="src/base/systems/Camera.cpp" />
+		<Unit filename="src/base/systems/Camera.h" />
+		<Unit filename="src/base/systems/EntityRenderer.cpp" />
+		<Unit filename="src/base/systems/EntityRenderer.h" />
+		<Unit filename="src/base/systems/Input.cpp" />
+		<Unit filename="src/base/systems/Input.h" />
+		<Unit filename="src/base/systems/Light.cpp" />
+		<Unit filename="src/base/systems/Light.h" />
+		<Unit filename="src/base/systems/Movement.cpp" />
+		<Unit filename="src/base/systems/Movement.h" />
+		<Unit filename="src/base/systems/Physic.cpp" />
+		<Unit filename="src/base/systems/Physic.h" />
+		<Unit filename="src/base/systems/Shadow.cpp" />
+		<Unit filename="src/base/systems/Shadow.h" />
+		<Unit filename="src/base/systems/TerrainRender.h" />
+		
+		<Unit filename="src/core/glue/Glue.cpp" />
+		<Unit filename="src/core/glue/Glue.h" />
+		<Unit filename="src/core/glue/ImGuiExtension.h" />
+		
+		<Unit filename="src/core/world/Biome.h" />
+		<Unit filename="src/core/world/Climat.h" />
+		<Unit filename="src/core/world/TEM.h" />
+		
+		<Unit filename="src/core/BlankScene.h" />
+		<Unit filename="src/core/Blueprint.h" />
+		<Unit filename="src/core/Builder.h" />
+		<Unit filename="src/core/Camera.h" />
+		<Unit filename="src/core/Controller.h" />
+        <Unit filename="src/core/Director.cpp" />
+		<Unit filename="src/core/Director.h" />
+		<Unit filename="src/core/Gamepad.h" />
+		<Unit filename="src/core/Graphics.cpp" />
+		<Unit filename="src/core/Graphics.h" />
+		<Unit filename="src/core/Keyboard.h" />
+		<Unit filename="src/core/Player.h" />
+		<Unit filename="src/core/Probe.h" />
+		<Unit filename="src/core/Registry.h" />
+		<Unit filename="src/core/Scene.h" />
+		<Unit filename="src/core/Scheduler.h" />
+		<Unit filename="src/core/Surface.h" />
+		<Unit filename="src/core/System.cpp" />
+		<Unit filename="src/core/System.h" />
+		<Unit filename="src/core/Terrain.h" />
+		<Unit filename="src/core/Texture.h" />
+		<Unit filename="src/core/Tile.h" />
+		<Unit filename="src/core/Time.h" />
+		<Unit filename="src/core/World.cpp" />
+		<Unit filename="src/core/World.h" />
+		
+		<Unit filename="src/editor/model/Model.h" />
+		
+		<Unit filename="src/editor/panels/Entities.h" />
+		<Unit filename="src/editor/panels/Inspector.h" />
+		<Unit filename="src/editor/panels/Profiler.h" />
+		<Unit filename="src/editor/panels/Systems.h" />
+		<Unit filename="src/editor/panels/Viewport.h" />
+		
+		<Unit filename="src/editor/Editor.h" />
+		<Unit filename="src/editor/FPSCounter.h" />
+		<Unit filename="src/editor/Inspect.h" />
+		<Unit filename="src/editor/Panel.h" />
+		
+		<Unit filename="src/game/components/Armor.h" />
+		<Unit filename="src/game/components/Attack.h" />
+		<Unit filename="src/game/components/Breakable.h" />
+		<Unit filename="src/game/components/Enemy.h" />
+		<Unit filename="src/game/components/Flammable.h" />
+		<Unit filename="src/game/components/Growable.h" />
+		<Unit filename="src/game/components/Health.h" />
+		<Unit filename="src/game/components/HoldItem.h" />
+		<Unit filename="src/game/components/Hunger.h" />
+		<Unit filename="src/game/components/Inventory.h" />
+		<Unit filename="src/game/components/Menu.h" />
+		<Unit filename="src/game/components/Pickable.h" />
+		<Unit filename="src/game/components/Prey.h" />
+		<Unit filename="src/game/components/Stamina.h" />
+		<Unit filename="src/game/components/Target.h" />
+		<Unit filename="src/game/components/Temperature.h" />
+		<Unit filename="src/game/components/Thirst.h" />
+		
+		<Unit filename="src/game/generator/Generator.h" />
+		<Unit filename="src/game/generator/Pass.h" />
+		<Unit filename="src/game/generator/TilePass.h" />
+		
+		<Unit filename="src/game/inventory/Craft.h" />
+		<Unit filename="src/game/inventory/Item.h" />
+		<Unit filename="src/game/inventory/Stack.cpp" />
+		<Unit filename="src/game/inventory/Stack.h" />
+		
+		<Unit filename="src/game/pass/SpawnEntity.h" />
+		
+		<Unit filename="src/game/scene/CreateGame.cpp" />
+		<Unit filename="src/game/scene/CreateGame.h" />
+		<Unit filename="src/game/scene/InGame.cpp" />
+		<Unit filename="src/game/scene/InGame.h" />
+		<Unit filename="src/game/scene/SplashScreen.h" />
+		
+		<Unit filename="src/game/systems/AttackSystem.cpp" />
+		<Unit filename="src/game/systems/AttackSystem.h" />
+		<Unit filename="src/game/systems/BreakableSystem.cpp" />
+		<Unit filename="src/game/systems/BreakableSystem.h" />
+		<Unit filename="src/game/systems/DrinkSystem.cpp" />
+		<Unit filename="src/game/systems/DrinkSystem.h" />
+		<Unit filename="src/game/systems/EatSystem.cpp" />
+		<Unit filename="src/game/systems/EatSystem.h" />
+		<Unit filename="src/game/systems/EnemyMove.cpp" />
+		<Unit filename="src/game/systems/EnemyMove.h" />
+		<Unit filename="src/game/systems/Fire.h" />
+        <Unit filename="src/game/systems/HealthSystem.cpp" />
+		<Unit filename="src/game/systems/HealthSystem.h" />
+		<Unit filename="src/game/systems/HoldItemSystem.cpp" />
+		<Unit filename="src/game/systems/HoldItemSystem.h" />
+		<Unit filename="src/game/systems/HungerSystem.cpp" />
+		<Unit filename="src/game/systems/HungerSystem.h" />
+		<Unit filename="src/game/systems/InventorySystem.cpp" />
+		<Unit filename="src/game/systems/InventorySystem.h" />
+		<Unit filename="src/game/systems/MenuSystem.cpp" />
+		<Unit filename="src/game/systems/MenuSystem.h" />
+		<Unit filename="src/game/systems/RegenSystem.cpp" />
+		<Unit filename="src/game/systems/RegenSystem.h" />
+		<Unit filename="src/game/systems/StaminaSystem.cpp" />
+		<Unit filename="src/game/systems/StaminaSystem.h" />
+		<Unit filename="src/game/systems/ThirstSystem.cpp" />
+		<Unit filename="src/game/systems/ThirstSystem.h" />
+		
+		<Unit filename="src/game/Game.h" />
+		<Unit filename="src/game/Registry.cpp" />
+		<Unit filename="src/game/Registry.h" />
+		
+		<Unit filename="src/utils/Callback.h" />
+		<Unit filename="src/utils/Common.h" />
+		<Unit filename="src/utils/Hash.h" />
+		<Unit filename="src/utils/HashMap.h" />
+		<Unit filename="src/utils/Iteration.h" />
+		<Unit filename="src/utils/Logger.h" />
+		<Unit filename="src/utils/Macros.h" />
+		<Unit filename="src/utils/Math.h" />
+		<Unit filename="src/utils/Noise.cpp" />
+		<Unit filename="src/utils/Noise.h" />
+		<Unit filename="src/utils/OwnPtr.h" />
+		<Unit filename="src/utils/QuadTree.h" />
+		<Unit filename="src/utils/Random.h" />
+		<Unit filename="src/utils/Rect.h" />
+		<Unit filename="src/utils/RefCounter.h" />
+		<Unit filename="src/utils/RefPtr.h" />
+		<Unit filename="src/utils/Traits.h" />
+		<Unit filename="src/utils/Vec.h" />
+		<Unit filename="src/utils/Vector.h" />
+		
 		<Unit filename="src/main.cpp" />
 		<Extensions />
 	</Project>
