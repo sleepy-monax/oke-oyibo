@@ -31,4 +31,17 @@ namespace game
             return 0;
         }        
     }
+
+    int Stack::remove (int quantity) {
+        if (_quantity - quantity <= 0)
+        {
+            int rest = quantity - _quantity;
+            _quantity = 0;
+            return rest;
+        } else {
+            _quantity -= quantity;
+            return quantity;
+        }
+    }
+
 } // namespace game

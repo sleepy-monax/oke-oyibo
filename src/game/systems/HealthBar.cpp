@@ -20,10 +20,10 @@ namespace game
                 if (world.entities().has<Inventory>(entity))
                 {
                     auto &inv = world.entities().get<Inventory>(entity);
-                    for (game::Stack &st : inv.inventory)
+                    for (size_t i = 0;i<inv.inventory.count();i++)
                     {
                         world.create_item(
-                            st,
+                            inv.inventory[i],
                             position() +
                                 utils::Vec2f{
                                     (float)_random.next_double_minus_one_to_one() * core::Tile::SIZE,

@@ -9,8 +9,6 @@ namespace game
     class HoldItemSystem : public core::System
     {
     private:
-        core::Texture texture;
-        int num;
         Font font;
 
     public:

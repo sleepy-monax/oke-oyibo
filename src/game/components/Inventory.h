@@ -4,25 +4,27 @@
 
 #include "game/inventory/Stack.h"
 
+#include "utils/Vector.h"
+
 namespace game
 {
     struct Inventory
     {
-        std::vector<game::Stack> inventory;
+        utils::Vector<game::Stack> inventory;
         static constexpr int MAX_SIZE = 64;
 
         game::Stack add(game::Stack stack)
         {
 
-            for (game::Stack &st : inventory)
+            for (size_t i=0; i < inventory.count() ; i++)
             {
-                if (st.getItem().getName() == stack.getItem().getName())
+                if (inventory[i].getItem().getName() == stack.getItem().getName())
                 {
-                    stack.set_quantity(st.add(stack.getQuantity()));
+                    stack.set_quantity(inventory[i].add(stack.getQuantity()));
                 }
             }
 
-            if (stack.getQuantity() > 0 && inventory.size() < MAX_SIZE)
+            if (stack.getQuantity() > 0 && inventory.count() < MAX_SIZE)
             {
                 inventory.push_back(stack);
                 stack.set_quantity(0);
@@ -33,12 +35,25 @@ namespace game
 
         game::Stack remove(game::Stack &stack)
         {
-            if (stack.getQuantity() > 0)
+            for (size_t i=0; i<inventory.count();i++)
             {
-                stack.set_quantity(stack.getQuantity() - 1);
+                if (inventory[i].getItem().getName() == stack.getItem().getName())
+                {
+                    auto quantityRemoved = inventory[i].remove(stack.getQuantity());
+                    stack.set_quantity(stack.getQuantity()-quantityRemoved);
+                    if (inventory[i].getQuantity() == 0) {
+                        inventory.remove_index(i);
+                    }
+                }
             }
 
             return stack;
+        }
+
+        game::Stack remove(game::Item item, int quantity)
+        {
+            game::Stack stack{item, quantity};
+            return remove(stack);
         }
 
         void clear()
@@ -51,10 +66,10 @@ namespace game
 template <>
 inline void inspect<game::Inventory>(game::Inventory &inv)
 {
-    for (game::Stack &stack : inv.inventory)
+    for (size_t i=0; i< inv.inventory.count();i++)
     {
-        ImGui::PushID(&stack);
-        inspect(stack);
+        ImGui::PushID(&inv.inventory[i]);
+        inspect(inv.inventory[i]);
         ImGui::PopID();
     }
 }

@@ -19,6 +19,7 @@ namespace game
         int getQuantity() const;
         int getMax_quantity() const;
         int add(int quantity);
+        int remove (int quantity);
         void set_quantity(int quantity);
     };
     

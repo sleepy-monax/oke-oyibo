@@ -7,12 +7,7 @@ namespace game
 {
     struct HoldItem
     {
-        int index = 0;
+        size_t index = 0;
     };
 
 } // namespace game
-template <>
-inline void inspect<game::HoldItem>(game::HoldItem &hold)
-{
-    ImGui::InputInt("Index", &hold.index);
-}

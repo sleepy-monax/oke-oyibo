@@ -29,20 +29,11 @@ namespace game
         player.each([&](auto &inventory, auto &hold, auto &) {
             if (IsKeyPressed(KEY_SPACE))
             {
-                if (hold.index == static_cast<int>(inventory.inventory.size() - 1))
-                {
-                    hold.index = 0;
-                    return;
-                }
+                if (inventory.inventory.count()) {
+                    hold.index = (hold.index + 1) % inventory.inventory.count();
 
-                for (size_t i = 0; i < inventory.inventory.size(); i++)
-                {
-                    if (static_cast<size_t>(hold.index) == i - 1)
-                    {
-                        hold.index = static_cast<int>(i);
-                        break;
-                    }
                 }
+                
             }
         });
     }
@@ -62,20 +53,17 @@ namespace game
 
                 bound = bound.offset(position());
 
-                if (inv.inventory.size() > 0)
+                if (inv.inventory.count() > 0)
                 {
-                    texture = inv.inventory[hold.index].getItem().get_texture();
-                    num = inv.inventory[hold.index].getQuantity();
+                    if (hold.index < inv.inventory.count()) {
+                        auto texture = inv.inventory[hold.index].getItem().get_texture();
+                        auto num = inv.inventory[hold.index].getQuantity();
 
-                    Vector2 pos(position().x() + 4, position().y() - 5);
-                    DrawTextEx(font, std::to_string(num).c_str(), pos, 5.f, 1.f, WHITE);
+                        Vector2 pos(position().x() + 4, position().y() - 5);
+                        core::draw_texture(texture, bound, WHITE);
+                        DrawTextEx(font, std::to_string(num).c_str(), pos, 5.f, 1.f, WHITE);               
+                    }
                 }
-                else
-                {
-                    texture = world.registry().texture("empty");
-                }
-
-                core::draw_texture(texture, bound, WHITE);
             });
         });
     }
