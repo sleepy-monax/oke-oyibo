@@ -29,7 +29,7 @@ namespace game
 
         //Create menu window
         ImGui::Begin("Create game");
-        ImVec2 vector(720, 480), button_size(200, 30);
+        ImVec2 vector(720, 300), button_size(200, 30);
         ImGui::SetWindowSize(vector);
 
         ImGui::Text("%65s", "Welcome to Oke Oyibo ! ");
@@ -54,6 +54,7 @@ namespace game
             director().switch_scene<game::InGame>();
         }
 
+        ImGui::Text(" ");
         ImGui::Text("%67s", "Press E to break and collect items");
         ImGui::Text("%78s", "Press F to attack enemies (better with a sword :p)");
         ImGui::Text("%60s", "Go to water to drink");
