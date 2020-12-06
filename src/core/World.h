@@ -14,6 +14,7 @@
 #include "core/Terrain.h"
 #include "core/Time.h"
 
+#include "base/components/CastShadow.h"
 #include "base/components/Sprite.h"
 #include "game/components/Pickable.h"
 #include "game/inventory/Stack.h"
@@ -70,7 +71,8 @@ namespace core
             return create_entity()
                 .with<base::Position>(position.x(), position.y(), 0.0f)
                 .with<game::Pickable>(stack)
-                .with<base::Sprite>(stack.getItem().get_texture());
+                .with<base::Sprite>(stack.getItem().get_texture())
+                .with<base::CastShadow>(2, utils::Vec2f::zero());
         }
 
         void remove_entity(entt::entity entity)
