@@ -15,6 +15,11 @@ namespace base
         {
             return {x, y};
         }
+
+        utils::Vec2f operator()()
+        {
+            return {x, y};
+        }
     };
 
 } // namespace base

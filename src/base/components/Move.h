@@ -9,6 +9,12 @@ namespace base
         bool moving = false;
         utils::Vec2f destination{};
 
+        void move_to(utils::Vec2f dest)
+        {
+            destination = dest;
+            moving = true;
+        }
+
         double speed;
 
         Move()

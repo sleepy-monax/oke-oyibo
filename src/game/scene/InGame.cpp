@@ -11,6 +11,7 @@
 #include "base/components/CastShadow.h"
 #include "base/components/LightSource.h"
 #include "base/components/Momentum.h"
+#include "base/components/Move.h"
 #include "base/components/Player.h"
 #include "base/components/Sprite.h"
 #include "game/components/Attack.h"
@@ -72,20 +73,21 @@ namespace game
     {
         auto world_center = world.terrain().bound().center();
         world.create_entity()
-            .with<base::Position>(world_center.x(), world_center.y(), 0.0f)
-            .with<base::Momentum>()
-            .with<base::LightSource>(128.0f, WHITE)
-            .with<game::Health>(10, 10)
-            .with<game::Hunger>(20.0f, 20.0f)
-            .with<game::Thirst>(20.0f, 20.0f)
-            .with<base::Player>(0)
-            .with<base::Sprite>(registry().texture("character"))
-            .with<game::Stamina>(20.0f, 20.0f)
-            .with<game::Inventory>()
             .with<base::CastShadow>(4, utils::Vec2f{0.5, 0})
+            .with<base::LightSource>(128.0f, WHITE)
+            .with<base::Momentum>()
+            .with<base::Player>(0)
+            .with<base::Position>(world_center.x(), world_center.y(), 0.0f)
+            .with<base::Sprite>(registry().texture("character"))
             .with<game::Attack>(2)
+            .with<game::Health>(10, 10)
+            .with<game::HoldItem>()
+            .with<game::Hunger>(20.0f, 20.0f)
+            .with<game::Inventory>()
+            .with<base::Move>()
             .with<game::Prey>()
-            .with<game::HoldItem>();
+            .with<game::Stamina>(20.0f, 20.0f)
+            .with<game::Thirst>(20.0f, 20.0f);
     }
 
     void InGame::on_switch_out()
