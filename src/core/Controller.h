@@ -17,7 +17,10 @@ namespace core
         ACTION_MAIN,
         ACTION_SECONDARY,
 
-        OPEN_MENU,
+        MENU_OPEN,
+        MENU_NEXT,
+        MENU_PREV,
+        MENU_ACTION,
 
         ZOOM_IN,
         ZOOM_OUT,

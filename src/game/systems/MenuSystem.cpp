@@ -36,26 +36,23 @@ namespace game
 
                 bound = bound.offset(position() - bound.center() - utils::Vec2f{0, 8});
 
-                core::draw_rect(bound, RED);
-
-                for (size_t i = 0; i < crafts.count(); i++)
-                {
-                    auto &craft = crafts[i];
-                    auto column = bound.column(crafts.count(), i, ITEM_GAP);
-
-                    if (menu.selected == i)
-                    {
-                        core::draw_texture(_cursor, column, WHITE);
-                    }
-
-                    core::draw_texture(craft.result.item().texture(), column, WHITE);
-
-                    Vector2 pos(column.bottom_left().x() + 4, column.bottom_left().y() - 5);
-                    DrawTextEx(_font, std::to_string(craft.result.quantity()).c_str(), pos, 4.f, 1.f, WHITE);
-                }
-
                 if (menu.visible)
                 {
+                    for (size_t i = 0; i < crafts.count(); i++)
+                    {
+                        auto &craft = crafts[i];
+                        auto column = bound.column(crafts.count(), i, ITEM_GAP);
+
+                        if (menu.selected == i)
+                        {
+                            core::draw_texture(_cursor, column, WHITE);
+                        }
+
+                        core::draw_texture(craft.result.item().texture(), column, WHITE);
+
+                        Vector2 pos(column.bottom_left().x() + 4, column.bottom_left().y() - 5);
+                        DrawTextEx(_font, std::to_string(craft.result.quantity()).c_str(), pos, 4.f, 1.f, WHITE);
+                    }
                 }
             });
         });
