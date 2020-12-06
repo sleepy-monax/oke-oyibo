@@ -1,9 +1,7 @@
-//
-// Created by oslo on 11/23/20.
-//
 #pragma once
 
 #include "core/Scene.h"
+#include "core/Texture.h"
 
 namespace game
 {
@@ -11,6 +9,8 @@ namespace game
     {
 
     private:
+        core::Texture background_image;
+
     public:
         MainMenu(core::Director &dir, core::Registry &reg);
 

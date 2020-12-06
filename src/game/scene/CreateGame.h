@@ -1,12 +1,15 @@
 #pragma once
 
 #include "core/Scene.h"
+#include "core/Texture.h"
 
 namespace game
 {
     class CreateGame : public core::Scene
     {
     private:
+        core::Texture background_image;
+
     public:
         CreateGame(core::Director &dir, core::Registry &reg);
         ~CreateGame();

@@ -3,11 +3,16 @@
 #include "CreateGame.h"
 #include "game/scene/InGame.h"
 #include "game/scene/MainMenu.h"
+#include "core/Graphics.h"
 
 namespace game
 {
     CreateGame::CreateGame(core::Director &dir, core::Registry &reg) :
-        core::Scene(dir, reg) {}
+        core::Scene(dir, reg) 
+    {
+        //Charge image for background
+        background_image =  reg.texture("background");
+    }
 
     CreateGame::~CreateGame()
     {
@@ -20,6 +25,10 @@ namespace game
 
     void CreateGame::render()
     {
+        //Put image on indow background
+        core::draw_texture(background_image, core::glue::screen(),  WHITE);
+
+        //Create menu window
         ImGui::Begin("Create game");
         ImVec2 vector(720, 480), button_size(200, 30);
         ImGui::SetWindowSize(vector);
@@ -43,13 +52,19 @@ namespace game
         const char *difficulties[] = {"easy", "normal", "hard"};
         ImGui::Combo(" ", &animate, difficulties, IM_ARRAYSIZE(difficulties));
 
-        //Create game
+        //Create a game
         ImGui::SetCursorPosX(270.);
         if (ImGui::Button("Create game", button_size))
         {
             director().switch_scene<game::InGame>();
         }
 
+        //Game controls 
+        ImGui::Text("%62s", "Press E to collect ");
+        ImGui::Text("%61s", "Press F to attack ");
+        ImGui::Text("%65s", "Try not to be killed and");
+        ImGui::Text("%68s", "make a boat to escape the island");
+        ImGui::Text("%58s", "Good luck !");
         ImGui::Text("%65s", "Press E to break and collect items");
         ImGui::Text("%73s", "Press F to attack enemies (better with a sword :p)");
         ImGui::Text("%60s", "Go to water to drink");
