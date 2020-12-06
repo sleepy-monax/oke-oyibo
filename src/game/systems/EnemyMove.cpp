@@ -29,7 +29,8 @@ namespace game
 
                 if (enemy.has_focus && enemy.target == entity)
                 {
-                    if (!world.entities().valid(entity) && distance > enemy.focus_distance * core::Tile::SIZE)
+                    if (!world.entities().valid(entity) ||
+                        distance > enemy.focus_distance * core::Tile::SIZE)
                     {
                         enemy.has_focus = false;
                         move.stop();

@@ -34,6 +34,7 @@
 
 #include "game/systems/AttackSystem.h"
 #include "game/systems/BreakableSystem.h"
+#include "game/systems/EatSystem.h"
 #include "game/systems/EnemyMove.h"
 #include "game/systems/HealthBar.h"
 #include "game/systems/HoldItemSystem.h"
@@ -42,7 +43,6 @@
 #include "game/systems/RegenSystem.h"
 #include "game/systems/StaminaSystem.h"
 #include "game/systems/ThirstSystem.h"
-#include "game/systems/EatSystem.h"
 
 utils::RefPtr<core::Registry> game::make_registry()
 {
@@ -263,8 +263,8 @@ utils::RefPtr<core::Registry> game::make_registry()
             {1, GRASS, 1, utils::Noise{0x404c09fa, 1, 2}},
             {1, FLOWER, 0.25, utils::Noise{0x404c09fa, 1, 0.025}},
             {0.5, BUSH, 0.25, utils::Noise{0x404c09fa, 1, 0.025}},
-            {1, BUNNY, 0.01, utils::Noise{0x404c09fa, 1, 2}},
-            {1, SHEEP, 0.01, utils::Noise{0x404c09fa, 1, 2}},
+            {1, BUNNY, 0.05, utils::Noise{0x404c09fa, 1, 2}},
+            {1, SHEEP, 0.05, utils::Noise{0x404c09fa, 1, 2}},
         },
     });
 
@@ -276,8 +276,8 @@ utils::RefPtr<core::Registry> game::make_registry()
             {1, TREE, 1, utils::Noise{0x404c09fa, 1, 0.1}},
             {1, GRASS, 1, utils::Noise{0x404c09fa, 1, 2}},
             {1, ZOMBIE, 0.1, utils::Noise{0x404c09fa, 1, 2}},
-            {0.1, HEDGEHOG, 1, utils::Noise{0x404c09fa, 1, 2}},
-            {1, SHEEP, 0.01, utils::Noise{0x404c09fa, 1, 2}},
+            {0.5, HEDGEHOG, 1, utils::Noise{0x404c09fa, 1, 2}},
+            {1, SHEEP, 0.05, utils::Noise{0x404c09fa, 1, 2}},
         },
     });
 
@@ -297,8 +297,8 @@ utils::RefPtr<core::Registry> game::make_registry()
         {
             {1, PINE, 1, utils::Noise{0x404c09fa, 1, 0.1}},
             {1, BIG_SLIME, 0.01, utils::Noise{0x404c09fa, 1, 2}},
-            {1, BUNNY, 0.01, utils::Noise{0x404c09fa, 1, 2}},
-            {1, SHEEP, 0.01, utils::Noise{0x404c09fa, 1, 2}},
+            {1, BUNNY, 0.02, utils::Noise{0x404c09fa, 1, 2}},
+            {1, SHEEP, 0.02, utils::Noise{0x404c09fa, 1, 2}},
         },
     });
 
@@ -313,7 +313,7 @@ utils::RefPtr<core::Registry> game::make_registry()
             {1, ROCK, 0.1, utils::Noise{0x404c09fa, 1, 1}},
             {0.2, SKELETON, 0.2, utils::Noise{0x404c09fa, 1, 2}},
             {1, BUNNY, 0.05, utils::Noise{0x404c09fa, 1, 2}},
-            {1, SHEEP, 0.01, utils::Noise{0x404c09fa, 1, 2}},
+            {1, SHEEP, 0.05, utils::Noise{0x404c09fa, 1, 2}},
         },
     });
 

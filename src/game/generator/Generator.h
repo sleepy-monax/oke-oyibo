@@ -83,7 +83,7 @@ namespace game
             _climat.seed(seed);
             _random.seed(seed);
 
-            auto world = utils::make<core::World>(reg, 256, 256);
+            auto world = utils::make<core::World>(reg, 128, 128);
 
             generate_biomes(reg, *world);
 
