@@ -4,13 +4,15 @@
 #include "game/scene/InGame.h"
 #include "core/Graphics.h"
 
+#include "game/generator/Generator.h"
+#include "core/Camera.h"
+
 namespace game
 {
     CreateGame::CreateGame(core::Director &dir, core::Registry &reg) :
         core::Scene(dir, reg) 
     {
-        //Charge image for background
-        background_image =  reg.texture("background");
+        
     }
 
     CreateGame::~CreateGame()
@@ -20,12 +22,25 @@ namespace game
     void CreateGame::update(core::Time &time)
     {
         Scene::update(time);
+        _camera.resize_to_fit_the_screen();
+        _camera.animate(time.elapsed());
+        if (stackFrame(time)) {
+            int randomX = rand()%(int)_world->terrain().bound().width();
+            int randomY = rand()%(int)_world->terrain().bound().height();
+
+            _camera.move_to({(float) randomX, (float) randomY});
+        }
+        
     }
 
     void CreateGame::render()
     {
-        //Put image on indow background
-        core::draw_texture(background_image, core::glue::screen(),  WHITE);
+        _camera.clear();
+        _world->render(_camera);
+        _camera.compose();
+
+        Rectangle rect{0, 0, _camera.width() * 1.0f, _camera.height() * 1.0f};
+        DrawTexturePro(_camera.composite().underlying_texture(), rect, rect, (Vector2){0, 0}, 0.0f, WHITE);
 
         //Create menu window
         ImGui::Begin("Create game");
@@ -34,8 +49,8 @@ namespace game
 
         ImGui::Text("%65s", "Welcome to Oke Oyibo ! ");
 
-        //Name of world
-        ImGui::Text("%20s", "Name of world : ");
+        //Name of the world
+        ImGui::Text("%20s", "Name of the world : ");
         ImGui::SameLine();
         char buf[64] = "";
         ImGui::InputText("", buf, IM_ARRAYSIZE(buf));
@@ -70,10 +85,28 @@ namespace game
     void CreateGame::on_switch_in()
     {
         Scene::on_switch_in();
+        Generator gen{};
+
+        _world = gen.generate(registry(), time(nullptr));
     }
 
     void CreateGame::on_switch_out()
     {
         Scene::on_switch_out();
+    }
+
+    bool CreateGame::stackFrame(core::Time &time)
+    {
+        _accumulator += time.elapsed();
+
+        if (_accumulator >= 15)
+        {
+            _accumulator -= 15;
+            return true;
+        }
+        else
+        {
+            return false;
+        }
     }
 } // namespace game
