@@ -1,5 +1,7 @@
 #pragma once
 
+#include <time.h>
+
 #include "utils/Common.h"
 
 namespace utils
@@ -39,6 +41,11 @@ namespace utils
         double next_double()
         {
             return next_u32() / (double)UINT32_MAX;
+        }
+
+        double next_double_minus_one_to_one()
+        {
+            return (next_double() * 2) - 1;
         }
     };
 

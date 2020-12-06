@@ -2,6 +2,7 @@
 
 #include "core/Surface.h"
 #include "utils/Math.h"
+#include "utils/Random.h"
 #include "utils/Rect.h"
 #include "utils/Vec.h"
 
@@ -12,10 +13,12 @@ namespace core
     private:
         utils::Vec2f _position;
         float _zoom;
+        float _trauma = 0;
 
     public:
         utils::Vec2f position() const { return _position; }
         float zoom() const { return _zoom; }
+        float trauma() const { return _trauma; }
 
         CameraState zoomed_in()
         {
@@ -45,13 +48,20 @@ namespace core
             return copy;
         }
 
+        CameraState trauma(float value)
+        {
+            CameraState copy = *this;
+            copy._trauma += value;
+            return copy;
+        }
+
         CameraState() :
             _position{0, 0}, _zoom(4)
         {
         }
 
-        CameraState(utils::Vec2f position, float zoom) :
-            _position{position}, _zoom(zoom)
+        CameraState(utils::Vec2f position, float zoom, float trauma) :
+            _position{position}, _zoom(zoom), _trauma(trauma)
         {
         }
     };
@@ -61,6 +71,7 @@ namespace core
         return {
             utils::lerp(from.position(), to.position(), t),
             utils::lerp(from.zoom(), to.zoom(), t),
+            utils::lerp(from.trauma(), to.trauma(), t),
         };
     }
 
@@ -81,6 +92,7 @@ namespace core
         Surface _overlay{};
 
         Surface _composite{};
+        utils::Random _random{};
 
     public:
         auto zoom() { return _current.zoom(); }
@@ -100,7 +112,8 @@ namespace core
         {
             return {
                 {width() / 2.0f, height() / 2.0f},
-                {position().x(), position().y()},
+                {position().x() + 16 * (float)_random.next_double_minus_one_to_one() * _current.trauma(),
+                 position().y() + 16 * (float)_random.next_double_minus_one_to_one() * _current.trauma()},
                 0,
                 _current.zoom(),
             };
@@ -262,6 +275,11 @@ namespace core
         {
             _target = _target.moved_to(pos);
             _current = _current.moved_to(pos);
+        }
+
+        void trauma(float value)
+        {
+            _current = _current.trauma(value);
         }
 
         void animate(double dt)

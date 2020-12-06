@@ -19,13 +19,13 @@ namespace base
                 return;
             }
 
-            if (position.pos2d().distance_to(move.destination) < core::Tile::SIZE / 2)
+            if (position().distance_to(move.destination) < core::Tile::SIZE / 2)
             {
                 move.moving = false;
                 return;
             }
 
-            auto diff = move.destination - position.pos2d();
+            auto diff = move.destination - position();
 
             auto acceleration = diff.normalized();
 

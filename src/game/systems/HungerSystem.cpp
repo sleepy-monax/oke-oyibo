@@ -72,13 +72,13 @@ namespace game
             view.each([&](auto &position, auto &hunger) {
                 utils::Rectf bound = {-15, -20, 30, 2};
 
-                bound = bound.offset(position.pos2d());
+                bound = bound.offset(position());
                 bound = bound.take_left_percent(hunger.current_food / (float)hunger.max_food);
 
                 core::fill_rect(bound, ORANGE);
 
                 utils::Rectf foodRect = {-18, -20, 2, 2};
-                foodRect = foodRect.offset(position.pos2d());
+                foodRect = foodRect.offset(position());
 
                 core::draw_texture(foodTexture, foodRect, WHITE);
             });

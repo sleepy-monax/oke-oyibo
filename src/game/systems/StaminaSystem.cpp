@@ -112,13 +112,13 @@ namespace game
             view.each([&](auto &position, auto &stamina) {
                 utils::Rectf bound = {-15, 5, 30, 2};
 
-                bound = bound.offset(position.pos2d());
+                bound = bound.offset(position());
                 bound = bound.take_left_percent(stamina.current / (float)stamina.maximum);
 
                 core::fill_rect(bound, YELLOW);
 
                 utils::Rectf staminaRect = {-18, 4, 2, 2};
-                staminaRect = staminaRect.offset(position.pos2d());
+                staminaRect = staminaRect.offset(position());
 
                 core::draw_texture(staminaTexture, staminaRect, WHITE);
             });

@@ -12,16 +12,17 @@ namespace game
     void HealthBar::update(core::World &world, core::Time &)
     {
         auto view = world.entities().view<Health>();
-        view.each([](/*auto &damage,*/ auto &health) {
-            //health.current -= damage;
+        view.each([&](entt::entity entity, auto &health) {
             if (health.current <= 0)
             {
-                health.current = 0;
+                world.remove_entity(entity);
             }
+
             if (health.current >= health.maximum)
             {
                 health.current = health.maximum;
             }
+
             health.current = health.current;
         });
     }
@@ -41,13 +42,13 @@ namespace game
                 {
                     utils::Rectf bound = {-15, -24, 30, 2};
 
-                    bound = bound.offset(position.pos2d());
+                    bound = bound.offset(position());
                     bound = bound.take_left_percent(health.current / (float)health.maximum);
 
                     core::fill_rect(bound, RED);
 
                     utils::Rectf healthRect = {-18, -24, 2, 2};
-                    healthRect = healthRect.offset(position.pos2d());
+                    healthRect = healthRect.offset(position());
 
                     core::draw_texture(healthTexture, healthRect, WHITE);
                 }

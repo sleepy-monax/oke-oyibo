@@ -11,11 +11,6 @@ namespace base
         float y;
         float z;
 
-        utils::Vec2f pos2d()
-        {
-            return {x, y};
-        }
-
         utils::Vec2f operator()()
         {
             return {x, y};

@@ -9,5 +9,6 @@ namespace base
     struct Sprite
     {
         core::Texture texture;
+        float flash = 0;
     };
 } // namespace base

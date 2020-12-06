@@ -19,7 +19,7 @@ namespace base
             BeginBlendMode(BLEND_ADDITIVE);
 
             view.each([](auto &position, auto &light_source) {
-                core::draw_ellipse(position.pos2d(), light_source.radius, light_source.radius, light_source.color);
+                core::draw_ellipse(position(), light_source.radius, light_source.radius, light_source.color);
             });
 
             EndBlendMode();

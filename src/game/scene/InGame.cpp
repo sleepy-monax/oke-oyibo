@@ -57,7 +57,8 @@ namespace game
         game::Stack stack(game::Item("sword", registry().texture("sword")), 1);
         world->create_entity()
             .with<game::Pickable>(stack)
-            .with<base::Position>(2060.0f, 2060.0f, 0.0f);
+            .with<base::Position>(2060.0f, 2060.0f, 0.0f)
+            .with<base::Sprite>(registry().texture("sword"));
 
         _editor = utils::own<editor::Editor>(world);
         _editor->open<editor::Entities>();

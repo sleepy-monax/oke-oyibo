@@ -7,6 +7,7 @@
 #include "base/components/Player.h"
 #include "base/components/Position.h"
 
+#include "game/components/Attack.h"
 #include "game/components/Enemy.h"
 #include "game/components/Prey.h"
 
@@ -18,30 +19,37 @@ namespace game
     //enemy movements
     void EnemyMove::update(core::World &world, core::Time &)
     {
-        auto enemies = world.entities().view<game::Enemy, base::Position, base::Move>();
+        auto enemies = world.entities().view<game::Enemy, base::Position, base::Move, game::Attack>();
 
-        enemies.each([&](game::Enemy &enemy, base::Position &enemy_position, base::Move &move) {
+        enemies.each([&](game::Enemy &enemy, base::Position &enemy_position, base::Move &move, game::Attack &attack) {
             auto preys = world.entities().view<game::Prey, base::Position>();
 
             preys.each([&](entt::entity entity, game::Prey &, base::Position &prey_position) {
+                double distance = enemy_position().distance_to(prey_position());
+
                 if (enemy.has_focus && enemy.target == entity)
                 {
-                    if (enemy_position.pos2d().distance_to(prey_position.pos2d()) > enemy.focus_distance * core::Tile::SIZE)
+                    if (distance > enemy.focus_distance * core::Tile::SIZE)
                     {
                         enemy.has_focus = false;
                         move.moving = false;
                     }
                     else
                     {
-                        move.destination = prey_position.pos2d();
+                        move.destination = prey_position();
                         move.moving = true;
+
+                        if (distance < core::Tile::SIZE)
+                        {
+                            attack.attacking = true;
+                        }
                     }
                 }
-                else if (enemy_position.pos2d().distance_to(prey_position.pos2d()) < enemy.focus_distance * core::Tile::SIZE)
+                else if (distance < enemy.focus_distance * core::Tile::SIZE)
                 {
                     enemy.target = entity;
                     enemy.has_focus = true;
-                    move.destination = prey_position.pos2d();
+                    move.destination = prey_position();
                     move.moving = true;
                 }
             });
@@ -57,7 +65,7 @@ namespace game
                 auto offx = multx * max_distance;
                 auto offy = multy * max_distance;
 
-                move.destination = enemy_position.pos2d() + utils::Vec2f{(float)offx, (float)offy};
+                move.destination = enemy_position() + utils::Vec2f{(float)offx, (float)offy};
                 move.moving = true;
             }
         });

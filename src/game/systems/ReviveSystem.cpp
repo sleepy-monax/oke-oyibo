@@ -19,7 +19,6 @@ namespace game
             view.each([&](auto &, auto &health, auto &hunger, auto &thirst, auto &momentum, auto &inventory, auto &stamina) {
                 if (health.current == 0)
                 {
-
                     momentum.ax = 0.0f;
                     momentum.ay = 0.0f;
                     momentum.vx = 0.0f;
@@ -74,11 +73,9 @@ namespace game
         auto player = world.entities().view<base::Player, base::Position>();
 
         enemy.each([&](auto const &entity, auto &, auto &positionEnemy) {
-            auto enemy_pos = positionEnemy.pos2d();
-            player.each([&](auto &, auto &positionPlayer) {
-                auto player_pos = positionPlayer.pos2d();
-
-                if (enemy_pos.distance_to(player_pos) <= 100)
+            auto enemy_pos = positionEnemy();
+            player.each([&](auto &, auto &player_pos) {
+                if (enemy_pos.distance_to(player_pos()) <= 100)
                 {
                     world.remove_entity(entity);
                 }

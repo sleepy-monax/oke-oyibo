@@ -2,6 +2,7 @@
 
 #include "base/components/Player.h"
 #include "base/components/Position.h"
+#include "base/components/Sprite.h"
 
 #include "game/components/Attack.h"
 #include "game/components/Enemy.h"
@@ -13,55 +14,42 @@ namespace game
 {
     void AttackSystem::update(core::World &world, core::Time &time)
     {
-        if (stackFrame(time))
-        {
-            auto enemy = world.entities().view<game::Enemy, base::Position, game::Health, game::Attack>();
-            auto player = world.entities().view<base::Player, base::Position, game::Health, game::Inventory, game::HoldItem, game::Attack>();
+        auto attackers = world.entities().view<base::Position, game::Attack>();
 
-            enemy.each([&](auto const &entity, auto &, auto &positionEnemy, auto &healthEnemy, auto &attackEnemy) {
-                auto enemy_pos = positionEnemy.pos2d();
-                player.each([&](auto &, auto &positionPlayer, auto &healthPlayer, auto &inv, auto &hold, auto &attackPlayer)
-                {
-                    auto player_pos = positionPlayer.pos2d();
+        attackers.each([&](entt::entity attacker, base::Position &attacker_position, game::Attack &attacker_attack) {
+            attacker_attack.cooldown -= time.elapsed();
 
-                    if (enemy_pos.distance_to(player_pos) <= 5)
+            int damages = attacker_attack.base_damages;
+
+            auto victims = world.entities().view<base::Position, game::Health, base::Sprite>();
+
+            if (attacker_attack.attacking && attacker_attack.cooldown < 0)
+            {
+                victims.each([&](entt::entity victim, base::Position &victim_position, game::Health &victim_health, base::Sprite &victim_sprite) {
+                    if (attacker == victim)
                     {
-                        healthPlayer.current -= attackEnemy.attack;
+                        return;
+                    }
 
-                        if (IsKeyPressed(KEY_F))
-                        {
-                            if (inv.inventory.size() != 0) {
-                                string holdItem = inv.inventory[hold.index].getItem().getName();
-                                if (holdItem.compare("sword") == 0) {
-                                    attackPlayer.attack = 5;
-                                }
-                            }
-                            if (healthEnemy.current - attackPlayer.attack < 0){
-                                world.remove_entity(entity);
-                            }
-                            else
-                            {
-                                healthEnemy.current -= attackPlayer.attack;
-                            }
-                        }
+                    if (world.entities().has<base::Player>(victim))
+                    {
+                        auto &player = world.entities().get<base::Player>(victim);
+                        auto &camera = world.players()[player.player_index].camera();
+
+                        camera.trauma(0.1);
+                    }
+
+                    if (attacker_position().distance_to(victim_position()) <= attacker_attack.range * core::Tile::SIZE)
+                    {
+                        attacker_attack.cooldown = 0.8;
+                        victim_sprite.flash = 0.1;
+                        victim_health.current -= damages;
                     }
                 });
-            });
-        }
+            }
+
+            attacker_attack.attacking = false;
+        });
     }
 
-    bool AttackSystem::stackFrame(core::Time &time)
-    {
-        _accumulator += time.elapsed();
-
-        if (_accumulator >= 0.8)
-        {
-            _accumulator -= 0.8;
-            return true;
-        }
-        else
-        {
-            return false;
-        }
-    }
 } // namespace game

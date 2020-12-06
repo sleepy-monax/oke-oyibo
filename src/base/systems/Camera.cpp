@@ -20,11 +20,11 @@ namespace base
 
                 if (world.terrain().bound().width() < camera.width_world() || world.terrain().bound().height() < camera.height_world())
                 {
-                    camera.move_to(position.pos2d());
+                    camera.move_to(position());
                 }
                 else
                 {
-                    camera.move_to(position.pos2d().clamped(camera_allowed_bound.top_left(), camera_allowed_bound.bottom_right()));
+                    camera.move_to(position().clamped(camera_allowed_bound.top_left(), camera_allowed_bound.bottom_right()));
                 }
 
                 camera.animate(time.elapsed());

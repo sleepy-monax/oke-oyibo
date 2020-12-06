@@ -74,13 +74,13 @@ namespace game
             view.each([&](auto &position, auto &thirst) {
                 utils::Rectf bound = {-15, -22, 30, 2};
 
-                bound = bound.offset(position.pos2d());
+                bound = bound.offset(position());
                 bound = bound.take_left_percent(thirst.current_thirst / (float)thirst.max_thirst);
 
                 core::fill_rect(bound, BLUE);
 
                 utils::Rectf waterRect = {-18, -22, 2, 2};
-                waterRect = waterRect.offset(position.pos2d());
+                waterRect = waterRect.offset(position());
 
                 core::draw_texture(waterTexture, waterRect, WHITE);
             });

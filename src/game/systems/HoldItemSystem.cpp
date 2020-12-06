@@ -47,7 +47,8 @@ namespace game
         });
     }
 
-    void HoldItemSystem::on_load(core::Registry &registry) {
+    void HoldItemSystem::on_load(core::Registry &registry)
+    {
         font = registry.font("romulus");
     }
 
@@ -59,23 +60,22 @@ namespace game
             player.each([&](auto &inv, auto &hold, auto &position) {
                 utils::Rectf bound = {3, -10, 6, 6};
 
-                bound = bound.offset(position.pos2d());
+                bound = bound.offset(position());
 
                 if (inv.inventory.size() > 0)
                 {
                     texture = inv.inventory[hold.index].getItem().get_texture();
                     num = inv.inventory[hold.index].getQuantity();
 
-                    Vector2 pos(position.pos2d().x() + 4, position.pos2d().y() - 5);
+                    Vector2 pos(position().x() + 4, position().y() - 5);
                     DrawTextEx(font, std::to_string(num).c_str(), pos, 5.f, 1.f, WHITE);
                 }
                 else
                 {
                     texture = world.registry().texture("empty");
                 }
-                
-                core::draw_texture(texture, bound, WHITE);
 
+                core::draw_texture(texture, bound, WHITE);
             });
         });
     }
