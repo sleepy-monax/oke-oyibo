@@ -34,6 +34,7 @@
 
 #include "game/systems/AttackSystem.h"
 #include "game/systems/BreakableSystem.h"
+#include "game/systems/DrinkSystem.h"
 #include "game/systems/EatSystem.h"
 #include "game/systems/EnemyMove.h"
 #include "game/systems/HealthBar.h"
@@ -43,7 +44,6 @@
 #include "game/systems/RegenSystem.h"
 #include "game/systems/StaminaSystem.h"
 #include "game/systems/ThirstSystem.h"
-#include "game/systems/DrinkSystem.h"
 
 utils::RefPtr<core::Registry> game::make_registry()
 {
@@ -254,6 +254,13 @@ utils::RefPtr<core::Registry> game::make_registry()
         e.with<base::Colider>(-2.0f, -2.0f, 4.0f, 4.0f);
     });
 
+    auto DEAD_BUSH = registry->register_blueprint("dead-bush", [&](core::Builder &e) {
+        Stack item(Item("dead-bush", registry->texture("dead-bush")), 1);
+        e.with<game::Breakable>(item, 1);
+        e.with<base::Sprite>(registry->texture("dead-bush"));
+        e.with<base::CastShadow>(4, utils::Vec2f{0, 0});
+    });
+
     core::Tile WATER_TILE{registry->texture("water-tile"), core::Tile::LIQUID};
     core::Tile GRASS_TILE{registry->texture("grass-tile"), core::Tile::SOLID};
     core::Tile SNOW_TILE{registry->texture("snow-tile"), core::Tile::SOLID};
@@ -287,7 +294,7 @@ utils::RefPtr<core::Registry> game::make_registry()
             {1, TREE, 1, utils::Noise{0x404c09fa, 1, 0.1}},
             {1, GRASS, 1, utils::Noise{0x404c09fa, 1, 2}},
             {1, ZOMBIE, 0.1, utils::Noise{0x404c09fa, 1, 2}},
-            {0.5, HEDGEHOG, 1, utils::Noise{0x404c09fa, 1, 2}},
+            {0.5, HEDGEHOG, 0.1, utils::Noise{0x404c09fa, 1, 2}},
             {1, SHEEP, 0.05, utils::Noise{0x404c09fa, 1, 2}},
         },
     });
@@ -337,6 +344,7 @@ utils::RefPtr<core::Registry> game::make_registry()
             {1, ROCK, 0.1, utils::Noise{0x404c09fa, 1, 1}},
             {0.2, ZOMBIE, 0.2, utils::Noise{0x404c09fa, 1, 2}},
             {0.2, SKELETON, 0.2, utils::Noise{0x404c09fa, 1, 2}},
+            {1, DEAD_BUSH, 0.25, utils::Noise{0x404c09fa, 3, 1}},
         },
     });
 
