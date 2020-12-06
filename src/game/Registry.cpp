@@ -127,6 +127,17 @@ utils::RefPtr<core::Registry> game::make_registry()
         e.with<game::Attack>(1);
     });
 
+    auto SHEEP = registry->register_blueprint("sheep", [&](core::Builder &e) {
+        e.with<base::Momentum>();
+        e.with<base::Move>(0.05);
+        e.with<base::Sprite>(registry->texture("sheep"));
+        e.with<base::CastShadow>(4, utils::Vec2f{-1, 0});
+        e.with<base::Colider>(-2.0f, -2.0f, 4.0f, 4.0f);
+
+        e.with<game::Health>(7, 7);
+        e.with<game::Attack>(1);
+    });
+
     auto ZOMBIE = registry->register_blueprint("zombie", [&](core::Builder &e) {
         e.with<base::Momentum>();
         e.with<base::Move>(0.03);
@@ -253,6 +264,7 @@ utils::RefPtr<core::Registry> game::make_registry()
             {1, FLOWER, 0.25, utils::Noise{0x404c09fa, 1, 0.025}},
             {0.5, BUSH, 0.25, utils::Noise{0x404c09fa, 1, 0.025}},
             {1, BUNNY, 0.01, utils::Noise{0x404c09fa, 1, 2}},
+            {1, SHEEP, 0.01, utils::Noise{0x404c09fa, 1, 2}},
         },
     });
 
@@ -265,6 +277,7 @@ utils::RefPtr<core::Registry> game::make_registry()
             {1, GRASS, 1, utils::Noise{0x404c09fa, 1, 2}},
             {1, ZOMBIE, 0.1, utils::Noise{0x404c09fa, 1, 2}},
             {0.1, HEDGEHOG, 1, utils::Noise{0x404c09fa, 1, 2}},
+            {1, SHEEP, 0.01, utils::Noise{0x404c09fa, 1, 2}},
         },
     });
 
@@ -285,6 +298,7 @@ utils::RefPtr<core::Registry> game::make_registry()
             {1, PINE, 1, utils::Noise{0x404c09fa, 1, 0.1}},
             {1, BIG_SLIME, 0.01, utils::Noise{0x404c09fa, 1, 2}},
             {1, BUNNY, 0.01, utils::Noise{0x404c09fa, 1, 2}},
+            {1, SHEEP, 0.01, utils::Noise{0x404c09fa, 1, 2}},
         },
     });
 
@@ -299,6 +313,7 @@ utils::RefPtr<core::Registry> game::make_registry()
             {1, ROCK, 0.1, utils::Noise{0x404c09fa, 1, 1}},
             {0.2, SKELETON, 0.2, utils::Noise{0x404c09fa, 1, 2}},
             {1, BUNNY, 0.05, utils::Noise{0x404c09fa, 1, 2}},
+            {1, SHEEP, 0.01, utils::Noise{0x404c09fa, 1, 2}},
         },
     });
 
