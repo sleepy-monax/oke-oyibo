@@ -12,7 +12,7 @@ namespace utils
     class QuadTree
     {
     private:
-        static constexpr size_t CAPACITY = 16;
+        static constexpr size_t CAPACITY = 4;
 
         using DataIterationCallback =
             Callback<Iteration(const Vec2<TScalar> &, const TData &data)>;

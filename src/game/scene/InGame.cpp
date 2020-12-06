@@ -9,6 +9,7 @@
 #include "editor/panels/Viewport.h"
 
 #include "base/components/CastShadow.h"
+#include "base/components/Colider.h"
 #include "base/components/LightSource.h"
 #include "base/components/Momentum.h"
 #include "base/components/Move.h"
@@ -87,6 +88,7 @@ namespace game
             .with<game::Inventory>()
             .with<base::Move>()
             .with<game::Prey>()
+            .with<base::Colider>(-2.0f, -2.0f, 4.0f, 4.0f)
             .with<game::Stamina>(20.0f, 20.0f)
             .with<game::Thirst>(20.0f, 20.0f);
     }

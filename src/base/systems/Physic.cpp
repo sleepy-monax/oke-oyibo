@@ -38,10 +38,48 @@ namespace base
 
     void Physic::check_for_colisions(core::World &world, float dt)
     {
-        __unused(world);
-        __unused(dt);
+        auto view = world.entities().view<Momentum, Position, Colider>();
 
-        // FIXME: Implement colisions.
+        view.each([&](entt::entity entity, Momentum &momentum, Position &position, Colider &colider) {
+            utils::Vec2f predicted = position() + utils::Vec2f{momentum.vx * dt, momentum.vy * dt};
+            utils::Rectf predicted_colider = colider().offset(predicted);
+
+            _entities.query_elements(predicted_colider.expended(core::Tile::SIZE), [&](const auto &other_position, const entt::entity &e) {
+                if (e != entity && world.entities().has<Colider>(e))
+                {
+                    auto other_colider = world.entities().get<Colider>(e)();
+
+                    utils::Rectf other_predicted_colider = other_colider.offset(other_position);
+
+                    predicted = position() + utils::Vec2f{momentum.vx * dt, 0};
+                    predicted_colider = colider().offset(predicted);
+
+                    if (predicted_colider.colide_with(other_predicted_colider))
+                    {
+                        momentum.vx = 0;
+                    }
+
+                    predicted = position() + utils::Vec2f{0, momentum.vy * dt};
+                    predicted_colider = colider().offset(predicted);
+
+                    if (predicted_colider.colide_with(other_predicted_colider))
+                    {
+                        momentum.vy = 0;
+                    }
+
+                    predicted = position() + utils::Vec2f{momentum.vx * dt, momentum.vy * dt};
+                    predicted_colider = colider().offset(predicted);
+
+                    if (predicted_colider.colide_with(other_predicted_colider))
+                    {
+                        momentum.vx = 0;
+                        momentum.vy = 0;
+                    }
+                }
+
+                return utils::Iteration::CONTINUE;
+            });
+        });
     }
 
     void Physic::apply_friction(core::World &world, float dt)

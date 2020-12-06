@@ -91,6 +91,7 @@ utils::RefPtr<core::Registry> game::make_registry()
         e.with<base::Move>(0.05);
         e.with<base::Sprite>(registry->texture("hedgehog"));
         e.with<base::CastShadow>(4, utils::Vec2f{-1, 0});
+        e.with<base::Colider>(-2.0f, -2.0f, 4.0f, 4.0f);
 
         e.with<game::Health>(7, 7);
         e.with<game::Attack>(1);
@@ -101,6 +102,7 @@ utils::RefPtr<core::Registry> game::make_registry()
         e.with<base::Move>(0.05);
         e.with<base::Sprite>(registry->texture("bunny"));
         e.with<base::CastShadow>(4, utils::Vec2f{-1, 0});
+        e.with<base::Colider>(-2.0f, -2.0f, 4.0f, 4.0f);
 
         e.with<game::Health>(7, 7);
         e.with<game::Attack>(1);
@@ -111,6 +113,7 @@ utils::RefPtr<core::Registry> game::make_registry()
         e.with<base::Move>(0.03);
         e.with<base::Sprite>(registry->texture("zombie"));
         e.with<base::CastShadow>(4, utils::Vec2f{0.5, 0});
+        e.with<base::Colider>(-2.0f, -2.0f, 4.0f, 4.0f);
 
         e.with<game::Enemy>();
         e.with<game::Health>(7, 7);
@@ -122,6 +125,7 @@ utils::RefPtr<core::Registry> game::make_registry()
         e.with<base::Move>(0.03);
         e.with<base::Sprite>(registry->texture("skeleton"));
         e.with<base::CastShadow>(4, utils::Vec2f{0.5, 0});
+        e.with<base::Colider>(-2.0f, -2.0f, 4.0f, 4.0f);
 
         e.with<game::Enemy>();
         e.with<game::Health>(6, 6);
@@ -163,6 +167,7 @@ utils::RefPtr<core::Registry> game::make_registry()
     auto TREE = registry->register_blueprint("tree", [&](core::Builder &e) {
         e.with<base::Sprite>(registry->texture("tree"));
         e.with<base::CastShadow>(12, utils::Vec2f{});
+        e.with<base::Colider>(-2.0f, -2.0f, 4.0f, 4.0f);
 
         Stack tree(Item("log", registry->texture("log")), 12);
         e.with<game::Breakable>(tree, 5);
@@ -171,6 +176,7 @@ utils::RefPtr<core::Registry> game::make_registry()
     auto PINE = registry->register_blueprint("pine", [&](core::Builder &e) {
         e.with<base::Sprite>(registry->texture("pine"));
         e.with<base::CastShadow>(12, utils::Vec2f{});
+        e.with<base::Colider>(-2.0f, -2.0f, 4.0f, 4.0f);
 
         Stack tree(Item("log", registry->texture("log")), 12);
         e.with<game::Breakable>(tree, 5);
@@ -179,6 +185,7 @@ utils::RefPtr<core::Registry> game::make_registry()
     auto PALM = registry->register_blueprint("palm", [&](core::Builder &e) {
         e.with<base::Sprite>(registry->texture("palm"));
         e.with<base::CastShadow>(16, utils::Vec2f{});
+        e.with<base::Colider>(-2.0f, -2.0f, 4.0f, 4.0f);
 
         Stack tree(Item("log", registry->texture("log")), 12);
         e.with<game::Breakable>(tree, 5);
@@ -204,6 +211,7 @@ utils::RefPtr<core::Registry> game::make_registry()
 
     auto CACTUS = registry->register_blueprint("cactus", [&](core::Builder &e) {
         e.with<base::Sprite>(registry->texture("cactus"));
+        e.with<base::Colider>(-2.0f, -2.0f, 4.0f, 4.0f);
     });
 
     registry->register_biome({

@@ -10,6 +10,11 @@ namespace base
         float offy;
         float w;
         float h;
+
+        utils::Rectf operator()()
+        {
+            return {offx, offy, w, h};
+        }
     };
 } // namespace base
 
