@@ -8,9 +8,9 @@
 #include "core/glue/ImGuiExtension.h"
 #include "game/generator/Generator.h"
 
-#include "game/generator/Generator.h"
 #include "core/Camera.h"
 #include "core/Keyboard.h"
+#include "game/generator/Generator.h"
 
 namespace game
 {
@@ -68,23 +68,19 @@ namespace game
         //Difficulty
         ImGui::Text("%20s", "Difficulty : ");
         ImGui::SameLine();
-        //static int animate = 1;
-        const char *difficulties[] = {"easy", "normal", "hard"};
+
+        static const char *difficulties[] = {"easy", "normal", "hard"};
         static int difficulty_current_index = 0;
-        const char* combo_difficulties = difficulties[difficulty_current_index];
-        //ImGui::Comworld->add_player({"bob", utils::own<core::Keyboard>()});
-        
+        const char *combo_difficulties = difficulties[difficulty_current_index];
+
         if (ImGui::BeginCombo(" ", combo_difficulties, 0))
         {
             for (int n = 0; n < IM_ARRAYSIZE(difficulties); n++)
             {
                 const bool is_selected = (difficulty_current_index == n);
-                if (ImGui::Selectable(difficulties[n], is_selected)){
-                    difficulty_current_index = n;
-                }
-                if (is_selected)
+                if (ImGui::Selectable(difficulties[n], is_selected))
                 {
-                    ImGui::SetItemDefaultFocus();
+                    difficulty_current_index = n;
                 }
             }
             ImGui::EndCombo();
