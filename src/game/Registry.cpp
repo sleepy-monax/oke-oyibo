@@ -244,6 +244,7 @@ utils::RefPtr<core::Registry> game::make_registry()
         e.with<game::Attack>(1+difficulty.value);
     });
 
+<<<<<<< Updated upstream
     auto SHARK = registry->register_blueprint("shark", [&](core::Builder &e) {
         e.with<base::Momentum>();
         e.with<base::Move>(0.03);
@@ -255,6 +256,8 @@ utils::RefPtr<core::Registry> game::make_registry()
         e.with<game::Attack>(5+difficulty.value);
     });
 
+=======
+>>>>>>> Stashed changes
     auto TREE = registry->register_blueprint("tree", [&, ITEM_LOG](core::Builder &e) {
         e.with<base::Sprite>(registry->texture("tree"));
         e.with<base::CastShadow>(12, utils::Vec2f{});

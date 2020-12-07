@@ -9,6 +9,9 @@
 #include "game/generator/Generator.h"
 #include "game/components/Difficulty.h"
 
+#include "game/generator/Generator.h"
+#include "core/Camera.h"
+
 namespace game
 {
     CreateGame::CreateGame(core::Director &dir, core::Registry &reg) :
