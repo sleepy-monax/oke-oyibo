@@ -111,8 +111,12 @@ utils::RefPtr<core::Registry> game::make_registry()
     Item ITEM_THORN{"hedgehog-thorn", registry->texture("hedgehog-thorn")};
     Item ITEM_MEAT{"meat", registry->texture("meat"), Item::FOOD};
     Item ITEM_WOOL{"wool", registry->texture("wool")};
-    Item ITEM_COCO{"coconut", registry->texture("coconut")};
+    Item ITEM_COCO{"coconut", registry->texture("coconut"), Item::FOOD};
     Item ITEM_FLOUR{"flour", registry->texture("flour")};
+    Item ITEM_PLANK{"plank", registry->texture("plank")};
+    Item ITEM_VEIL{"veil", registry->texture("veil")};
+    Item ITEM_HULL{"hull", registry->texture("hull")};
+    Item ITEM_BOAT{"boat", registry->texture("boat")};
 
     game::Difficulty difficulty;
 
@@ -124,11 +128,52 @@ utils::RefPtr<core::Registry> game::make_registry()
     });
 
     registry->register_craft({
-        {ITEM_SWORD, 1},
-        {
+        .result = {ITEM_SWORD, 1},
+        .ingredients = {
             {ITEM_STICK, 1},
             {ITEM_ROCK, 2},
         },
+    });
+
+    registry->register_craft({
+        .result = {ITEM_BURGER, 1},
+        .ingredients = {
+            {ITEM_FLOUR, 1},
+            {ITEM_MEAT, 1},
+            {ITEM_APPLE, 1},
+        },
+    });
+
+    registry->register_craft({
+        .result = {ITEM_PLANK, 2},
+        .ingredients = {
+            {ITEM_LOG, 1},
+        },
+    });
+
+    registry->register_craft({
+        .result = {ITEM_HULL, 1},
+        .ingredients = {
+            {ITEM_PLANK, 10},
+            {ITEM_SLIME_BALL, 2},
+        },
+    });
+
+    registry->register_craft({
+        .result = {ITEM_VEIL, 1},
+        .ingredients = {
+            {ITEM_WOOL, 5},
+        },
+    });
+
+    registry->register_craft({
+        .result = {ITEM_BOAT, 1},
+        .ingredients = {
+            {ITEM_VEIL, 1},
+            {ITEM_HULL, 1},
+            {ITEM_SLIME_BALL, 1},
+}
+,
     });
 
     auto PLAYER = registry->register_blueprint("player", [&](core::Builder &e) {
