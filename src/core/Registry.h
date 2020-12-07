@@ -141,7 +141,7 @@ namespace core
             }
 
             auto path = "assets/" + name + ".ttf";
-            auto ttf = LoadFont(path.c_str());
+            auto ttf = LoadFontEx(path.c_str(), 72, nullptr, 0);
             _fonts.push_back({name, ttf});
             return ttf;
         }

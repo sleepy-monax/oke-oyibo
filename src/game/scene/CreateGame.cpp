@@ -52,22 +52,35 @@ namespace game
         Rectangle rect{0, 0, _camera.width() * 1.0f, _camera.height() * 1.0f};
         DrawTexturePro(_camera.composite().underlying_texture(), rect, rect, (Vector2){0, 0}, 0.0f, WHITE);
 
+        float menu_with = MeasureTextEx(_font, "Oke-Oyibo", 72, 1).x + 128;
+        float title_height = MeasureTextEx(_font, "Oke-Oyibo", 72, 1).y + 72;
+        DrawRectangle(0, 0, menu_with, _camera.height(), {0, 0, 0, 200});
+        DrawTextEx(_font, "Oke-Oyibo", {64, 64}, 72, 1, WHITE);
+
         //Create menu window
-        ImGui::Begin("Create game");
-        ImVec2 vector(720, 340), button_size(200, 30);
+        ImGuiWindowFlags window_flags = 0;
+        window_flags |= ImGuiWindowFlags_NoBackground;
+        window_flags |= ImGuiWindowFlags_NoTitleBar;
+
+        ImGui::Begin("Create game", nullptr, window_flags);
+        ImVec2 vector(menu_with - 128, _camera.height()), button_size(menu_with - 128, 32);
         ImGui::SetWindowSize(vector);
 
-        ImGui::Text("%65s", "Welcome to Oke Oyibo ! ");
+        ImVec2 pos{64, title_height};
+        ImGui::SetWindowPos(pos);
+
+        ImGui::Text("Welcome to Oke-Oyibo!");
+
+        ImGui::Text(" ");
 
         //Name of the world
-        ImGui::Text("%20s", "Name of the world : ");
-        ImGui::SameLine();
-        char buf[64] = "";
+        ImGui::Text("Name of the world : ");
+
+        static char buf[64] = "";
         ImGui::InputText("", buf, IM_ARRAYSIZE(buf));
 
         //Difficulty
-        ImGui::Text("%20s", "Difficulty : ");
-        ImGui::SameLine();
+        ImGui::Text("Difficulty :");
 
         static const char *difficulties[] = {"easy", "normal", "hard"};
         static int difficulty_current_index = 0;
@@ -86,6 +99,12 @@ namespace game
             ImGui::EndCombo();
         }
 
+        static float world_scale = 1;
+        ImGui::PushID("scale");
+        ImGui::Text("Scale :");
+        ImGui::SliderFloat("", &world_scale, 1, 5, "x%f", 0);
+        ImGui::PopID();
+
         //Create a game
 
         ImGui::Text(" ");
@@ -100,12 +119,12 @@ namespace game
         ImGui::TextCenter("Good luck !");
         ImGui::Text(" ");
 
-        ImGui::SetCursorPosX(270.);
+        ImGui::SetCursorPosX(0);
         if (ImGui::Button("Create game", button_size))
         {
             Generator gen{};
 
-            auto world = gen.generate(registry(), time(nullptr));
+            auto world = gen.generate(registry(), 128 * world_scale, time(nullptr));
 
             world->add_player({"bob", utils::own<core::Keyboard>()});
             world->players()[0].camera().zoom_in();
@@ -114,6 +133,7 @@ namespace game
 
             world->create_entity(registry().blueprint("player"), world->terrain().bound().center());
             world->setDifficulty(difficulty_current_index);
+
             director().switch_scene<game::InGame>(world);
         }
 
@@ -125,7 +145,8 @@ namespace game
         Scene::on_switch_in();
         Generator gen{};
 
-        _world = gen.generate(registry(), time(nullptr));
+        _font = registry().font("alagard");
+        _world = gen.generate(registry(), 128, time(nullptr));
         _camera.jump_to(_world->terrain().bound().center());
     }
 

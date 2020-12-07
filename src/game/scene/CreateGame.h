@@ -1,19 +1,20 @@
 #pragma once
 
+#include "core/Camera.h"
 #include "core/Scene.h"
 #include "core/Texture.h"
-#include "core/Camera.h"
 #include "core/World.h"
 
 namespace game
 {
-    class CreateGame : public core::Scene
+    class CreateGame: public core::Scene
     {
     private:
         core::Texture background_image;
         core::Camera _camera;
         utils::RefPtr<core::World> _world;
         double _accumulator = 4;
+        Font _font;
 
     public:
         CreateGame(core::Director &dir, core::Registry &reg);
@@ -29,5 +30,5 @@ namespace game
 
         bool stackFrame(core::Time &time);
     };
-    
+
 } // namespace game

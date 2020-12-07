@@ -76,8 +76,8 @@ namespace core::glue
     {
         // This intitalize all components of the engine.
 
-        const int screenWidth = 800;
-        const int screenHeight = 450;
+        const int screenWidth = 1280;
+        const int screenHeight = 768;
 
         SetConfigFlags(FLAG_WINDOW_RESIZABLE);
         InitWindow(screenWidth, screenHeight, "raylib [core] example - basic window");

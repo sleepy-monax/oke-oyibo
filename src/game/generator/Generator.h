@@ -79,12 +79,12 @@ namespace game
             }
         }
 
-        utils::RefPtr<core::World> generate(core::Registry &reg, uint32_t seed)
+        utils::RefPtr<core::World> generate(core::Registry &reg, int size, uint32_t seed)
         {
             _climat.seed(seed);
             _random.seed(seed);
 
-            auto world = utils::make<core::World>(reg, 128, 128);
+            auto world = utils::make<core::World>(reg, size, size);
 
             generate_biomes(reg, *world);
 
