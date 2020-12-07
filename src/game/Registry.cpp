@@ -326,7 +326,7 @@ utils::RefPtr<core::Registry> game::make_registry()
         e.with<base::Sprite>(registry->texture("bush"));
     });
 
-    auto GRASS = registry->register_blueprint("grass", [&, ITEM_BURGER](core::Builder &e) {
+    auto GRASS = registry->register_blueprint("grass", [&, ITEM_FLOUR](core::Builder &e) {
         e.with<game::Health>(1, 1);
         e.with<game::Inventory>(game::Inventory{{{ITEM_FLOUR, 1}}});
         e.with<base::Sprite>(registry->texture("grass"));
