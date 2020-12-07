@@ -22,5 +22,12 @@ namespace core
             _registry.emplace_or_replace<TComponent>(_entity, std::forward<TArgs>(args)...);
             return *this;
         }
+
+        template <typename TComponent>
+        Builder &with(TComponent component)
+        {
+            _registry.emplace_or_replace<TComponent>(_entity, component);
+            return *this;
+        }
     };
 } // namespace core
