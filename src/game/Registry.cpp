@@ -12,7 +12,6 @@
 #include "game/components/Animal.h"
 #include "game/components/Armor.h"
 #include "game/components/Attack.h"
-#include "game/components/Breakable.h"
 #include "game/components/Difficulty.h"
 #include "game/components/Enemy.h"
 #include "game/components/Flammable.h"
@@ -37,7 +36,6 @@
 
 #include "game/systems/AnimalMove.h"
 #include "game/systems/AttackSystem.h"
-#include "game/systems/BreakableSystem.h"
 #include "game/systems/DrinkSystem.h"
 #include "game/systems/EatSystem.h"
 #include "game/systems/EnemyMove.h"
@@ -63,7 +61,6 @@ utils::RefPtr<core::Registry> game::make_registry()
     registry->register_system<base::TerrainRender>("terrain");
     registry->register_system<base::Movement>("movement");
 
-    registry->register_system<game::BreakableSystem>("breakable");
     registry->register_system<game::EnemyMove>("enemy-move");
     registry->register_system<game::HealthBar>("health-bar");
     registry->register_system<game::HungerSystem>("hunger");
@@ -89,7 +86,6 @@ utils::RefPtr<core::Registry> game::make_registry()
     registry->register_component<game::Health>("health");
     registry->register_component<game::Hunger>("hunger");
     registry->register_component<game::Inventory>("inventory");
-    registry->register_component<game::Breakable>("breakable");
     registry->register_component<game::Pickable>("pickable");
     registry->register_component<game::Stamina>("stamina");
     registry->register_component<game::Thirst>("thirst");

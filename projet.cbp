@@ -133,7 +133,6 @@
 		
 		<Unit filename="src/game/components/Armor.h" />
 		<Unit filename="src/game/components/Attack.h" />
-		<Unit filename="src/game/components/Breakable.h" />
 		<Unit filename="src/game/components/Enemy.h" />
 		<Unit filename="src/game/components/Flammable.h" />
 		<Unit filename="src/game/components/Growable.h" />
@@ -169,8 +168,6 @@
 		
 		<Unit filename="src/game/systems/AttackSystem.cpp" />
 		<Unit filename="src/game/systems/AttackSystem.h" />
-		<Unit filename="src/game/systems/BreakableSystem.cpp" />
-		<Unit filename="src/game/systems/BreakableSystem.h" />
 		<Unit filename="src/game/systems/DrinkSystem.cpp" />
 		<Unit filename="src/game/systems/DrinkSystem.h" />
 		<Unit filename="src/game/systems/EatSystem.cpp" />
