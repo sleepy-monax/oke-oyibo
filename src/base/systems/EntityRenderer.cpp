@@ -38,6 +38,7 @@ namespace base
 
             auto destination = tex.bound().moved(position() - tex.bound().bottom_center());
 
+            // Only rendere entities which are in the view of the camera.
             if (destination.colide_with(camera.bound_world()))
             {
                 on_screen_sprites.push_back({tex, destination, position, sprite.flash > 0});
@@ -46,6 +47,7 @@ namespace base
 
         if (on_screen_sprites.count() > 0)
         {
+            // Sort entities back to front.
             for (size_t i = 0; i < on_screen_sprites.count() - 1; i++)
             {
                 for (size_t j = i + 1; j < on_screen_sprites.count(); j++)
@@ -60,6 +62,7 @@ namespace base
             camera.with_entities([&]() {
                 for (size_t i = 0; i < on_screen_sprites.count(); i++)
                 {
+                    // When entities are hit they flash red.
                     if (on_screen_sprites[i].flash)
                     {
                         core::draw_texture(on_screen_sprites[i].texture, on_screen_sprites[i].destination, RED);

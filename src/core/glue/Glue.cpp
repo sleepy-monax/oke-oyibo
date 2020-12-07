@@ -74,6 +74,8 @@ namespace core::glue
 
     void initialize()
     {
+        // This intitalize all components of the engine.
+
         const int screenWidth = 800;
         const int screenHeight = 450;
 
@@ -90,6 +92,7 @@ namespace core::glue
         ImGui::StyleColorsDark();
 
         load_imgui_style();
+        // We had to edit RayLib in order to expose the underlying GLFW windows.
         ImGui_ImplGlfw_InitForOpenGL(reinterpret_cast<GLFWwindow *>(GetWindowGLFWHandle()), true);
         ImGui_ImplOpenGL3_Init("#version 130");
     }
@@ -122,9 +125,9 @@ namespace core::glue
 
     void uninitialize()
     {
+        ImGui::DestroyContext();
         ImGui_ImplOpenGL3_Shutdown();
         ImGui_ImplGlfw_Shutdown();
-        ImGui::DestroyContext();
         CloseWindow();
     }
 

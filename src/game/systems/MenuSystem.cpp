@@ -37,7 +37,7 @@ namespace game
                 menu.selected = MAX(0, menu.selected);
                 menu.selected = MIN(menu.selected, static_cast<int>(crafts.count()) - 1);
 
-                bound = bound.offset(position() - bound.center() - utils::Vec2f{0, 8});
+                bound = bound.offset(position() - bound.center() + utils::Vec2f{0, 16});
 
                 if (menu.visible)
                 {
@@ -45,11 +45,6 @@ namespace game
                     {
                         auto &craft = crafts[i];
                         auto column = bound.column(crafts.count(), i, ITEM_GAP);
-
-                        if (menu.selected == i)
-                        {
-                            core::draw_texture(_cursor, column, WHITE);
-                        }
 
                         if (craft.can_be_made(inventory))
                         {
@@ -63,10 +58,15 @@ namespace game
                         Vector2 pos(column.bottom_left().x() + 4, column.bottom_left().y() - 5);
                         DrawTextEx(_font, std::to_string(craft.result.quantity()).c_str(), pos, 4.f, 1.f, WHITE);
 
-                        if (menu.selected == i && menu.clicked)
+                        if (menu.selected == i)
                         {
-                            craft.do_it(inventory);
-                            menu.clicked = false;
+                            core::draw_texture(_cursor, column, WHITE);
+
+                            if (menu.clicked)
+                            {
+                                craft.do_it(inventory);
+                                menu.clicked = false;
+                            }
                         }
                     }
                 }

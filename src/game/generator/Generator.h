@@ -10,6 +10,7 @@
 #include "utils/Random.h"
 #include "utils/Vector.h"
 
+#include "core/Registry.h"
 #include "core/world/Biome.h"
 #include "core/world/Climat.h"
 
