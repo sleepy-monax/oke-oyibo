@@ -22,11 +22,11 @@ namespace game
         static constexpr int ITEM_SIZE = 8;
         static constexpr int ITEM_GAP = 2;
 
-        auto view = world.entities().view<game::Menu, base::Position>();
+        auto view = world.entities().view<game::Menu, game::Inventory, base::Position>();
         auto &crafts = world.registry().crafts();
 
         camera.with_overlay([&]() {
-            view.each([&](game::Menu &menu, base::Position &position) {
+            view.each([&](game::Menu &menu, game::Inventory &inventory, base::Position &position) {
                 utils::Rectf bound = {
                     0,
                     0,
@@ -51,10 +51,23 @@ namespace game
                             core::draw_texture(_cursor, column, WHITE);
                         }
 
-                        core::draw_texture(craft.result.item().texture(), column, WHITE);
+                        if (craft.can_be_made(inventory))
+                        {
+                            core::draw_texture(craft.result.item().texture(), column, WHITE);
+                        }
+                        else
+                        {
+                            core::draw_texture(craft.result.item().texture(), column, {50, 50, 50, 255});
+                        }
 
                         Vector2 pos(column.bottom_left().x() + 4, column.bottom_left().y() - 5);
                         DrawTextEx(_font, std::to_string(craft.result.quantity()).c_str(), pos, 4.f, 1.f, WHITE);
+
+                        if (menu.selected == i && menu.clicked)
+                        {
+                            craft.do_it(inventory);
+                            menu.clicked = false;
+                        }
                     }
                 }
 

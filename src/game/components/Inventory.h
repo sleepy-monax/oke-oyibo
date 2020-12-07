@@ -10,8 +10,9 @@ namespace game
 {
     struct Inventory
     {
-        utils::Vector<game::Stack> inventory;
         static constexpr int MAX_SIZE = 64;
+
+        utils::Vector<game::Stack> inventory;
 
         game::Stack add(game::Stack stack)
         {
@@ -33,7 +34,7 @@ namespace game
             return stack;
         }
 
-        game::Stack remove(game::Stack &stack)
+        game::Stack remove(game::Stack stack)
         {
             for (size_t i = 0; i < inventory.count(); i++)
             {
@@ -55,6 +56,21 @@ namespace game
         {
             game::Stack stack{item, quantity};
             return remove(stack);
+        }
+
+        int count(game::Item item) const
+        {
+            int result = 0;
+
+            for (size_t i = 0; i < inventory.count(); i++)
+            {
+                if (inventory[i].item() == item)
+                {
+                    result += inventory[i].quantity();
+                }
+            }
+
+            return result;
         }
 
         void clear()

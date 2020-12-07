@@ -33,6 +33,11 @@ namespace game
 
         Item(std::string name, core::Texture texture, int flags = 0) :
             _name(name), _texture(texture), _flags(flags) {}
+
+        bool operator==(const Item &other)
+        {
+            return name() == other.name();
+        }
     };
 
 } // namespace game
