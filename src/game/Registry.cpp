@@ -13,6 +13,7 @@
 #include "game/components/Armor.h"
 #include "game/components/Attack.h"
 #include "game/components/Breakable.h"
+#include "game/components/Difficulty.h"
 #include "game/components/Enemy.h"
 #include "game/components/Flammable.h"
 #include "game/components/Growable.h"
@@ -24,7 +25,6 @@
 #include "game/components/Pickable.h"
 #include "game/components/Prey.h"
 #include "game/components/Stamina.h"
-#include "game/components/Difficulty.h"
 
 #include "base/systems/Camera.h"
 #include "base/systems/EntityRenderer.h"
@@ -172,8 +172,7 @@ utils::RefPtr<core::Registry> game::make_registry()
             {ITEM_VEIL, 1},
             {ITEM_HULL, 1},
             {ITEM_SLIME_BALL, 1},
-}
-,
+        },
     });
 
     auto PLAYER = registry->register_blueprint("player", [&](core::Builder &e) {
@@ -237,11 +236,11 @@ utils::RefPtr<core::Registry> game::make_registry()
         e.with<base::Sprite>(registry->texture("zombie"));
         e.with<base::CastShadow>(4, utils::Vec2f{0.5, 0});
         e.with<base::Colider>(-2.0f, -2.0f, 4.0f, 4.0f);
-        e.with<game::Inventory>(game::Inventory{{{ITEM_STICK, 2},{ITEM_ROCK, 2}}});
+        e.with<game::Inventory>(game::Inventory{{{ITEM_STICK, 2}, {ITEM_ROCK, 2}}});
 
         e.with<game::Enemy>();
         e.with<game::Health>(7, 7);
-        e.with<game::Attack>(1+difficulty.value);
+        e.with<game::Attack>(1 * difficulty.value);
     });
 
     auto SKELETON = registry->register_blueprint("skeleton", [&, ITEM_BONE](core::Builder &e) {
@@ -254,7 +253,7 @@ utils::RefPtr<core::Registry> game::make_registry()
 
         e.with<game::Enemy>();
         e.with<game::Health>(6, 6);
-        e.with<game::Attack>(1+difficulty.value);
+        e.with<game::Attack>(1 + difficulty.value);
     });
 
     auto SLIME = registry->register_blueprint("slime", [&, ITEM_SLIME_BALL](core::Builder &e) {
@@ -266,7 +265,7 @@ utils::RefPtr<core::Registry> game::make_registry()
 
         e.with<game::Enemy>();
         e.with<game::Health>(3, 3);
-        e.with<game::Attack>(1+difficulty.value);
+        e.with<game::Attack>(1 + difficulty.value);
     });
 
     auto BIG_SLIME = registry->register_blueprint("big-slime", [&, ITEM_SLIME_BALL](core::Builder &e) {
@@ -278,7 +277,7 @@ utils::RefPtr<core::Registry> game::make_registry()
 
         e.with<game::Enemy>();
         e.with<game::Health>(5, 5);
-        e.with<game::Attack>(1+difficulty.value);
+        e.with<game::Attack>(1 + difficulty.value);
     });
 
     auto WISP = registry->register_blueprint("wisp", [&](core::Builder &e) {
@@ -288,18 +287,18 @@ utils::RefPtr<core::Registry> game::make_registry()
 
         e.with<game::Enemy>();
         e.with<game::Health>(2, 2);
-        e.with<game::Attack>(1+difficulty.value);
+        e.with<game::Attack>(1 + difficulty.value);
     });
 
     auto SHARK = registry->register_blueprint("shark", [&, ITEM_SWORD, ITEM_SHARK_FIN](core::Builder &e) {
         e.with<base::Momentum>();
         e.with<base::Move>(0.03);
         e.with<base::Sprite>(registry->texture("shark"));
-        e.with<game::Inventory>(game::Inventory{{{ITEM_SWORD, 1}, {ITEM_SHARK_FIN,1}}});
+        e.with<game::Inventory>(game::Inventory{{{ITEM_SWORD, 1}, {ITEM_SHARK_FIN, 1}}});
 
         e.with<game::Enemy>(true);
         e.with<game::Health>(20, 20);
-        e.with<game::Attack>(5+difficulty.value);
+        e.with<game::Attack>(5 + difficulty.value);
     });
 
     auto TREE = registry->register_blueprint("tree", [&, ITEM_LOG, ITEM_APPLE](core::Builder &e) {
@@ -309,7 +308,6 @@ utils::RefPtr<core::Registry> game::make_registry()
 
         e.with<game::Health>(5, 5);
         e.with<game::Inventory>(game::Inventory{{{ITEM_LOG, 4}, {ITEM_APPLE, 1}}});
-
     });
 
     auto PINE = registry->register_blueprint("pine", [&, ITEM_LOG](core::Builder &e) {
@@ -366,11 +364,34 @@ utils::RefPtr<core::Registry> game::make_registry()
         e.with<base::CastShadow>(4, utils::Vec2f{0, 0});
     });
 
+    auto SWAMP_TREE = registry->register_blueprint("swamp-tree", [&, ITEM_LOG](core::Builder &e) {
+        e.with<base::Sprite>(registry->texture("swamp-tree"));
+        e.with<base::CastShadow>(12, utils::Vec2f{});
+        e.with<base::Colider>(-2.0f, -2.0f, 4.0f, 4.0f);
+
+        e.with<game::Health>(5, 5);
+        e.with<game::Inventory>(game::Inventory{{{ITEM_LOG, 4}}});
+    });
+
+    auto DEAD_SWAMP_TREE = registry->register_blueprint("dead-swamp-tree", [&, ITEM_LOG](core::Builder &e) {
+        e.with<base::Sprite>(registry->texture("dead-swamp-tree"));
+        e.with<base::CastShadow>(4, utils::Vec2f{});
+        e.with<base::Colider>(-2.0f, -2.0f, 4.0f, 4.0f);
+
+        e.with<game::Health>(1, 1);
+        e.with<game::Inventory>(game::Inventory{{{ITEM_LOG, 1}}});
+    });
+
+    auto SWAMP_ROOT = registry->register_blueprint("swamp-root", [&, ITEM_LOG](core::Builder &e) {
+        e.with<base::Sprite>(registry->texture("root"));
+        e.with<base::Colider>(-2.0f, -2.0f, 4.0f, 4.0f);
+    });
+
     core::Tile WATER_TILE{registry->texture("water-tile"), core::Tile::LIQUID};
     core::Tile GRASS_TILE{registry->texture("grass-tile"), core::Tile::SOLID};
     core::Tile SNOW_TILE{registry->texture("snow-tile"), core::Tile::SOLID};
     core::Tile SAND_TILE{registry->texture("sand-tile"), core::Tile::SOLID};
-    // core::Tile SWAMP_GRASS_TILE{registry->texture("swamp-grass-tile"), core::Tile::SOLID};
+    core::Tile SWAMP_GRASS_TILE{registry->texture("swamp-grass-tile"), core::Tile::SOLID};
     core::Tile BEACH_SAND_TILE{registry->texture("beach-sand-tile"), core::Tile::SOLID};
     core::Tile STONE_TILE{registry->texture("stone-tile"), core::Tile::SOLID};
     core::Tile DEEP_WATER_TILE{registry->texture("deep-water-tile"), core::Tile::LIQUID};
@@ -404,13 +425,13 @@ utils::RefPtr<core::Registry> game::make_registry()
         },
     });
 
-    // FIXME: Jungle biome
     // registry->register_biome({
     //     "jungle",
     //     GRASS_TILE,
     //     core::TEM{0.5, 0.5, 0.5},
     //     {
     //         {1, SLIME, 0.03, utils::Noise{0x404c09fa, 1, 2}},
+    //         {1, BIG_SLIME, 0.03, utils::Noise{0x404c09fa, 1, 2}},
     //     },
     // });
 
@@ -455,14 +476,20 @@ utils::RefPtr<core::Registry> game::make_registry()
     });
 
     // FIXME: swamp biome;
-    // registry->register_biome({
-    //     "swamp",
-    //     SWAMP_GRASS_TILE,
-    //     core::TEM{0.25, 0.1, 1},
-    //     {
-    //         {1, WISP, 0.01, utils::Noise{0x404c09fa, 1, 2}},
-    //     },
-    // });
+    registry->register_biome({
+        "swamp",
+        SWAMP_GRASS_TILE,
+        core::TEM{0.25, 0.1, 1},
+        {
+            {1, GRASS, 1, utils::Noise{0x1af03d7d, 1, 2}},
+            {0.5, WISP, 0.1, utils::Noise{0x404c09fa, 1, 2}},
+            {0.75, SLIME, 0.5, utils::Noise{0x404c09fa, 1, 2}},
+            {0.75, BIG_SLIME, 0.1, utils::Noise{0x404c09fa, 1, 2}},
+            {0.75, SWAMP_TREE, 1, utils::Noise{0x404c09fa, 1, 0.1}},
+            {0.25, DEAD_SWAMP_TREE, 1, utils::Noise{0x404c09fa, 1, 0.1}},
+            {0.5, SWAMP_ROOT, 1, utils::Noise{0xcba21a9a, 1, 0.1}},
+        },
+    });
 
     registry->register_biome({
         "beach",
