@@ -148,6 +148,7 @@
 		<Unit filename="src/game/components/Target.h" />
 		<Unit filename="src/game/components/Temperature.h" />
 		<Unit filename="src/game/components/Thirst.h" />
+		<Unit filename="src/game/components/Difficulty.h" />
 		
 		<Unit filename="src/game/generator/Generator.h" />
 		<Unit filename="src/game/generator/Pass.h" />
