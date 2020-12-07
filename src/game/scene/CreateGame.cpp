@@ -7,6 +7,7 @@
 #include "core/Camera.h"
 #include "core/glue/ImGuiExtension.h"
 #include "game/generator/Generator.h"
+#include "game/components/Difficulty.h"
 
 namespace game
 {
@@ -64,9 +65,31 @@ namespace game
         //Difficulty
         ImGui::Text("%20s", "Difficulty : ");
         ImGui::SameLine();
-        static int animate = 1;
+        //static int animate = 1;
         const char *difficulties[] = {"easy", "normal", "hard"};
-        ImGui::Combo(" ", &animate, difficulties, IM_ARRAYSIZE(difficulties));
+        game::Difficulty difficulty;
+        static int difficulty_current_index = 0;
+        const char* combo_difficulties = difficulties[difficulty_current_index];
+        //ImGui::Combo(" ", &animate, difficulties, IM_ARRAYSIZE(difficulties));
+        
+        if (ImGui::BeginCombo(" ", combo_difficulties, 0))
+        {
+            for (int n = 0; n < IM_ARRAYSIZE(difficulties); n++)
+            {
+                const bool is_selected = (difficulty_current_index == n);
+                if (ImGui::Selectable(difficulties[n], is_selected)){
+                    difficulty_current_index = n;
+                    difficulty.value = n + 1;
+                }
+                if (is_selected)
+                {
+                    ImGui::SetItemDefaultFocus();
+                }
+            }
+            ImGui::EndCombo();
+        }
+
+        
 
         //Create a game
 

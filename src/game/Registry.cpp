@@ -24,6 +24,7 @@
 #include "game/components/Pickable.h"
 #include "game/components/Prey.h"
 #include "game/components/Stamina.h"
+#include "game/components/Difficulty.h"
 
 #include "base/systems/Camera.h"
 #include "base/systems/EntityRenderer.h"
@@ -95,6 +96,7 @@ utils::RefPtr<core::Registry> game::make_registry()
     registry->register_component<game::HoldItem>("hold-item");
     registry->register_component<game::Attack>("attack");
     registry->register_component<game::Animal>("animal");
+    registry->register_component<game::Difficulty>("difficulty");
 
     Item ITEM_LOG{"log", registry->texture("log")};
     Item ITEM_BURGER{"burger", registry->texture("food"), Item::FOOD};
@@ -102,6 +104,8 @@ utils::RefPtr<core::Registry> game::make_registry()
     Item ITEM_ROCK{"rock", registry->texture("rock")};
     Item ITEM_FLOWER{"flower", registry->texture("flower")};
     Item ITEM_SWORD{"sword", registry->texture("sword")};
+
+    game::Difficulty difficulty;
 
     registry->register_craft({
         .result = {ITEM_STICK, 4},
@@ -179,7 +183,7 @@ utils::RefPtr<core::Registry> game::make_registry()
 
         e.with<game::Enemy>();
         e.with<game::Health>(7, 7);
-        e.with<game::Attack>(1);
+        e.with<game::Attack>(1*difficulty.value);
     });
 
     auto SKELETON = registry->register_blueprint("skeleton", [&](core::Builder &e) {
