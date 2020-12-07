@@ -150,7 +150,7 @@ utils::RefPtr<core::Registry> game::make_registry()
         e.with<game::Menu>();
     });
 
-    auto HEDGEHOG = registry->register_blueprint("hedgehog", [&](core::Builder &e) {
+    auto HEDGEHOG = registry->register_blueprint("hedgehog", [&, ITEM_THORN, ITEM_MEAT](core::Builder &e) {
         e.with<base::Momentum>();
         e.with<base::Move>(0.05);
         e.with<base::Sprite>(registry->texture("hedgehog"));
@@ -162,7 +162,7 @@ utils::RefPtr<core::Registry> game::make_registry()
         e.with<game::Health>(7, 7);
     });
 
-    auto BUNNY = registry->register_blueprint("bunny", [&](core::Builder &e) {
+    auto BUNNY = registry->register_blueprint("bunny", [&, ITEM_MEAT](core::Builder &e) {
         e.with<base::Momentum>();
         e.with<base::Move>(0.05);
         e.with<base::Sprite>(registry->texture("bunny"));
@@ -174,7 +174,7 @@ utils::RefPtr<core::Registry> game::make_registry()
         e.with<game::Health>(7, 7);
     });
 
-    auto SHEEP = registry->register_blueprint("sheep", [&](core::Builder &e) {
+    auto SHEEP = registry->register_blueprint("sheep", [&, ITEM_MEAT, ITEM_WOOL](core::Builder &e) {
         e.with<base::Momentum>();
         e.with<base::Move>(0.05);
         e.with<base::Sprite>(registry->texture("sheep"));
@@ -186,7 +186,7 @@ utils::RefPtr<core::Registry> game::make_registry()
         e.with<game::Health>(7, 7);
     });
 
-    auto ZOMBIE = registry->register_blueprint("zombie", [&](core::Builder &e) {
+    auto ZOMBIE = registry->register_blueprint("zombie", [&, ITEM_STICK, ITEM_ROCK](core::Builder &e) {
         e.with<base::Momentum>();
         e.with<base::Move>(0.03);
         e.with<base::Sprite>(registry->texture("zombie"));
@@ -199,7 +199,7 @@ utils::RefPtr<core::Registry> game::make_registry()
         e.with<game::Attack>(1+difficulty.value);
     });
 
-    auto SKELETON = registry->register_blueprint("skeleton", [&](core::Builder &e) {
+    auto SKELETON = registry->register_blueprint("skeleton", [&, ITEM_BONE](core::Builder &e) {
         e.with<base::Momentum>();
         e.with<base::Move>(0.03);
         e.with<base::Sprite>(registry->texture("skeleton"));
@@ -212,7 +212,7 @@ utils::RefPtr<core::Registry> game::make_registry()
         e.with<game::Attack>(1+difficulty.value);
     });
 
-    auto SLIME = registry->register_blueprint("slime", [&](core::Builder &e) {
+    auto SLIME = registry->register_blueprint("slime", [&, ITEM_SLIME_BALL](core::Builder &e) {
         e.with<base::Momentum>();
         e.with<base::Move>(0.05);
         e.with<base::Sprite>(registry->texture("slime"));
@@ -224,7 +224,7 @@ utils::RefPtr<core::Registry> game::make_registry()
         e.with<game::Attack>(1+difficulty.value);
     });
 
-    auto BIG_SLIME = registry->register_blueprint("big-slime", [&](core::Builder &e) {
+    auto BIG_SLIME = registry->register_blueprint("big-slime", [&, ITEM_SLIME_BALL](core::Builder &e) {
         e.with<base::Momentum>();
         e.with<base::Move>(0.03);
         e.with<base::Sprite>(registry->texture("big-slime"));
@@ -246,7 +246,7 @@ utils::RefPtr<core::Registry> game::make_registry()
         e.with<game::Attack>(1+difficulty.value);
     });
 
-    auto SHARK = registry->register_blueprint("shark", [&](core::Builder &e) {
+    auto SHARK = registry->register_blueprint("shark", [&, ITEM_SWORD, ITEM_SHARK_FIN](core::Builder &e) {
         e.with<base::Momentum>();
         e.with<base::Move>(0.03);
         e.with<base::Sprite>(registry->texture("shark"));
@@ -257,7 +257,7 @@ utils::RefPtr<core::Registry> game::make_registry()
         e.with<game::Attack>(5+difficulty.value);
     });
 
-    auto TREE = registry->register_blueprint("tree", [&, ITEM_LOG](core::Builder &e) {
+    auto TREE = registry->register_blueprint("tree", [&, ITEM_LOG, ITEM_APPLE](core::Builder &e) {
         e.with<base::Sprite>(registry->texture("tree"));
         e.with<base::CastShadow>(12, utils::Vec2f{});
         e.with<base::Colider>(-2.0f, -2.0f, 4.0f, 4.0f);
@@ -276,7 +276,7 @@ utils::RefPtr<core::Registry> game::make_registry()
         e.with<game::Inventory>(game::Inventory{{{ITEM_LOG, 4}}});
     });
 
-    auto PALM = registry->register_blueprint("palm", [&, ITEM_LOG](core::Builder &e) {
+    auto PALM = registry->register_blueprint("palm", [&, ITEM_LOG, ITEM_COCO](core::Builder &e) {
         e.with<base::Sprite>(registry->texture("palm"));
         e.with<base::CastShadow>(16, utils::Vec2f{});
         e.with<base::Colider>(-2.0f, -2.0f, 4.0f, 4.0f);
@@ -314,7 +314,7 @@ utils::RefPtr<core::Registry> game::make_registry()
         e.with<base::Colider>(-2.0f, -2.0f, 4.0f, 4.0f);
     });
 
-    auto DEAD_BUSH = registry->register_blueprint("dead-bush", [&](core::Builder &e) {
+    auto DEAD_BUSH = registry->register_blueprint("dead-bush", [&, ITEM_STICK](core::Builder &e) {
         e.with<game::Health>(1, 1);
         e.with<game::Inventory>(game::Inventory{{{ITEM_STICK, 1}}});
         e.with<base::Sprite>(registry->texture("dead-bush"));
