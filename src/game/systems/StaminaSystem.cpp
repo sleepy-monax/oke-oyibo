@@ -18,13 +18,13 @@ namespace game
             view.each([&](game::Stamina &stamina, base::Momentum &momentum) {
                 if (momentum.ax == 0.1f || momentum.ay == 0.1f || momentum.ax == -0.1f || momentum.ay == -0.1f)
                 {
-                    if (stamina.current - 0.8f <= 0)
+                    if (stamina.current - 0.5f <= 0)
                     {
                         stamina.current = 0.0f;
                     }
                     else
                     {
-                        stamina.current -= 0.8f;
+                        stamina.current -= 0.5f;
                     }
                 }
 
