@@ -104,6 +104,13 @@ utils::RefPtr<core::Registry> game::make_registry()
     Item ITEM_ROCK{"rock", registry->texture("rock")};
     Item ITEM_FLOWER{"flower", registry->texture("flower")};
     Item ITEM_SWORD{"sword", registry->texture("sword")};
+    Item ITEM_BONE{"bone", registry->texture("bone")};
+    Item ITEM_SLIME_BALL{"slime-ball", registry->texture("slime-ball")};
+    Item ITEM_SHARK_FIN{"shark-fin", registry->texture("shark-fin")};
+    Item ITEM_APPLE{"apple", registry->texture("apple"), Item::FOOD};
+    Item ITEM_THORN{"hedgehog-thorn", registry->texture("hedgehog-thorn")};
+    Item ITEM_MEAT{"meat", registry->texture("meat"), Item::FOOD};
+    Item ITEM_WOOL{"wool", registry->texture("wool")};
 
     game::Difficulty difficulty;
 
@@ -148,6 +155,7 @@ utils::RefPtr<core::Registry> game::make_registry()
         e.with<base::CastShadow>(4, utils::Vec2f{-1, 0});
         e.with<base::Colider>(-2.0f, -2.0f, 4.0f, 4.0f);
         e.with<game::Animal>();
+        e.with<game::Inventory>(game::Inventory{{{ITEM_THORN, 2}, {ITEM_MEAT, 1}}});
 
         e.with<game::Health>(7, 7);
     });
@@ -159,6 +167,7 @@ utils::RefPtr<core::Registry> game::make_registry()
         e.with<base::CastShadow>(4, utils::Vec2f{-1, 0});
         e.with<base::Colider>(-2.0f, -2.0f, 4.0f, 4.0f);
         e.with<game::Animal>();
+        e.with<game::Inventory>(game::Inventory{{{ITEM_MEAT, 1}}});
 
         e.with<game::Health>(7, 7);
     });
@@ -170,6 +179,7 @@ utils::RefPtr<core::Registry> game::make_registry()
         e.with<base::CastShadow>(4, utils::Vec2f{-1, 0});
         e.with<game::Animal>();
         e.with<base::Colider>(-2.0f, -2.0f, 4.0f, 4.0f);
+        e.with<game::Inventory>(game::Inventory{{{ITEM_MEAT, 2}, {ITEM_WOOL, 1}}});
 
         e.with<game::Health>(7, 7);
     });
@@ -180,6 +190,7 @@ utils::RefPtr<core::Registry> game::make_registry()
         e.with<base::Sprite>(registry->texture("zombie"));
         e.with<base::CastShadow>(4, utils::Vec2f{0.5, 0});
         e.with<base::Colider>(-2.0f, -2.0f, 4.0f, 4.0f);
+        e.with<game::Inventory>(game::Inventory{{{ITEM_STICK, 2},{ITEM_ROCK, 2}}});
 
         e.with<game::Enemy>();
         e.with<game::Health>(7, 7);
@@ -192,6 +203,7 @@ utils::RefPtr<core::Registry> game::make_registry()
         e.with<base::Sprite>(registry->texture("skeleton"));
         e.with<base::CastShadow>(4, utils::Vec2f{0.5, 0});
         e.with<base::Colider>(-2.0f, -2.0f, 4.0f, 4.0f);
+        e.with<game::Inventory>(game::Inventory{{{ITEM_BONE, 2}}});
 
         e.with<game::Enemy>();
         e.with<game::Health>(6, 6);
@@ -203,6 +215,7 @@ utils::RefPtr<core::Registry> game::make_registry()
         e.with<base::Move>(0.05);
         e.with<base::Sprite>(registry->texture("slime"));
         e.with<base::CastShadow>(8, utils::Vec2f{0, 0});
+        e.with<game::Inventory>(game::Inventory{{{ITEM_SLIME_BALL, 3}}});
 
         e.with<game::Enemy>();
         e.with<game::Health>(3, 3);
@@ -214,6 +227,7 @@ utils::RefPtr<core::Registry> game::make_registry()
         e.with<base::Move>(0.03);
         e.with<base::Sprite>(registry->texture("big-slime"));
         e.with<base::CastShadow>(12, utils::Vec2f{0, 0});
+        e.with<game::Inventory>(game::Inventory{{{ITEM_SLIME_BALL, 6}}});
 
         e.with<game::Enemy>();
         e.with<game::Health>(5, 5);
@@ -234,6 +248,7 @@ utils::RefPtr<core::Registry> game::make_registry()
         e.with<base::Momentum>();
         e.with<base::Move>(0.03);
         e.with<base::Sprite>(registry->texture("shark"));
+        e.with<game::Inventory>(game::Inventory{{{ITEM_SWORD, 1}, {ITEM_SHARK_FIN,1}}});
 
         e.with<game::Enemy>(true);
         e.with<game::Health>(20, 20);
@@ -274,7 +289,7 @@ utils::RefPtr<core::Registry> game::make_registry()
     });
 
     auto GRASS = registry->register_blueprint("grass", [&, ITEM_BURGER](core::Builder &e) {
-        Stack item(ITEM_BURGER, 1);
+        Stack item(ITEM_APPLE, 1);
         e.with<game::Breakable>(item, 1);
         e.with<base::Sprite>(registry->texture("grass"));
     });

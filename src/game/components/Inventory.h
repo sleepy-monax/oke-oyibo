@@ -2,6 +2,8 @@
 
 #include <vector>
 
+#include <initializer_list>
+
 #include "game/inventory/Stack.h"
 
 #include "utils/Vector.h"
