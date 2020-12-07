@@ -165,6 +165,8 @@
 		<Unit filename="src/game/scene/InGame.cpp" />
 		<Unit filename="src/game/scene/InGame.h" />
 		<Unit filename="src/game/scene/SplashScreen.h" />
+		<Unit filename="src/game/scene/EndGameScene.cpp" />
+		<Unit filename="src/game/scene/EndGameScene.h" />
 		
 		<Unit filename="src/game/systems/AttackSystem.cpp" />
 		<Unit filename="src/game/systems/AttackSystem.h" />
