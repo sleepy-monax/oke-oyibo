@@ -93,7 +93,7 @@ namespace game
         //Create a game
 
         ImGui::Text(" ");
-        ImGui::TextCenter("Press E to break and collect items");
+        ImGui::TextCenter("Press J to break items");
         ImGui::TextCenter("Press J to attack enemies (better with a sword :p)");
         ImGui::TextCenter("Press A to eat some food if you find some");
         ImGui::TextCenter("Press Up Arrow to see the craft recipes");
