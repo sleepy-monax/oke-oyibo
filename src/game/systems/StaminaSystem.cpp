@@ -30,13 +30,13 @@ namespace game
 
                 if (momentum.ax == 0.0f && momentum.ay == 0.0f)
                 {
-                    if (stamina.current + 0.3f > stamina.maximum)
+                    if (stamina.current + 0.6f > stamina.maximum)
                     {
                         stamina.current = stamina.maximum;
                     }
                     else
                     {
-                        stamina.current += 0.3f;
+                        stamina.current += 0.6f;
                     }
                 }
             });
