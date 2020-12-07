@@ -48,7 +48,7 @@ namespace game
 
         camera.with_entities([&]() {
             player.each([&](auto &inv, auto &hold, auto &position) {
-                utils::Rectf bound = {3, -10, 6, 6};
+                utils::Rectf bound = {2, -11, 8, 8};
 
                 bound = bound.offset(position());
 
@@ -59,7 +59,7 @@ namespace game
                         auto texture = inv.inventory[hold.index].item().texture();
                         auto num = inv.inventory[hold.index].quantity();
 
-                        Vector2 pos(position().x() + 4, position().y() - 5);
+                        Vector2 pos(position().x() + 6, position().y() - 6);
                         core::draw_texture(texture, bound, WHITE);
                         DrawTextEx(font, std::to_string(num).c_str(), pos, 5.f, 1.f, WHITE);
                     }

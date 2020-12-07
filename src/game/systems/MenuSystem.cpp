@@ -55,8 +55,8 @@ namespace game
                             core::draw_texture(craft.result.item().texture(), column, {50, 50, 50, 255});
                         }
 
-                        Vector2 pos(column.bottom_left().x() + 4, column.bottom_left().y() - 5);
-                        DrawTextEx(_font, std::to_string(craft.result.quantity()).c_str(), pos, 4.f, 1.f, WHITE);
+                        Vector2 pos(column.bottom_left().x() + 6, column.bottom_left().y() - 2);
+                        DrawTextEx(_font, std::to_string(craft.result.quantity()).c_str(), pos, 6.f, 1.f, WHITE);
 
                         if (menu.selected == i)
                         {
@@ -66,6 +66,7 @@ namespace game
                             {
                                 craft.do_it(inventory);
                                 menu.clicked = false;
+                                menu.visible = false;
                             }
                         }
                     }
