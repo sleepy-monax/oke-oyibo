@@ -23,7 +23,7 @@ namespace game
         utils::RefPtr<core::World> _world;
 
     public:
-        InGame(core::Director &dir, core::Registry &reg);
+        InGame(core::Director &dir, core::Registry &reg, utils::RefPtr<core::World> world);
         ~InGame() override;
 
         void update(core::Time &time) override;

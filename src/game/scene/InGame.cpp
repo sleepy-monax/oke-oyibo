@@ -14,9 +14,17 @@
 namespace game
 {
 
-    InGame::InGame(core::Director &dir, core::Registry &reg) :
-        core::Scene(dir, reg)
+    InGame::InGame(core::Director &dir, core::Registry &reg, utils::RefPtr<core::World> world) :
+        core::Scene(dir, reg), _world(world)
     {
+        _editor = utils::own<editor::Editor>(_world);
+        _editor->open<editor::Entities>();
+        _editor->open<editor::Inspector>();
+        _editor->open<editor::Profiler>();
+        _editor->open<editor::Systems>();
+        _editor->open<editor::Viewport>();
+
+        _game = utils::own<game::Game>(_world);
     }
 
     InGame::~InGame()
@@ -25,26 +33,6 @@ namespace game
 
     void InGame::on_switch_in()
     {
-        Generator gen{};
-
-        auto world = gen.generate(registry(), time(nullptr));
-
-        world->add_player({"bob", utils::own<core::Keyboard>()});
-        world->players()[0].camera().zoom_in();
-        world->players()[0].camera().speed(10);
-        world->players()[0].camera().jump_to(world->terrain().bound().center());
-
-        world->create_entity(registry().blueprint("player"), world->terrain().bound().center());
-
-        _editor = utils::own<editor::Editor>(world);
-        _editor->open<editor::Entities>();
-        _editor->open<editor::Inspector>();
-        _editor->open<editor::Profiler>();
-        _editor->open<editor::Systems>();
-        _editor->open<editor::Viewport>();
-
-        _game = utils::own<game::Game>(world);
-        _world = world;
     }
 
     void InGame::on_switch_out()

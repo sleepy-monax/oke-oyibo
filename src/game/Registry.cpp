@@ -12,7 +12,6 @@
 #include "game/components/Animal.h"
 #include "game/components/Armor.h"
 #include "game/components/Attack.h"
-#include "game/components/Difficulty.h"
 #include "game/components/Enemy.h"
 #include "game/components/Flammable.h"
 #include "game/components/Growable.h"
@@ -92,7 +91,6 @@ utils::RefPtr<core::Registry> game::make_registry()
     registry->register_component<game::HoldItem>("hold-item");
     registry->register_component<game::Attack>("attack");
     registry->register_component<game::Animal>("animal");
-    registry->register_component<game::Difficulty>("difficulty");
 
     Item ITEM_LOG{"log", registry->texture("log")};
     Item ITEM_BURGER{"burger", registry->texture("food"), Item::FOOD};
@@ -113,8 +111,6 @@ utils::RefPtr<core::Registry> game::make_registry()
     Item ITEM_VEIL{"veil", registry->texture("veil")};
     Item ITEM_HULL{"hull", registry->texture("hull")};
     Item ITEM_BOAT{"boat", registry->texture("boat")};
-
-    game::Difficulty difficulty;
 
     registry->register_craft({
         .result = {ITEM_STICK, 4},
@@ -236,7 +232,7 @@ utils::RefPtr<core::Registry> game::make_registry()
 
         e.with<game::Enemy>();
         e.with<game::Health>(7, 7);
-        e.with<game::Attack>(1 * difficulty.value);
+        e.with<game::Attack>(1);
     });
 
     auto SKELETON = registry->register_blueprint("skeleton", [&, ITEM_BONE](core::Builder &e) {
@@ -249,7 +245,7 @@ utils::RefPtr<core::Registry> game::make_registry()
 
         e.with<game::Enemy>();
         e.with<game::Health>(6, 6);
-        e.with<game::Attack>(1 + difficulty.value);
+        e.with<game::Attack>(1);
     });
 
     auto SLIME = registry->register_blueprint("slime", [&, ITEM_SLIME_BALL](core::Builder &e) {
@@ -261,7 +257,7 @@ utils::RefPtr<core::Registry> game::make_registry()
 
         e.with<game::Enemy>();
         e.with<game::Health>(3, 3);
-        e.with<game::Attack>(1 + difficulty.value);
+        e.with<game::Attack>(1);
     });
 
     auto BIG_SLIME = registry->register_blueprint("big-slime", [&, ITEM_SLIME_BALL](core::Builder &e) {
@@ -273,7 +269,7 @@ utils::RefPtr<core::Registry> game::make_registry()
 
         e.with<game::Enemy>();
         e.with<game::Health>(5, 5);
-        e.with<game::Attack>(1 + difficulty.value);
+        e.with<game::Attack>(1);
     });
 
     auto WISP = registry->register_blueprint("wisp", [&](core::Builder &e) {
@@ -283,7 +279,7 @@ utils::RefPtr<core::Registry> game::make_registry()
 
         e.with<game::Enemy>();
         e.with<game::Health>(2, 2);
-        e.with<game::Attack>(1 + difficulty.value);
+        e.with<game::Attack>(1);
     });
 
     auto SHARK = registry->register_blueprint("shark", [&, ITEM_SWORD, ITEM_SHARK_FIN](core::Builder &e) {
@@ -294,7 +290,7 @@ utils::RefPtr<core::Registry> game::make_registry()
 
         e.with<game::Enemy>(true);
         e.with<game::Health>(20, 20);
-        e.with<game::Attack>(5 + difficulty.value);
+        e.with<game::Attack>(5);
     });
 
     auto TREE = registry->register_blueprint("tree", [&, ITEM_LOG, ITEM_APPLE](core::Builder &e) {

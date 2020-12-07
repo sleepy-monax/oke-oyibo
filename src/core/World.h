@@ -36,6 +36,7 @@ namespace core
 
         utils::HashMap<entt::id_type, utils::OwnPtr<System>> _systems;
         utils::Vector<core::Player> _players;
+        int _difficulty = 0;
 
         bool _win=false;
 
@@ -49,6 +50,12 @@ namespace core
         auto &systems() { return _systems; }
 
         auto &players() { return _players; }
+
+        int getDifficulty() { return _difficulty; }
+
+        void setDifficulty(int newDifficulty) { 
+            _difficulty = newDifficulty;
+        }
 
         World(utils::RefPtr<Registry> registry, int width, int height);
 

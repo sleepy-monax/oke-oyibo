@@ -7,10 +7,10 @@
 #include "core/Camera.h"
 #include "core/glue/ImGuiExtension.h"
 #include "game/generator/Generator.h"
-#include "game/components/Difficulty.h"
 
 #include "game/generator/Generator.h"
 #include "core/Camera.h"
+#include "core/Keyboard.h"
 
 namespace game
 {
@@ -70,20 +70,17 @@ namespace game
         ImGui::SameLine();
         //static int animate = 1;
         const char *difficulties[] = {"easy", "normal", "hard"};
-        game::Difficulty difficulty;
         static int difficulty_current_index = 0;
         const char* combo_difficulties = difficulties[difficulty_current_index];
-        //ImGui::Combo(" ", &animate, difficulties, IM_ARRAYSIZE(difficulties));
+        //ImGui::Comworld->add_player({"bob", utils::own<core::Keyboard>()});
         
         if (ImGui::BeginCombo(" ", combo_difficulties, 0))
         {
             for (int n = 0; n < IM_ARRAYSIZE(difficulties); n++)
             {
-                difficulty.value = 0;
                 const bool is_selected = (difficulty_current_index == n);
                 if (ImGui::Selectable(difficulties[n], is_selected)){
                     difficulty_current_index = n;
-                    difficulty.value += n;
                 }
                 if (is_selected)
                 {
@@ -110,7 +107,18 @@ namespace game
         ImGui::SetCursorPosX(270.);
         if (ImGui::Button("Create game", button_size))
         {
-            director().switch_scene<game::InGame>();
+            Generator gen{};
+
+            auto world = gen.generate(registry(), time(nullptr));
+
+            world->add_player({"bob", utils::own<core::Keyboard>()});
+            world->players()[0].camera().zoom_in();
+            world->players()[0].camera().speed(10);
+            world->players()[0].camera().jump_to(world->terrain().bound().center());
+
+            world->create_entity(registry().blueprint("player"), world->terrain().bound().center());
+            world->setDifficulty(difficulty_current_index);
+            director().switch_scene<game::InGame>(world);
         }
 
         ImGui::End();

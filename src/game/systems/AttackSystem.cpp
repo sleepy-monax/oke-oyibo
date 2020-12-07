@@ -19,7 +19,7 @@ namespace game
         attackers.each([&](entt::entity attacker, base::Position &attacker_position, game::Attack &attacker_attack) {
             attacker_attack.cooldown -= time.elapsed();
 
-            int damages = attacker_attack.base_damages;
+            int damages = attacker_attack.base_damages + world.getDifficulty();
 
             auto victims = world.entities().view<base::Position, game::Health, base::Sprite>();
 
