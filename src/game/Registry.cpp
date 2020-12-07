@@ -111,6 +111,8 @@ utils::RefPtr<core::Registry> game::make_registry()
     Item ITEM_THORN{"hedgehog-thorn", registry->texture("hedgehog-thorn")};
     Item ITEM_MEAT{"meat", registry->texture("meat"), Item::FOOD};
     Item ITEM_WOOL{"wool", registry->texture("wool")};
+    Item ITEM_COCO{"coconut", registry->texture("coconut")};
+    Item ITEM_FLOUR{"flour", registry->texture("flour")};
 
     game::Difficulty difficulty;
 
@@ -244,7 +246,6 @@ utils::RefPtr<core::Registry> game::make_registry()
         e.with<game::Attack>(1+difficulty.value);
     });
 
-<<<<<<< Updated upstream
     auto SHARK = registry->register_blueprint("shark", [&](core::Builder &e) {
         e.with<base::Momentum>();
         e.with<base::Move>(0.03);
@@ -256,15 +257,14 @@ utils::RefPtr<core::Registry> game::make_registry()
         e.with<game::Attack>(5+difficulty.value);
     });
 
-=======
->>>>>>> Stashed changes
     auto TREE = registry->register_blueprint("tree", [&, ITEM_LOG](core::Builder &e) {
         e.with<base::Sprite>(registry->texture("tree"));
         e.with<base::CastShadow>(12, utils::Vec2f{});
         e.with<base::Colider>(-2.0f, -2.0f, 4.0f, 4.0f);
 
-        Stack item(ITEM_LOG, 4);
-        e.with<game::Breakable>(item, 5);
+        e.with<game::Health>(5, 5);
+        e.with<game::Inventory>(game::Inventory{{{ITEM_LOG, 4}, {ITEM_APPLE, 1}}});
+
     });
 
     auto PINE = registry->register_blueprint("pine", [&, ITEM_LOG](core::Builder &e) {
@@ -272,8 +272,8 @@ utils::RefPtr<core::Registry> game::make_registry()
         e.with<base::CastShadow>(12, utils::Vec2f{});
         e.with<base::Colider>(-2.0f, -2.0f, 4.0f, 4.0f);
 
-        Stack item(ITEM_LOG, 4);
-        e.with<game::Breakable>(item, 5);
+        e.with<game::Health>(5, 5);
+        e.with<game::Inventory>(game::Inventory{{{ITEM_LOG, 4}}});
     });
 
     auto PALM = registry->register_blueprint("palm", [&, ITEM_LOG](core::Builder &e) {
@@ -281,31 +281,31 @@ utils::RefPtr<core::Registry> game::make_registry()
         e.with<base::CastShadow>(16, utils::Vec2f{});
         e.with<base::Colider>(-2.0f, -2.0f, 4.0f, 4.0f);
 
-        Stack item(ITEM_LOG, 4);
-        e.with<game::Breakable>(item, 5);
+        e.with<game::Health>(5, 5);
+        e.with<game::Inventory>(game::Inventory{{{ITEM_LOG, 4}, {ITEM_COCO, 1}}});
     });
 
     auto BUSH = registry->register_blueprint("bush", [&, ITEM_STICK](core::Builder &e) {
-        Stack item(ITEM_STICK, 1);
-        e.with<game::Breakable>(item, 1);
+        e.with<game::Health>(1, 1);
+        e.with<game::Inventory>(game::Inventory{{{ITEM_STICK, 2}}});
         e.with<base::Sprite>(registry->texture("bush"));
     });
 
     auto GRASS = registry->register_blueprint("grass", [&, ITEM_BURGER](core::Builder &e) {
-        Stack item(ITEM_APPLE, 1);
-        e.with<game::Breakable>(item, 1);
+        e.with<game::Health>(1, 1);
+        e.with<game::Inventory>(game::Inventory{{{ITEM_FLOUR, 1}}});
         e.with<base::Sprite>(registry->texture("grass"));
     });
 
     auto FLOWER = registry->register_blueprint("flower", [&, ITEM_FLOWER](core::Builder &e) {
-        Stack item(ITEM_FLOWER, 1);
-        e.with<game::Breakable>(item, 1);
+        e.with<game::Health>(1, 1);
+        e.with<game::Inventory>(game::Inventory{{{ITEM_FLOWER, 1}}});
         e.with<base::Sprite>(registry->texture("flower"));
     });
 
     auto ROCK = registry->register_blueprint("rock", [&, ITEM_ROCK](core::Builder &e) {
-        Stack item{ITEM_ROCK, 1};
-        e.with<game::Breakable>(item, 5);
+        e.with<game::Health>(1, 1);
+        e.with<game::Inventory>(game::Inventory{{{ITEM_ROCK, 1}}});
         e.with<base::Sprite>(registry->texture("rock"));
     });
 
@@ -315,6 +315,8 @@ utils::RefPtr<core::Registry> game::make_registry()
     });
 
     auto DEAD_BUSH = registry->register_blueprint("dead-bush", [&](core::Builder &e) {
+        e.with<game::Health>(1, 1);
+        e.with<game::Inventory>(game::Inventory{{{ITEM_STICK, 1}}});
         e.with<base::Sprite>(registry->texture("dead-bush"));
         e.with<base::CastShadow>(4, utils::Vec2f{0, 0});
     });
