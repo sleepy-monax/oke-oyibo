@@ -20,6 +20,7 @@ namespace game
         bool _debugging = false;
         utils::OwnPtr<game::Game> _game;
         utils::OwnPtr<editor::Editor> _editor;
+        utils::RefPtr<core::World> _world;
 
     public:
         InGame(core::Director &dir, core::Registry &reg);

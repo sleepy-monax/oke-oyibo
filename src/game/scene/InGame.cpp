@@ -9,6 +9,7 @@
 #include "editor/panels/Viewport.h"
 
 #include "game/generator/Generator.h"
+#include "game/scene/EndGameScene.h"
 
 namespace game
 {
@@ -43,6 +44,7 @@ namespace game
         _editor->open<editor::Viewport>();
 
         _game = utils::own<game::Game>(world);
+        _world = world;
     }
 
     void InGame::on_switch_out()
@@ -68,6 +70,9 @@ namespace game
         else
         {
             _game->update(time);
+        }
+        if(_world->isWin()){
+            director().switch_scene<game::EndGameScene>();
         }
     }
 

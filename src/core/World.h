@@ -37,6 +37,8 @@ namespace core
         utils::HashMap<entt::id_type, utils::OwnPtr<System>> _systems;
         utils::Vector<core::Player> _players;
 
+        bool _win=false;
+
     public:
         auto &terrain() { return _terrain; }
 
@@ -83,5 +85,13 @@ namespace core
         void update(Time &);
 
         void render(Camera &);
+
+        bool isWin(){
+            return _win;
+        }
+
+        void setWin(bool win){
+            _win = win;
+        }
     };
 } // namespace core
