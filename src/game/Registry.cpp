@@ -194,7 +194,7 @@ utils::RefPtr<core::Registry> game::make_registry()
 
         e.with<game::Enemy>();
         e.with<game::Health>(7, 7);
-        e.with<game::Attack>(1*difficulty.value);
+        e.with<game::Attack>(1+difficulty.value);
     });
 
     auto SKELETON = registry->register_blueprint("skeleton", [&](core::Builder &e) {
@@ -207,7 +207,7 @@ utils::RefPtr<core::Registry> game::make_registry()
 
         e.with<game::Enemy>();
         e.with<game::Health>(6, 6);
-        e.with<game::Attack>(1);
+        e.with<game::Attack>(1+difficulty.value);
     });
 
     auto SLIME = registry->register_blueprint("slime", [&](core::Builder &e) {
@@ -219,7 +219,7 @@ utils::RefPtr<core::Registry> game::make_registry()
 
         e.with<game::Enemy>();
         e.with<game::Health>(3, 3);
-        e.with<game::Attack>(1);
+        e.with<game::Attack>(1+difficulty.value);
     });
 
     auto BIG_SLIME = registry->register_blueprint("big-slime", [&](core::Builder &e) {
@@ -231,7 +231,7 @@ utils::RefPtr<core::Registry> game::make_registry()
 
         e.with<game::Enemy>();
         e.with<game::Health>(5, 5);
-        e.with<game::Attack>(1);
+        e.with<game::Attack>(1+difficulty.value);
     });
 
     auto WISP = registry->register_blueprint("wisp", [&](core::Builder &e) {
@@ -241,7 +241,7 @@ utils::RefPtr<core::Registry> game::make_registry()
 
         e.with<game::Enemy>();
         e.with<game::Health>(2, 2);
-        e.with<game::Attack>(1);
+        e.with<game::Attack>(1+difficulty.value);
     });
 
     auto SHARK = registry->register_blueprint("shark", [&](core::Builder &e) {
@@ -252,7 +252,7 @@ utils::RefPtr<core::Registry> game::make_registry()
 
         e.with<game::Enemy>(true);
         e.with<game::Health>(20, 20);
-        e.with<game::Attack>(5);
+        e.with<game::Attack>(5+difficulty.value);
     });
 
     auto TREE = registry->register_blueprint("tree", [&, ITEM_LOG](core::Builder &e) {

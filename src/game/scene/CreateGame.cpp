@@ -51,7 +51,7 @@ namespace game
 
         //Create menu window
         ImGui::Begin("Create game");
-        ImVec2 vector(720, 300), button_size(200, 30);
+        ImVec2 vector(720, 340), button_size(200, 30);
         ImGui::SetWindowSize(vector);
 
         ImGui::Text("%65s", "Welcome to Oke Oyibo ! ");
@@ -76,10 +76,11 @@ namespace game
         {
             for (int n = 0; n < IM_ARRAYSIZE(difficulties); n++)
             {
+                difficulty.value = 0;
                 const bool is_selected = (difficulty_current_index == n);
                 if (ImGui::Selectable(difficulties[n], is_selected)){
                     difficulty_current_index = n;
-                    difficulty.value = n + 1;
+                    difficulty.value += n;
                 }
                 if (is_selected)
                 {
@@ -89,15 +90,15 @@ namespace game
             ImGui::EndCombo();
         }
 
-        
-
         //Create a game
 
         ImGui::Text(" ");
         ImGui::TextCenter("Press E to break and collect items");
         ImGui::TextCenter("Press F to attack enemies (better with a sword :p)");
-        ImGui::TextCenter("Go to water to drink");
         ImGui::TextCenter("Press A to eat some food if you find some");
+        ImGui::TextCenter("Press Up Arrow to see the craft recipes");
+        ImGui::TextCenter("Press Enter to confirm the craft");
+        ImGui::TextCenter("Go to water to drink");
         ImGui::TextCenter("Try not to be killed");
         ImGui::TextCenter("Make a boat to escape the island");
         ImGui::TextCenter("Good luck !");

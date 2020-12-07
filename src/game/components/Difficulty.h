@@ -4,6 +4,6 @@ namespace game
 {
     struct Difficulty
     {
-        int value = 1;
+        int value = 0;
     };
 }
