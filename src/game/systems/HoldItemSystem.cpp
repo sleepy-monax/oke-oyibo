@@ -23,19 +23,8 @@ namespace game
     {
     }
 
-    void HoldItemSystem::update(core::World &world, core::Time &)
+    void HoldItemSystem::update(core::World &, core::Time &)
     {
-        auto player = world.entities().view<game::Inventory, game::HoldItem, base::Player>();
-
-        player.each([&](auto &inventory, auto &hold, auto &) {
-            if (IsKeyPressed(KEY_SPACE))
-            {
-                if (inventory.inventory.count())
-                {
-                    hold.index = (hold.index + 1) % inventory.inventory.count();
-                }
-            }
-        });
     }
 
     void HoldItemSystem::on_load(core::Registry &registry)

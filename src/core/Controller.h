@@ -16,6 +16,7 @@ namespace core
 
         ACTION_MAIN,
         ACTION_SECONDARY,
+        ACTION_NEXT_ITEM,
 
         MENU_OPEN,
         MENU_NEXT,

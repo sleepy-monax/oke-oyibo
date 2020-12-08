@@ -34,6 +34,9 @@ namespace core
             case Control::ACTION_SECONDARY:
                 return IsKeyDown(KEY_K);
 
+            case Control::ACTION_NEXT_ITEM:
+                return IsKeyDown(KEY_H);
+
             case Control::ZOOM_IN:
                 return IsKeyDown(KEY_PAGE_UP);
 
@@ -69,6 +72,9 @@ namespace core
 
             case Control::ACTION_SECONDARY:
                 return IsKeyPressed(KEY_K);
+
+            case Control::ACTION_NEXT_ITEM:
+                return IsKeyPressed(KEY_H);
 
             case Control::ZOOM_IN:
                 return IsKeyPressed(KEY_PAGE_UP);

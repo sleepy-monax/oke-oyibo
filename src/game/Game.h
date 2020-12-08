@@ -28,7 +28,8 @@ namespace game
         {
             for (size_t i = 0; i < _world->players().count(); i++)
             {
-                _world->players()[i].camera().resize_to_fit_the_screen();
+                auto bound =core::glue::screen().column(_world->players().count(), i);
+                _world->players()[i].camera().resize_to_fit(bound.width(), bound.height());
             }
 
             _world->update(time);
@@ -54,7 +55,9 @@ namespace game
             {
                 auto &cam = _world->players()[i].camera();
 
-                Rectangle rect{0, 0, cam.width() * 1.0f, cam.height() * 1.0f};
+                auto b =core::glue::screen().column(_world->players().count(), i);
+
+                Rectangle rect{b.x(), b.y(), b.width(), b.height()};
                 DrawTexturePro(cam.composite().underlying_texture(), rect, rect, (Vector2){0, 0}, 0.0f, WHITE);
             }
         }

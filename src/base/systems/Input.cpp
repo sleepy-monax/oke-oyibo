@@ -100,6 +100,21 @@ namespace base
                 }
             }
 
+            if (controller.pressed(core::Control::ACTION_NEXT_ITEM))
+            {
+                if (world.entities().has<game::Inventory>(entity) &&
+                    world.entities().has<game::HoldItem>(entity))
+                {
+                    auto &inventory = world.entities().get<game::Inventory>(entity);
+                    auto &hold_item = world.entities().get<game::HoldItem>(entity);
+
+                    if (inventory.inventory.count())
+                    {
+                        hold_item.index = (hold_item.index + 1) % inventory.inventory.count();
+                    }
+                }
+            }
+
             if (controller.pressed(core::Control::MENU_OPEN))
             {
                 menu.visible = !menu.visible;

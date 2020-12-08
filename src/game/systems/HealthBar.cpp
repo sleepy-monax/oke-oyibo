@@ -20,7 +20,7 @@ namespace game
                 if (world.entities().has<Inventory>(entity))
                 {
                     auto &inv = world.entities().get<Inventory>(entity);
-                    for (size_t i = 0;i<inv.inventory.count();i++)
+                    for (size_t i = 0; i < inv.inventory.count(); i++)
                     {
                         world.create_item(
                             inv.inventory[i],
@@ -34,9 +34,12 @@ namespace game
 
                 if (world.entities().has<base::Player>(entity))
                 {
+                    auto player = world.entities().get<base::Player>(entity);
+
                     world.create_entity(
-                        world.registry().blueprint("player"),
-                        world.terrain().bound().center());
+                             world.registry().blueprint("player"),
+                             world.terrain().bound().center())
+                        .with<base::Player>(player.player_index);
                 }
 
                 world.remove_entity(entity);
