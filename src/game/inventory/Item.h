@@ -15,6 +15,7 @@ namespace game
 
     public:
         static constexpr auto FOOD = 1 << 0;
+        static constexpr auto SUPER_FOOD = 1 << 1;
 
         std::string name() const
         {

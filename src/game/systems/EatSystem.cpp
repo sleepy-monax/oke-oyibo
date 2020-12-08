@@ -22,11 +22,16 @@ namespace game
 
                     if (item.flags() & Item::FOOD)
                     {
-                        if (hunger.current_food + 2 <= hunger.max_food)
+                        if (item.flags() & Item::SUPER_FOOD)
+                        {
+                            hunger.current_food += 5;
+                        }
+                        else
                         {
                             hunger.current_food += 2;
                         }
-                        else
+
+                        if (hunger.current_food > hunger.max_food)
                         {
                             hunger.current_food = hunger.max_food;
                         }

@@ -93,7 +93,7 @@ utils::RefPtr<core::Registry> game::make_registry()
     registry->register_component<game::Animal>("animal");
 
     Item ITEM_LOG{"log", registry->texture("log")};
-    Item ITEM_BURGER{"burger", registry->texture("food"), Item::FOOD};
+    Item ITEM_BURGER{"burger", registry->texture("food"), Item::FOOD | Item::SUPER_FOOD};
     Item ITEM_STICK{"stick", registry->texture("stick")};
     Item ITEM_ROCK{"rock", registry->texture("rock")};
     Item ITEM_FLOWER{"flower", registry->texture("flower")};
@@ -245,6 +245,21 @@ utils::RefPtr<core::Registry> game::make_registry()
 
         e.with<game::Enemy>();
         e.with<game::Health>(6, 6);
+        e.with<game::Attack>(1);
+    });
+
+    auto PIRATE = registry->register_blueprint("pirate", [&, ITEM_SWORD, ITEM_BONE](core::Builder &e) {
+        e.with<base::Momentum>();
+        e.with<base::Move>(0.03);
+        e.with<base::Sprite>(registry->texture("pirate"));
+        e.with<base::CastShadow>(4, utils::Vec2f{0.5, 0});
+        e.with<base::Colider>(-2.0f, -2.0f, 4.0f, 4.0f);
+
+        e.with<game::Inventory>(game::Inventory{{{ITEM_SWORD, 1}, {ITEM_BONE, 2}}});
+        e.with<game::HoldItem>();
+
+        e.with<game::Enemy>();
+        e.with<game::Health>(10, 10);
         e.with<game::Attack>(1);
     });
 
@@ -490,6 +505,7 @@ utils::RefPtr<core::Registry> game::make_registry()
         {
             {1, SLIME, 0.01, utils::Noise{0x404c09fa, 1, 2}},
             {1, PALM, 0.5, utils::Noise{0x404c09fa, 1, 0.1}},
+            {0.1, PIRATE, 0.5, utils::Noise{0x404c09fa, 1, 0.1}},
         },
     });
 

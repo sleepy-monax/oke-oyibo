@@ -34,6 +34,12 @@ namespace core
         draw_texture(texture, texture.bound(), dest, color);
     }
 
+    void draw_texture_flip(Texture texture, utils::Rectf dest, Color color)
+    {
+        auto b = texture.bound();
+        draw_texture(texture, {b.top_right(), {b.width() * -1.0f, b.height()}}, dest, color);
+    }
+
     void draw_ellipse(utils::Vec2f vec, float radiusH, float radiusV, Color color)
     {
         if (rlCheckBufferLimit(3 * 36))
