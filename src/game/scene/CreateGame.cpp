@@ -10,6 +10,7 @@
 
 #include "core/Camera.h"
 #include "core/Keyboard.h"
+#include "base/components/Player.h"
 #include "game/generator/Generator.h"
 
 namespace game
@@ -131,7 +132,14 @@ namespace game
             world->players()[0].camera().speed(10);
             world->players()[0].camera().jump_to(world->terrain().bound().center());
 
+            // FIXME: multiplayer.
+            // world->add_player({"greg", utils::own<core::Keyboard>()});
+            // world->players()[1].camera().zoom_in();
+            // world->players()[1].camera().speed(10);
+            // world->players()[1].camera().jump_to(world->terrain().bound().center());
+
             world->create_entity(registry().blueprint("player"), world->terrain().bound().center());
+            // world->create_entity(registry().blueprint("player"), world->terrain().bound().center() + utils::Vec2f{64,64}).with<base::Player>(1);
             world->setDifficulty(difficulty_current_index);
 
             director().switch_scene<game::InGame>(world);

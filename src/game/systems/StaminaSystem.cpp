@@ -21,7 +21,7 @@ namespace game
                     momentum.ax <= -0.05f ||
                     momentum.ay <= -0.05f)
                 {
-                    stamina.current -= 1.0f;
+                    stamina.current -= 0.5f;
 
                     if (stamina.current <= 0)
                     {
@@ -75,7 +75,7 @@ namespace game
 
                 core::fill_rect(bound, YELLOW);
 
-                utils::Rectf staminaRect = {-18, 4, 2, 2};
+                utils::Rectf staminaRect = {-18, 5, 2, 2};
                 staminaRect = staminaRect.offset(position());
 
                 core::draw_texture(staminaTexture, staminaRect, WHITE);

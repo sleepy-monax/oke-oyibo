@@ -464,6 +464,7 @@ utils::RefPtr<core::Registry> game::make_registry()
             {0.2, SKELETON, 0.2, utils::Noise{0x404c09fa, 1, 2}},
             {1, BUNNY, 0.05, utils::Noise{0x404c09fa, 1, 2}},
             {1, SHEEP, 0.05, utils::Noise{0x404c09fa, 1, 2}},
+            {1, SLIME, 0.03, utils::Noise{0x404c09fa, 1, 2}},
         },
     });
 

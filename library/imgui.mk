@@ -6,8 +6,6 @@ INCLUDES+= \
 	-Ilibrary/raylib/src/external/glfw/include
 
 SOURCES+= \
-	library/imgui/examples/imgui_impl_glfw.cpp \
-	library/imgui/examples/imgui_impl_opengl3.cpp \
 	library/imgui/imgui.cpp \
 	library/imgui/imgui_draw.cpp \
 	library/imgui/imgui_widgets.cpp
