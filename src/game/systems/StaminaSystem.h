@@ -14,8 +14,6 @@ namespace game
 
         bool stackFrame(core::Time &time);
 
-        bool stackFrameForAcc(core::Time &time);
-
         void on_load(core::Registry &registry) override;
 
         void render(core::World &world, core::Camera &camera);

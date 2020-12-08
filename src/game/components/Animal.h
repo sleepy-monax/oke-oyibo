@@ -11,5 +11,4 @@ namespace game
             wandering_distance = 8;
         }
     };
-       
 } // namespace game

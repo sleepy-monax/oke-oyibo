@@ -16,52 +16,26 @@ namespace game
         if (stackFrame(time))
         {
             view.each([&](game::Stamina &stamina, base::Momentum &momentum) {
-                if (momentum.ax == 0.1f || momentum.ay == 0.1f || momentum.ax == -0.1f || momentum.ay == -0.1f)
+                if (momentum.ax >= 0.05f ||
+                    momentum.ay >= 0.05f ||
+                    momentum.ax <= -0.05f ||
+                    momentum.ay <= -0.05f)
                 {
-                    if (stamina.current - 0.5f <= 0)
+                    stamina.current -= 1.0f;
+
+                    if (stamina.current <= 0)
                     {
                         stamina.current = 0.0f;
-                    }
-                    else
-                    {
-                        stamina.current -= 0.5f;
                     }
                 }
 
                 if (momentum.ax == 0.0f && momentum.ay == 0.0f)
                 {
-                    if (stamina.current + 0.6f > stamina.maximum)
+                    stamina.current += 0.5f + stamina.current / 5;
+
+                    if (stamina.current > stamina.maximum)
                     {
                         stamina.current = stamina.maximum;
-                    }
-                    else
-                    {
-                        stamina.current += 0.6f;
-                    }
-                }
-            });
-        }
-
-        if (stackFrameForAcc(time))
-        {
-            view.each([&](game::Stamina &stamina, base::Momentum &momentum) {
-                if (stamina.current < (stamina.maximum) / 5)
-                {
-                    if (momentum.ax == 0.05f)
-                    {
-                        momentum.ax = 0.02f;
-                    }
-                    else if (momentum.ay == 0.05f)
-                    {
-                        momentum.ay = 0.02f;
-                    }
-                    else if (momentum.ax == -0.05f)
-                    {
-                        momentum.ax = -0.02f;
-                    }
-                    else if (momentum.ay == -0.05f)
-                    {
-                        momentum.ay = -0.02f;
                     }
                 }
             });
@@ -75,22 +49,6 @@ namespace game
         if (_accumulator >= 1)
         {
             _accumulator -= 1;
-            return true;
-        }
-        else
-        {
-            return false;
-        }
-    }
-
-    bool StaminaSystem::stackFrameForAcc(core::Time &time)
-    {
-        _accumAccel += time.elapsed();
-
-        if (_accumAccel >= 0.05)
-        {
-            _accumAccel -= 0.05;
-
             return true;
         }
         else

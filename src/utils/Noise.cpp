@@ -33,7 +33,8 @@ namespace utils
         x *= scale;
         y *= scale;
 
-        double n0, n1, n2; // Noise contributions from the three corners
+        // Noise contributions from the three corners
+        double n0, n1, n2;
 
         // Skewing/Unskewing factors for 2D
         static const double F2 = 0.366025403f; // F2 = (sqrt(3) - 1) / 2
@@ -53,7 +54,8 @@ namespace utils
         const double x0 = x - X0; // The x,y distances from the cell origin
         const double y0 = y - Y0;
 
-        int32_t i1, j1; // Offsets for second (middle) corner of simplex in (i,j) coords
+        // Offsets for second (middle) corner of simplex in (i,j) coords
+        int32_t i1, j1;
         if (x0 > y0)
         {
             i1 = 1;

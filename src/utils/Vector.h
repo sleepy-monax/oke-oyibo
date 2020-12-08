@@ -57,7 +57,13 @@ namespace utils
 
         T *raw_storage() { return _storage; }
 
-        T& at(size_t index)
+        T &at(size_t index)
+        {
+            assert(index < _count);
+            return _storage[index];
+        }
+
+        const T &at(size_t index) const
         {
             assert(index < _count);
             return _storage[index];
@@ -310,7 +316,7 @@ namespace utils
 
             grow();
 
-            for (size_t j = _count - 1; j > index ; j--)
+            for (size_t j = _count - 1; j > index; j--)
             {
                 new (&_storage[j]) T(std::move(at(j - 1)));
                 at(j - 1).~T();

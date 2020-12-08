@@ -4,6 +4,7 @@
 #include "base/components/Momentum.h"
 #include "base/components/Move.h"
 #include "base/components/Position.h"
+#include "game/components/Stamina.h"
 
 #include "base/systems/Movement.h"
 
@@ -13,7 +14,7 @@ namespace base
     {
         auto view = world.entities().view<base::Position, base::Momentum, base::Move>();
 
-        view.each([&](base::Position &position, base::Momentum &momentum, base::Move &move) {
+        view.each([&](entt::entity entity, base::Position &position, base::Momentum &momentum, base::Move &move) {
             if (!move.moving)
             {
                 return;
@@ -31,28 +32,24 @@ namespace base
                 return;
             }
 
+            auto speed = move.speed;
+
+            if (world.entities().has<game::Stamina>(entity))
+            {
+                auto stamina = world.entities().get<game::Stamina>(entity);
+
+                if (stamina.current < (stamina.maximum) / 5)
+                {
+                    speed /= 2;
+                }
+            }
+
             auto diff = move.destination - position();
 
             auto acceleration = diff.normalized();
 
-            momentum.ax = acceleration.x() * move.speed;
-            momentum.ay = acceleration.y() * move.speed;
+            momentum.ax = acceleration.x() * speed;
+            momentum.ay = acceleration.y() * speed;
         });
     }
-
-    // void Movement::render(core::World &world, core::Camera &camera)
-    // {
-    //     auto view = world.entities().view<base::Position, base::Move>();
-    //
-    //     camera.with_overlay([&]() {
-    //         view.each([](base::Position &position, base::Move &move) {
-    //             if (!move.moving)
-    //             {
-    //                 return;
-    //             }
-    //
-    //             DrawLineV({position.x, position.y}, {move.destination.x(), move.destination.y()}, RED);
-    //         });
-    //     });
-    // }
 } // namespace base

@@ -36,6 +36,16 @@ namespace base
         });
     }
 
+    void Physic::apply_friction(core::World &world, float dt)
+    {
+        auto view = world.entities().view<Momentum>();
+
+        view.each([&](auto &momentum) {
+            momentum.vx -= (momentum.vx) * (1 - _air_friction) * dt;
+            momentum.vy -= (momentum.vy) * (1 - _air_friction) * dt;
+        });
+    }
+
     void Physic::check_for_colisions(core::World &world, float dt)
     {
         auto view = world.entities().view<Momentum, Position, Colider>();
@@ -82,16 +92,6 @@ namespace base
         });
     }
 
-    void Physic::apply_friction(core::World &world, float dt)
-    {
-        auto view = world.entities().view<Momentum>();
-
-        view.each([&](auto &momentum) {
-            momentum.vx -= (momentum.vx) * (1 - _air_friction) * dt;
-            momentum.vy -= (momentum.vy) * (1 - _air_friction) * dt;
-        });
-    }
-
     void Physic::apply_velocity(core::World &world, float dt)
     {
         auto view = world.entities().view<Momentum, Position>();
@@ -111,8 +111,8 @@ namespace base
 
         rebuild_quad_tree(world);
         apply_acceleration(world, dt);
-        check_for_colisions(world, dt);
         apply_friction(world, dt);
+        check_for_colisions(world, dt);
         apply_velocity(world, dt);
     }
 

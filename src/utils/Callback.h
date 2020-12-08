@@ -47,7 +47,9 @@ namespace utils
         Callback() = default;
         Callback(nullptr_t) {}
 
-        template <typename CallableType, class = typename EnableIf<!(IsPointer<CallableType>::value && IsFunction<typename RemovePointer<CallableType>::Type>::value) && IsRvalueReference<CallableType &&>::value>::Type>
+        template <typename CallableType, class = typename EnableIf<!(IsPointer<CallableType>::value &&
+                                                                     IsFunction<typename RemovePointer<CallableType>::Type>::value) &&
+                                                                   IsRvalueReference<CallableType &&>::value>::Type>
         Callback(CallableType &&callable) :
             _wrapper(own<CallableWrapper<CallableType>>(std::move(callable)))
         {
