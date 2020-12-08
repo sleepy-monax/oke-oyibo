@@ -9,6 +9,7 @@
 #include "editor/panels/Viewport.h"
 
 #include "game/generator/Generator.h"
+#include "game/scene/CreateGame.h"
 #include "game/scene/EndGameScene.h"
 
 namespace game
@@ -46,9 +47,9 @@ namespace game
             _debugging = !_debugging;
         }
 
-        if (IsKeyPressed(KEY_R))
+        if (IsKeyPressed(KEY_ESCAPE))
         {
-            on_switch_in();
+            director().switch_scene<game::CreateGame>();
         }
 
         if (_debugging)
@@ -59,7 +60,8 @@ namespace game
         {
             _game->update(time);
         }
-        if(_world->isWin()){
+        if (_world->isWin())
+        {
             director().switch_scene<game::EndGameScene>();
         }
     }

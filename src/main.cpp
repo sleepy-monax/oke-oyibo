@@ -17,6 +17,7 @@ int main()
     director.switch_scene<game::SplashScreen>();
 
     SetExitKey(KEY_F4);
+    SetWindowTitle("Oke-Oyibo");
 
     while (!core::glue::should_exit())
     {
