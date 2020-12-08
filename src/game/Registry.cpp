@@ -36,7 +36,6 @@
 #include "game/systems/AnimalMove.h"
 #include "game/systems/AttackSystem.h"
 #include "game/systems/DrinkSystem.h"
-#include "game/systems/EatSystem.h"
 #include "game/systems/EnemyMove.h"
 #include "game/systems/HealthBar.h"
 #include "game/systems/HoldItemSystem.h"
@@ -69,7 +68,6 @@ utils::RefPtr<core::Registry> game::make_registry()
     registry->register_system<game::RegenSystem>("regen");
     registry->register_system<game::HoldItemSystem>("hold-item");
     registry->register_system<game::AttackSystem>("attack");
-    registry->register_system<game::EatSystem>("eat");
     registry->register_system<game::DrinkSystem>("drink");
     registry->register_system<game::MenuSystem>("menu");
     registry->register_system<game::AnimalMove>("animal");

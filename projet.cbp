@@ -172,8 +172,6 @@
 		<Unit filename="src/game/systems/AttackSystem.h" />
 		<Unit filename="src/game/systems/DrinkSystem.cpp" />
 		<Unit filename="src/game/systems/DrinkSystem.h" />
-		<Unit filename="src/game/systems/EatSystem.cpp" />
-		<Unit filename="src/game/systems/EatSystem.h" />
 		<Unit filename="src/game/systems/EnemyMove.cpp" />
 		<Unit filename="src/game/systems/EnemyMove.h" />
 		<Unit filename="src/game/systems/Fire.h" />
