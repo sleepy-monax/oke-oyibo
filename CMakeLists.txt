@@ -40,3 +40,9 @@ add_executable(oke_oyibo ${oke_oyibo_SRC})
 set_property(TARGET oke_oyibo PROPERTY CXX_STANDARD 20)
 
 target_link_libraries(oke_oyibo raylib)
+
+add_custom_target(run
+    COMMAND oke_oyibo
+    DEPENDS oke_oyibo
+    WORKING_DIRECTORY ${CMAKE_PROJECT_DIR}
+)
